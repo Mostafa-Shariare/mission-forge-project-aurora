@@ -1,0 +1,3308 @@
+/* ==========================================================================
+   PROJECT AURORA HUD THEME OVERRIDE FOR MISSION FORGE EXPEDITION GAME
+   Ultra-Sleek Zero-Border Free-Floating Glassmorphic Aerospace HUD
+   ========================================================================== */
+
+/* 1. Eliminate Loading Screen Completely */
+#loading,
+.loading-screen,
+.loading-mark,
+.load-line,
+#loading-text {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+
+/* 2. Deep Space Canvas & Purge Bulky Cockpit Frames */
+html, body {
+  background: radial-gradient(circle at 50% 50%, #030814 0%, #010307 100%) !important;
+  color: #E2F1F8 !important;
+  font-family: 'IBM Plex Mono', 'JetBrains Mono', monospace !important;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+#world {
+  background: transparent !important;
+}
+
+/* Purge outer cockpit border frames, vignette, scanlines, and redundant status bars */
+.hud-frame,
+.vignette,
+.scanlines,
+.bottom-status,
+.menu-center-caption {
+  display: none !important;
+}
+
+/* 3. Purge Bottom Destination Carousel / Strip */
+.destination-strip,
+#destination-cards,
+.strip-heading,
+.keyboard-hint {
+  display: none !important;
+}
+
+/* 4. Topbar & Floating HUD Placement */
+.topbar {
+  background: rgba(3, 8, 20, 0.55) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: none !important;
+  border-bottom: 1px solid rgba(0, 229, 255, 0.16) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
+  padding: 8px 28px !important;
+  height: 52px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+}
+
+.menu-topline {
+  background: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid rgba(0, 229, 255, 0.08) !important;
+  padding: 8px 36px !important;
+  color: rgba(148, 163, 184, 0.75) !important;
+  font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace !important;
+  font-size: 10px !important;
+  letter-spacing: 0.18em !important;
+}
+
+/* 5. Aerospace Glassmorphic Readout Panels (Left Briefing & Right Telemetry) */
+.brief-panel,
+.hud-panel.brief-panel,
+.right-panels .hud-panel,
+.system-preview,
+.route-preview {
+  background: rgba(4, 10, 22, 0.65) !important; /* bg-[#040a16]/65 */
+  backdrop-filter: blur(20px) !important; /* backdrop-blur-xl */
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(0, 229, 255, 0.25) !important; /* border border-cyan-500/25 */
+  border-radius: 8px !important; /* rounded-lg */
+  padding: 20px !important; /* p-5 */
+  box-shadow: 0 0 25px rgba(0, 180, 255, 0.08), 0 12px 36px rgba(0, 0, 0, 0.65) !important; /* shadow-[0_0_25px_rgba(0,180,255,0.08)] */
+}
+
+.brief-panel {
+  position: absolute !important;
+  left: 28px !important;
+  top: 62px !important;
+  width: clamp(310px, 24vw, 360px) !important;
+  max-width: 380px !important;
+  overflow: visible !important;
+  z-index: 40 !important;
+}
+
+.right-panels {
+  position: absolute !important;
+  right: 28px !important;
+  top: 62px !important;
+  width: clamp(280px, 20vw, 310px) !important;
+  max-width: 330px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 16px !important;
+  z-index: 40 !important;
+}
+
+/* Purge heavy legacy corner brackets & borders */
+.hud-panel:before,
+.hud-panel:after {
+  display: none !important;
+}
+
+/* 6. Crisp High-Legibility Sci-Fi Typography System */
+/* Category Header: "MISSION BRIEFING" */
+.brief-panel .panel-caption {
+  font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace !important;
+  font-size: 12px !important; /* text-xs */
+  font-weight: 700 !important; /* font-bold */
+  letter-spacing: 0.25em !important; /* tracking-[0.25em] */
+  color: #00E5FF !important; /* text-cyan-400 */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  border-bottom: 1px solid rgba(0, 229, 255, 0.2) !important; /* border-b border-cyan-500/20 */
+  padding-bottom: 8px !important; /* pb-2 */
+  margin-bottom: 12px !important; /* mb-3 */
+  text-shadow: 0 0 10px rgba(0, 229, 255, 0.4) !important;
+}
+
+#mission-code {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  color: #7dd3fc !important;
+  letter-spacing: 0.15em !important;
+}
+
+/* Transmission Subtitle: "THE LAST TRANSMISSION" */
+.brief-panel .eyebrow,
+#mission-subtitle {
+  color: rgba(125, 211, 252, 0.85) !important; /* text-cyan-300/80 */
+  font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace !important;
+  font-size: 11px !important; /* text-[11px] */
+  font-weight: 700 !important;
+  letter-spacing: 0.18em !important; /* tracking-wider */
+  text-transform: uppercase !important;
+  text-shadow: 0 0 8px rgba(0, 229, 255, 0.4) !important;
+  margin: 6px 0 2px 0 !important;
+}
+
+/* Target Heading: "MISSION: MARS" */
+.brief-panel h1 {
+  font-family: 'Rajdhani', 'Orbitron', sans-serif !important;
+  font-size: clamp(1.6rem, 2.3vw, 2.2rem) !important; /* text-2xl md:text-3xl */
+  font-weight: 900 !important; /* font-extrabold */
+  font-style: italic !important;
+  letter-spacing: 0.08em !important; /* tracking-wider */
+  line-height: 1.15 !important;
+  white-space: nowrap !important;
+  color: #FFFFFF !important; /* text-white pure sharp white */
+  -webkit-text-fill-color: #FFFFFF !important;
+  background: none !important;
+  filter: drop-shadow(0 0 12px rgba(0, 229, 255, 0.35)) !important; /* drop-shadow-[0_0_12px_rgba(0,229,255,0.3)] */
+  margin: 8px 0 14px 0 !important; /* my-2 */
+}
+
+.brief-panel h1 span,
+#planet-name {
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  text-shadow: 0 0 16px rgba(0, 229, 255, 0.6) !important;
+}
+
+/* Glowing Cyber Tags: "[ SEARCH • DISCOVERY ]" and "[ CLASS III • HABITABLE VOID ]" */
+.mission-tags {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  flex-wrap: wrap !important;
+  margin: 10px 0 16px 0 !important;
+}
+
+.mission-tags span {
+  display: inline-flex !important;
+  align-items: center !important;
+  background: rgba(8, 47, 73, 0.5) !important; /* bg-cyan-950/50 */
+  border: 1px solid rgba(0, 229, 255, 0.4) !important; /* border border-cyan-400/40 */
+  color: #7dd3fc !important; /* text-cyan-300 */
+  font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace !important;
+  font-size: 11px !important; /* text-xs */
+  font-weight: 700 !important;
+  letter-spacing: 0.10em !important;
+  padding: 4px 10px !important; /* px-2.5 py-1 */
+  border-radius: 4px !important; /* rounded */
+  text-transform: uppercase !important;
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.15) !important;
+  text-shadow: 0 0 6px rgba(0, 229, 255, 0.4) !important;
+}
+
+.mission-tags span:before {
+  content: "[ " !important;
+  color: rgba(0, 229, 255, 0.6) !important;
+  margin-right: 2px !important;
+}
+
+.mission-tags span:after {
+  content: " ]" !important;
+  color: rgba(0, 229, 255, 0.6) !important;
+  margin-left: 2px !important;
+}
+
+/* Narrative Body: Soft Slate-100 high-legibility text */
+.brief-copy,
+.brief-panel p#mission-description {
+  color: #f1f5f9 !important; /* text-slate-100 Soft Slate-100 */
+  font-family: 'Space Grotesk', 'IBM Plex Mono', sans-serif !important;
+  font-size: 13.5px !important; /* text-sm */
+  line-height: 1.65 !important; /* leading-relaxed */
+  font-weight: 400 !important; /* font-normal */
+  margin: 16px 0 !important; /* my-4 */
+  letter-spacing: 0.02em !important;
+}
+
+/* Mission Specs Table (Grid 2-col): Pure White Range + Electric Cyan Transfer */
+.brief-stats {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 12px !important;
+  margin: 16px 0 !important;
+  background: rgba(0, 229, 255, 0.04) !important;
+  border: 1px solid rgba(0, 229, 255, 0.18) !important;
+  border-radius: 6px !important;
+  padding: 12px 14px !important;
+}
+
+.brief-stats div {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+}
+
+.brief-stats div span {
+  font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace !important;
+  font-size: 9.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.16em !important;
+  color: #7dd3fc !important; /* text-cyan-300 / pale ice cyan */
+  text-transform: uppercase !important;
+}
+
+.brief-stats div:first-child b,
+#destination-range {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 15px !important; /* text-base */
+  font-weight: 800 !important; /* font-bold */
+  color: #FFFFFF !important; /* text-white Pure Sharp White */
+  letter-spacing: 0.06em !important;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.4) !important;
+}
+
+.brief-stats div:last-child b,
+#transfer-time {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 15px !important; /* text-base */
+  font-weight: 800 !important; /* font-bold */
+  color: #00E5FF !important; /* text-cyan-400 Vivid Electric Cyan */
+  letter-spacing: 0.06em !important;
+  text-shadow: 0 0 10px rgba(0, 229, 255, 0.6) !important;
+}
+
+/* Primary Objective Pill: Glowing Callout Box */
+.mission-goal {
+  border: none !important;
+  border-left: 3px solid #00e5ff !important; /* border-l-2 border-cyan-400 */
+  background: rgba(8, 47, 73, 0.35) !important; /* bg-cyan-950/30 */
+  padding: 10px 14px !important; /* px-3 py-2 */
+  border-radius: 0 6px 6px 0 !important;
+  margin: 16px 0 0 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  box-shadow: 0 0 16px rgba(0, 229, 255, 0.12), inset 0 0 12px rgba(0, 229, 255, 0.08) !important;
+}
+
+.mission-goal .target-icon {
+  color: #00e5ff !important;
+  font-size: 16px !important;
+  filter: drop-shadow(0 0 8px #00e5ff) !important;
+  flex-shrink: 0;
+}
+
+.mission-goal .goal-text-wrap,
+.mission-goal div {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+}
+
+.mission-goal small {
+  font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace !important;
+  font-size: 9.5px !important;
+  font-weight: 700 !important;
+  color: #7dd3fc !important; /* text-cyan-300 */
+  letter-spacing: 0.18em !important;
+  text-transform: uppercase !important;
+  display: block !important;
+}
+
+.mission-goal strong {
+  font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace !important;
+  font-size: 12.5px !important; /* text-xs */
+  font-weight: 800 !important;
+  color: #a5f3fc !important; /* text-cyan-200 */
+  letter-spacing: 0.10em !important;
+  text-shadow: 0 0 8px rgba(0, 229, 255, 0.5) !important;
+}
+
+.brief-footer {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace !important;
+  font-size: 9px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.16em !important;
+  color: #7dd3fc !important;
+  border-top: 1px solid rgba(0, 229, 255, 0.15) !important;
+  padding-top: 12px !important;
+  margin-top: 14px !important;
+  text-transform: uppercase !important;
+}
+
+.brief-footer span:last-child {
+  color: #00e5ff !important;
+  font-size: 14px !important;
+  filter: drop-shadow(0 0 6px #00e5ff) !important;
+}
+
+/* ==========================================================================
+   RIGHT PANEL REDESIGN (VESSEL TELEMETRY & TRAJECTORY)
+   ========================================================================== */
+
+/* Vessel Header: "ODYSSEY • VESSEL 07" */
+.system-preview .panel-caption {
+  font-family: 'Rajdhani', 'JetBrains Mono', sans-serif !important;
+  font-size: 15px !important; /* text-base */
+  font-weight: 800 !important; /* font-bold */
+  color: #FFFFFF !important; /* text-white */
+  letter-spacing: 0.18em !important; /* tracking-widest */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  border-bottom: 1px solid rgba(0, 229, 255, 0.2) !important; /* border-b border-cyan-500/20 */
+  padding-bottom: 8px !important; /* pb-2 */
+  margin-bottom: 14px !important; /* mb-4 */
+  text-shadow: 0 0 10px rgba(0, 229, 255, 0.4) !important;
+}
+
+.system-preview .signal-bars {
+  color: #00e5ff !important;
+  text-shadow: 0 0 8px rgba(0, 229, 255, 0.8) !important;
+  letter-spacing: 0.1em !important;
+}
+
+/* Vessel Blueprint: Clean vector icon with cyan glow */
+.ship-blueprint {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 12px 8px !important;
+  background: rgba(0, 229, 255, 0.03) !important;
+  border: 1px solid rgba(0, 229, 255, 0.15) !important;
+  border-radius: 6px !important;
+  margin-bottom: 16px !important;
+}
+
+.ship-blueprint svg {
+  stroke: #00e5ff !important;
+  stroke-width: 1.2 !important;
+  fill: rgba(0, 229, 255, 0.06) !important;
+  filter: drop-shadow(0 0 8px rgba(0, 229, 255, 0.5)) !important;
+  max-width: 180px !important;
+  height: auto !important;
+  margin: 4px auto 8px auto !important;
+}
+
+.ship-blueprint span {
+  font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  color: #7dd3fc !important; /* text-cyan-300 */
+  letter-spacing: 0.18em !important;
+  text-transform: uppercase !important;
+  text-shadow: 0 0 6px rgba(0, 229, 255, 0.4) !important;
+}
+
+/* Status Bars & Metrics (HULL INTEGRITY, PROPELLANT, POWER RESERVE) */
+.mini-resource {
+  display: grid !important;
+  grid-template-columns: 1fr auto !important;
+  align-items: center !important;
+  margin-top: 14px !important;
+  gap: 6px 12px !important;
+}
+
+.mini-resource span {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 11.5px !important; /* text-xs font-mono */
+  font-weight: 600 !important;
+  letter-spacing: 0.12em !important; /* tracking-wider */
+  color: #cbd5e1 !important; /* text-slate-300 */
+  text-transform: uppercase !important;
+}
+
+.mini-resource b {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 13.5px !important; /* text-sm font-mono */
+  font-weight: 800 !important; /* font-bold */
+  color: #7dd3fc !important; /* text-cyan-300 */
+  text-shadow: 0 0 8px rgba(0, 229, 255, 0.5) !important;
+}
+
+.mini-resource b span {
+  font-size: 10px !important;
+  color: #38bdf8 !important;
+}
+
+/* Progress Bar Track: bg-slate-900/80 h-2 rounded-full overflow-hidden border border-cyan-500/30 */
+.mini-resource i {
+  grid-column: 1 / -1 !important;
+  width: 100% !important;
+  height: 8px !important; /* h-2 */
+  background: rgba(15, 23, 42, 0.8) !important; /* bg-slate-900/80 */
+  border: 1px solid rgba(0, 229, 255, 0.3) !important; /* border border-cyan-500/30 */
+  border-radius: 9999px !important; /* rounded-full */
+  overflow: hidden !important;
+  position: relative !important;
+  display: block !important;
+}
+
+/* Progress Bar Fill: bg-gradient-to-r from-cyan-500 to-[#00e5ff] shadow-[0_0_10px_#00e5ff] */
+.mini-resource i:before {
+  content: "" !important;
+  display: block !important;
+  width: var(--value, 100%) !important;
+  height: 100% !important;
+  background: linear-gradient(90deg, #06b6d4 0%, #00e5ff 100%) !important; /* bg-gradient-to-r from-cyan-500 to-[#00e5ff] */
+  border-radius: 9999px !important;
+  box-shadow: 0 0 10px #00e5ff, 0 0 16px rgba(0, 229, 255, 0.6) !important;
+}
+
+/* Mission Trajectory Mini-Widget */
+.route-preview .panel-caption {
+  font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace !important;
+  font-size: 11.5px !important; /* text-xs */
+  font-weight: 800 !important;
+  color: #00E5FF !important; /* text-cyan-400 */
+  letter-spacing: 0.16em !important;
+  border-bottom: 1px solid rgba(0, 229, 255, 0.2) !important;
+  padding-bottom: 6px !important;
+  margin-bottom: 10px !important; /* mb-2 */
+  text-shadow: 0 0 10px rgba(0, 229, 255, 0.4) !important;
+}
+
+.route-art {
+  position: relative !important;
+  height: 68px !important;
+  margin: 6px 0 !important;
+}
+
+/* Earth Blue Dot */
+.route-earth {
+  position: absolute !important;
+  left: 13px !important;
+  bottom: 4px !important;
+  width: 14px !important;
+  height: 14px !important;
+  border-radius: 50% !important;
+  background: radial-gradient(circle at 35% 35%, #38bdf8, #0284c7 65%, #032b4d 100%) !important;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.9), 0 0 20px rgba(2, 132, 199, 0.6) !important;
+  border: 1.5px solid #7dd3fc !important;
+}
+
+/* Mars / Target Orange Dot */
+.route-target {
+  position: absolute !important;
+  right: 13px !important;
+  bottom: 4px !important;
+  width: 14px !important;
+  height: 14px !important;
+  border-radius: 50% !important;
+  background: radial-gradient(circle at 35% 35%, #fb923c, #ea580c 65%, #431407 100%) !important;
+  box-shadow: 0 0 10px rgba(251, 146, 60, 0.9), 0 0 20px rgba(234, 88, 12, 0.6) !important;
+  border: 1.5px solid #fdba74 !important;
+}
+
+/* Trajectory Arc */
+.route-art svg {
+  width: 100% !important;
+  height: 100% !important;
+  fill: none !important;
+  stroke: rgba(0, 229, 255, 0.65) !important;
+  stroke-width: 1.5 !important;
+  stroke-dasharray: 4 4 !important;
+  filter: drop-shadow(0 0 6px rgba(0, 229, 255, 0.5)) !important;
+}
+
+.route-art svg circle {
+  fill: #00E5FF !important;
+  stroke: none !important;
+  filter: drop-shadow(0 0 8px #00E5FF) !important;
+}
+
+.route-labels {
+  display: flex !important;
+  justify-content: space-between !important;
+  color: #FFFFFF !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.12em !important;
+  margin-top: 6px !important;
+}
+
+.journey-dots {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  color: #7dd3fc !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 9.5px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.14em !important;
+  margin-top: 6px !important;
+  text-transform: uppercase !important;
+}
+
+.journey-dots i {
+  display: inline-block !important;
+  width: 18px !important;
+  height: 1px !important;
+  background: rgba(0, 229, 255, 0.5) !important;
+  box-shadow: 0 0 6px #00e5ff !important;
+}
+
+/* ==========================================================================
+   6. CELESTIAL SPHERE UNOBSTRUCTED: RELOCATE TEXT OVERLAYS OFF THE CELESTIAL BODY
+   ========================================================================== */
+.planet-overlay {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  pointer-events: none !important;
+  z-index: 25 !important;
+}
+
+/* Eliminate all framing SVG brackets & lines from drawing across the celestial body */
+.planet-overlay svg {
+  display: none !important;
+}
+
+/* Top Celestial Coordinate: Cleanly above the Moon sphere with ample negative space */
+.planet-coordinate.top {
+  position: absolute !important;
+  top: 32px !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: translateX(-50%) !important;
+  font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace !important;
+  font-size: 11.5px !important; /* text-xs */
+  color: rgba(0, 229, 255, 0.8) !important; /* text-cyan-400/80 */
+  letter-spacing: 0.25em !important; /* tracking-widest */
+  text-transform: uppercase !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+  text-shadow: 0 0 10px rgba(0, 229, 255, 0.45) !important;
+  pointer-events: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Bottom Orbital Status: Beneath the planet sphere in the lower-center footer area */
+.planet-coordinate.bottom {
+  position: absolute !important;
+  bottom: 20px !important;
+  left: 50% !important;
+  right: auto !important;
+  top: auto !important;
+  transform: translateX(-50%) !important;
+  font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace !important;
+  font-size: 11px !important; /* text-xs */
+  color: #7dd3fc !important; /* text-cyan-300 */
+  letter-spacing: 0.16em !important; /* tracking-wider */
+  text-transform: uppercase !important;
+  white-space: nowrap !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  background: rgba(4, 13, 30, 0.75) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(0, 229, 255, 0.25) !important;
+  border-radius: 9999px !important;
+  padding: 6px 18px !important;
+  box-shadow: 0 0 16px rgba(0, 229, 255, 0.16), 0 4px 14px rgba(0, 0, 0, 0.6) !important;
+  text-shadow: 0 0 8px rgba(0, 229, 255, 0.5) !important;
+  pointer-events: none !important;
+  margin: 0 !important;
+}
+
+.planet-coordinate.bottom i {
+  display: inline-block !important;
+  width: 6px !important;
+  height: 6px !important;
+  border-radius: 50% !important;
+  background: #00e5ff !important;
+  box-shadow: 0 0 8px #00e5ff !important;
+  animation: aurora-status-blink 2s infinite ease-in-out !important;
+}
+
+@keyframes aurora-status-blink {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.planet-coordinate.bottom #planet-rotation {
+  color: #00e5ff !important;
+  font-weight: 700 !important;
+  text-shadow: 0 0 8px #00e5ff !important;
+}
+
+/* ==========================================================================
+   7. ELECTRIC NEON CYAN CTA BUTTON ("DESIGN THIS MISSION ↗")
+   Ultra-high-energy neon aerospace action button
+   ========================================================================== */
+/* ==========================================================================
+   7. ELECTRIC NEON CYAN CTA BUTTON ("DESIGN THIS MISSION ↗")
+   Anchored directly beneath the right telemetry panels for clean columnar alignment
+   ========================================================================== */
+.menu-bottom {
+  position: absolute !important;
+  bottom: 24px !important;
+  right: 28px !important;
+  left: auto !important;
+  width: clamp(280px, 20vw, 310px) !important;
+  max-width: 330px !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  z-index: 100 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.menu-save {
+  display: none !important;
+}
+
+#design-button.primary-button {
+  width: 100% !important;
+  justify-content: center !important;
+  background: linear-gradient(135deg, #00f0ff 0%, #00b4d8 100%) !important;
+  border: 1px solid #38F8FF !important;
+  border-radius: 6px !important;
+  color: #020611 !important;
+  -webkit-text-fill-color: #020611 !important;
+  font-family: 'Rajdhani', 'JetBrains Mono', sans-serif !important;
+  font-weight: 900 !important;
+  font-size: 13.5px !important;
+  letter-spacing: 0.18em !important;
+  padding: 12px 20px !important;
+  min-height: 44px !important;
+  box-shadow: 0 0 25px rgba(0, 229, 255, 0.7), inset 0 1px 2px rgba(255, 255, 255, 0.4), 0 8px 24px rgba(0, 0, 0, 0.7) !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  text-transform: uppercase !important;
+  outline: none !important;
+  user-select: none !important;
+}
+
+#design-button.primary-button span,
+#design-button.primary-button b {
+  color: #020611 !important;
+  -webkit-text-fill-color: #020611 !important;
+  font-weight: 900 !important;
+}
+
+#design-button.primary-button b {
+  font-size: 16px !important;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Hover: Subtle scale-up and brighter neon bloom */
+#design-button.primary-button:hover {
+  background: linear-gradient(135deg, #38f8ff 0%, #00d4ff 100%) !important;
+  border-color: #ffffff !important;
+  box-shadow: 0 0 35px rgba(0, 229, 255, 0.95), 0 0 18px rgba(255, 255, 255, 0.7), inset 0 1px 3px rgba(255, 255, 255, 0.6), 0 10px 30px rgba(0, 0, 0, 0.9) !important;
+  color: #020611 !important;
+  transform: translateY(-2px) scale(1.02) !important;
+}
+
+#design-button.primary-button:hover b {
+  transform: translate(2px, -2px) !important;
+}
+
+#design-button.primary-button:active {
+  transform: translateY(0) scale(0.98) !important;
+}
+
+/* ==========================================================================
+   8. TOP NAV TABS: CYBERNETIC GLASS PILL BUTTONS & UTILITIES
+   Unified segmented control, sleek breadcrumbs, and aligned actions
+   ========================================================================== */
+.topbar nav {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 3px !important;
+  height: 34px !important;
+  background: rgba(3, 10, 24, 0.8) !important;
+  border: 1px solid rgba(0, 229, 255, 0.22) !important;
+  border-radius: 6px !important;
+  padding: 3px !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+}
+
+.nav-button {
+  background: transparent !important;
+  padding: 0 14px !important;
+  height: 28px !important;
+  line-height: 28px !important;
+  border-radius: 4px !important;
+  border: 1px solid transparent !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace !important;
+  font-size: 10.5px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.12em !important;
+  color: #94a3b8 !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  box-shadow: none !important;
+  outline: none !important;
+  user-select: none !important;
+}
+
+.nav-button span {
+  color: inherit !important;
+  margin-left: 0 !important;
+  letter-spacing: inherit !important;
+}
+
+/* Inactive Tabs Hover: text-white border-cyan-400/50 */
+.nav-button:not(.active):hover {
+  border-color: rgba(0, 229, 255, 0.35) !important;
+  color: #FFFFFF !important;
+  background: rgba(0, 229, 255, 0.12) !important;
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.2) !important;
+}
+
+/* Active Tab ("01 MISSIONS"): Intense neon cyan border */
+.nav-button.active {
+  border: 1px solid #00E5FF !important;
+  background: rgba(8, 47, 73, 0.85) !important;
+  color: #FFFFFF !important;
+  font-weight: 700 !important;
+  box-shadow: 0 0 14px rgba(0, 229, 255, 0.4), inset 0 0 8px rgba(0, 229, 255, 0.25) !important;
+  text-shadow: 0 0 8px rgba(0, 229, 255, 0.8) !important;
+}
+
+.nav-button.active:hover {
+  border-color: #38F8FF !important;
+  box-shadow: 0 0 18px rgba(0, 229, 255, 0.6), inset 0 0 10px rgba(0, 229, 255, 0.3) !important;
+}
+
+/* Header Right Actions Container */
+.header-right {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.aurora-return-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  height: 30px !important;
+  line-height: 30px !important;
+  background: rgba(0, 229, 255, 0.1) !important;
+  border: 1px solid rgba(0, 229, 255, 0.4) !important;
+  border-radius: 4px !important;
+  color: #00e5ff !important;
+  font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.12em !important;
+  padding: 0 12px !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  z-index: 100 !important;
+  pointer-events: auto !important;
+  text-decoration: none !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+  white-space: nowrap !important;
+}
+
+.aurora-return-btn:hover {
+  background: #00e5ff !important;
+  color: #020611 !important;
+  box-shadow: 0 0 16px rgba(0, 229, 255, 0.85) !important;
+  transform: translateX(-1px) !important;
+}
+
+.nasa-provenance-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  height: 30px !important;
+  line-height: 30px !important;
+  background: rgba(0, 50, 90, 0.55) !important;
+  border: 1px solid rgba(0, 229, 255, 0.35) !important;
+  border-radius: 4px !important;
+  color: #c7f4ff !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 9.5px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.08em !important;
+  padding: 0 10px !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+  white-space: nowrap !important;
+}
+
+.nasa-provenance-btn:hover {
+  background: rgba(0, 80, 140, 0.75) !important;
+  border-color: #00e5ff !important;
+  box-shadow: 0 0 14px rgba(0, 229, 255, 0.45) !important;
+  color: #ffffff !important;
+}
+
+.topbar .connection {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  height: 30px !important;
+  line-height: 30px !important;
+  padding: 0 10px !important;
+  margin: 0 !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 9px !important;
+  letter-spacing: 0.1em !important;
+  color: #7dd3fc !important;
+  background: rgba(4, 13, 30, 0.6) !important;
+  border: 1px solid rgba(0, 229, 255, 0.2) !important;
+  border-radius: 4px !important;
+  white-space: nowrap !important;
+}
+
+.bgm-selector-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  height: 30px !important;
+  line-height: 30px !important;
+  padding: 0 10px !important;
+  margin: 0 !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 9.5px !important;
+  font-weight: 600 !important;
+  color: #00e5ff !important;
+  background: rgba(4, 13, 30, 0.6) !important;
+  border: 1px solid rgba(0, 229, 255, 0.3) !important;
+  border-radius: 4px !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  white-space: nowrap !important;
+}
+
+.bgm-selector-btn:hover {
+  background: rgba(0, 229, 255, 0.18) !important;
+  border-color: #38f8ff !important;
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.4) !important;
+  color: #ffffff !important;
+}
+
+.icon-button {
+  width: 30px !important;
+  height: 30px !important;
+  border-radius: 4px !important;
+  background: rgba(4, 13, 30, 0.6) !important;
+  border: 1px solid rgba(0, 229, 255, 0.3) !important;
+  color: #00e5ff !important;
+  font-size: 14px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+
+.icon-button:hover {
+  background: rgba(0, 229, 255, 0.2) !important;
+  border-color: #00e5ff !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.4) !important;
+}
+
+/* 9. Top-Left Compact 3D Neon Badge */
+.aerospace-hud-crest,
+#home-button.aerospace-hud-crest {
+  position: relative;
+  pointer-events: auto;
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  min-height: 40px;
+  height: 44px;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  clip-path: none !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  cursor: pointer;
+  user-select: none;
+  text-align: left;
+}
+
+@media (min-width: 768px) {
+  .aerospace-hud-crest,
+  #home-button.aerospace-hud-crest {
+    height: 46px;
+    gap: 12px;
+  }
+}
+
+.aerospace-hud-crest:hover,
+#home-button.aerospace-hud-crest:hover {
+  transform: scale(1.02);
+  filter: brightness(1.12);
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+
+.cyber-emblem-bay {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 8px rgba(0, 229, 255, 0.5));
+  transition: filter 0.25s ease;
+}
+@media (min-width: 768px) {
+  .cyber-emblem-bay {
+    width: 38px;
+    height: 38px;
+  }
+}
+.cyber-emblem-bay:hover {
+  filter: drop-shadow(0 0 14px rgba(0, 229, 255, 0.85));
+}
+.cyber-emblem-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  shape-rendering: geometricPrecision;
+}
+
+.hud-brand-text-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.hud-titles-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5px;
+}
+
+.hud-main-title {
+  font-family: 'Rajdhani', sans-serif !important;
+  font-size: clamp(0.95rem, 1.22vw, 1.12rem) !important;
+  font-weight: 900 !important;
+  font-style: italic !important;
+  letter-spacing: 0.16em !important;
+  line-height: 1 !important;
+  text-transform: uppercase !important;
+  background: linear-gradient(180deg, 
+    #FFFFFF 0%, 
+    #F8FBFF 26%, 
+    #D5E3F0 48%, 
+    #8FAAC4 52%, 
+    #E2EEF9 78%, 
+    #FFFFFF 100%
+  ) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  filter: drop-shadow(0 0 4px rgba(0, 229, 255, 0.45))
+          drop-shadow(0 0 10px rgba(0, 102, 255, 0.25))
+          drop-shadow(0 1px 2px rgba(0, 0, 0, 0.95)) !important;
+  display: inline-block !important;
+}
+
+.hud-sub-title {
+  font-family: 'IBM Plex Mono', monospace !important;
+  font-size: 9px !important;
+  font-weight: 700 !important;
+  font-style: italic !important;
+  letter-spacing: 0.26em !important;
+  line-height: 1 !important;
+  margin-top: 1px !important;
+  color: #00E5FF !important;
+  text-transform: uppercase !important;
+  text-shadow: 0 0 6px #00E5FF, 0 0 12px rgba(0, 229, 255, 0.75), 0 0 20px rgba(0, 102, 255, 0.45) !important;
+  animation: aurora-neon-pulse 3s infinite ease-in-out !important;
+}
+
+@keyframes aurora-neon-pulse {
+  0%, 100% {
+    opacity: 0.85;
+    text-shadow: 0 0 6px #00E5FF, 0 0 12px rgba(0, 229, 255, 0.75), 0 0 20px rgba(0, 102, 255, 0.45);
+  }
+  50% {
+    opacity: 1;
+    text-shadow: 0 0 9px #00E5FF, 0 0 18px rgba(0, 229, 255, 0.95), 0 0 28px rgba(0, 102, 255, 0.65);
+  }
+}
+
+/* ==========================================================================
+   10. SPACECRAFT ASSEMBLY BAY: PROJECT AURORA DEEP-BLUE & CYAN HUD
+   ========================================================================== */
+
+/* Topbar Persistence: Ensure topbar is positioned strictly above modal */
+.topbar {
+  z-index: 300 !important;
+}
+
+/* Modal Layer: Deep Cosmic Dark Blue Palette (#020617 to #040d1e radial gradient) */
+.modal-layer[hidden],
+#modal-layer[hidden] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.modal-layer:not([hidden]) {
+  position: fixed !important;
+  inset: 0 !important;
+  top: 54px !important; /* Keep topbar with single Mission Forge logo & nav tabs visible */
+  height: calc(100vh - 54px) !important;
+  background: radial-gradient(circle at 50% 25%, #040d1e 0%, #020617 100%) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  z-index: 250 !important;
+  display: flex !important;
+  align-items: flex-start !important;
+  justify-content: center !important;
+  padding: 14px 24px 16px 24px !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+body:has(#modal-layer:not([hidden])) .menu-bottom {
+  display: none !important;
+}
+
+/* Unboxed, zero-border aerospace assembly dialog */
+.dialog.assembly-dialog {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  width: 96vw !important;
+  max-width: 1560px !important;
+  padding: 8px 4px 16px 4px !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+/* Remove duplicated second logo / category eyebrow beneath topbar */
+.assembly-dialog > .eyebrow {
+  display: none !important;
+}
+
+/* Main Heading: "BUILD THE ODYSSEY 07." */
+.assembly-dialog h2#dialog-title {
+  font-family: 'Rajdhani', 'Orbitron', sans-serif !important;
+  font-size: clamp(22px, 2.2vw, 28px) !important;
+  font-weight: 900 !important;
+  font-style: italic !important;
+  letter-spacing: 0.08em !important;
+  color: #FFFFFF !important;
+  text-shadow: 0 0 12px rgba(0, 229, 255, 0.35) !important;
+  margin: 0 0 4px 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+}
+
+/* Close button */
+.assembly-dialog .close-dialog {
+  position: absolute !important;
+  top: 0px !important;
+  right: 6px !important;
+  width: 30px !important;
+  height: 30px !important;
+  background: rgba(4, 13, 30, 0.8) !important;
+  border: 1px solid rgba(0, 229, 255, 0.35) !important;
+  border-radius: 4px !important;
+  color: #00e5ff !important;
+  font-size: 20px !important;
+  line-height: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5) !important;
+  z-index: 50 !important;
+}
+
+.assembly-dialog .close-dialog:hover {
+  background: #00e5ff !important;
+  color: #020611 !important;
+  box-shadow: 0 0 16px #00e5ff !important;
+}
+
+/* Topline Subheader: "ORBITAL ASSEMBLY BAY • VESSEL ODYSSEY 07" */
+.hangar-topline {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 0 0 8px 0 !important;
+  border-bottom: 1px solid rgba(0, 229, 255, 0.15) !important;
+  margin-bottom: 10px !important;
+}
+
+.hangar-topline .assembly-subheader,
+.hangar-topline > span:first-child {
+  font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace !important;
+  font-size: 11px !important;
+  font-style: italic !important;
+  color: #7dd3fc !important; /* pale cyan */
+  letter-spacing: 0.18em !important;
+  text-transform: uppercase !important;
+  text-shadow: 0 0 8px rgba(0, 229, 255, 0.3) !important;
+}
+
+.hangar-topline > span:last-child {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 10px !important;
+  color: rgba(148, 163, 184, 0.8) !important;
+  letter-spacing: 0.15em !important;
+}
+
+.hangar-topline button[data-hangar="engineering"] {
+  display: none !important;
+}
+
+/* Two-column Hangar Layout */
+.hangar-layout {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 350px !important;
+  gap: 16px !important;
+}
+
+.hangar-workbench {
+  min-width: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* ==========================================================================
+   3D VIEWPORT: EXPANDED, MAXIMIZED & UNBOXED
+   ========================================================================== */
+.hangar-stage {
+  height: clamp(165px, 20vh, 190px) !important;
+  position: relative !important;
+  background: transparent !important;
+  border: none !important; /* Remove heavy border enclosure */
+  box-shadow: none !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  flex: none !important;
+}
+
+.hangar-canvas {
+  position: absolute !important;
+  inset: 0 !important;
+}
+
+.hangar-canvas canvas {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  outline: none !important;
+}
+
+/* Hide duplicate "ODYSSEY / MODULAR EXPLORER" box */
+.hangar-overlay .eyebrow {
+  display: none !important;
+}
+
+.hangar-overlay {
+  position: absolute !important;
+  left: 14px !important;
+  top: 10px !important;
+  pointer-events: none !important;
+  z-index: 10 !important;
+  max-width: 65% !important;
+}
+
+.hangar-overlay p#assembly-message {
+  font-family: 'Space Grotesk', 'JetBrains Mono', sans-serif !important;
+  font-size: 11.5px !important;
+  color: #e2e8f0 !important; /* Slate-200 */
+  margin: 0 !important;
+  line-height: 1.4 !important;
+  background: rgba(4, 13, 30, 0.65) !important;
+  padding: 5px 12px !important;
+  border-radius: 4px !important;
+  border-left: 2px solid #00e5ff !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+/* Interactive Camera Tools: Frosted Glass Pills at Lower Edge of 3D Canvas */
+.hangar-tools {
+  position: absolute !important;
+  right: 10px !important;
+  bottom: 8px !important;
+  display: flex !important;
+  gap: 5px !important;
+  align-items: center !important;
+  z-index: 20 !important;
+}
+
+.hangar-tools button {
+  background: rgba(4, 13, 30, 0.75) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(0, 229, 255, 0.25) !important;
+  border-radius: 4px !important;
+  color: #7dd3fc !important;
+  font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace !important;
+  font-size: 9.5px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.08em !important;
+  padding: 5px 10px !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
+}
+
+.hangar-tools button:hover {
+  border-color: #00e5ff !important;
+  color: #ffffff !important;
+  background: rgba(8, 47, 73, 0.5) !important;
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.4) !important;
+}
+
+.hangar-tools button[aria-pressed="true"] {
+  background: rgba(8, 47, 73, 0.8) !important;
+  border-color: #00e5ff !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.5) !important;
+}
+
+/* Instructional Text: Pinned Neatly Below the Grid */
+.hangar-hint {
+  position: absolute !important;
+  bottom: 10px !important;
+  left: 12px !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 9px !important;
+  color: rgba(148, 163, 184, 0.75) !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  pointer-events: none !important;
+  z-index: 20 !important;
+}
+
+/* ==========================================================================
+   MIDDLE STEP CAROUSEL (01 • PROPULSION, 02 • POWER SYSTEM, ETC.)
+   3-item horizontal scroll carousel with < > arrows
+   ========================================================================== */
+.hangar-section-nav {
+  display: flex !important;
+  align-items: stretch !important;
+  gap: 7px !important;
+  margin: 6px 0 !important;
+  flex: none !important;
+  min-width: 0 !important;
+}
+
+.hangar-section-nav > button {
+  flex: none !important;
+  width: 28px !important;
+  min-height: 50px !important;
+  height: 50px !important;
+  background: rgba(4, 13, 30, 0.8) !important;
+  border: 1px solid rgba(0, 229, 255, 0.3) !important;
+  border-radius: 4px !important;
+  color: #00e5ff !important;
+  font-size: 16px !important;
+  line-height: 1 !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.2s ease !important;
+}
+
+.hangar-section-nav > button:hover {
+  background: rgba(8, 47, 73, 0.6) !important;
+  border-color: #00e5ff !important;
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.4) !important;
+}
+
+/* ==========================================================================
+   10B. ULTRA-PREMIUM SCI-FI HUD GLASS DESIGN: MIDDLE STEPS & BOTTOM CARDS
+   ========================================================================== */
+
+/* 1. MIDDLE CAROUSEL: 01-09 MODULAR SUBSYSTEM CARDS */
+.hangar-slots {
+  position: relative !important;
+  display: flex !important;
+  gap: 8px !important; /* Soft visual separation */
+  min-width: 0 !important;
+  flex: 1 !important;
+  margin: 0 !important;
+  padding: 2px !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  scrollbar-width: none !important;
+  scroll-behavior: smooth !important;
+}
+
+.hangar-slots::-webkit-scrollbar {
+  display: none !important;
+}
+
+/* 3D Glassmorphic Depth & Chamfered Cybernetic Corners */
+.hangar-slots button {
+  flex: 0 0 calc((100% - 16px) / 3) !important;
+  min-width: 0 !important;
+  height: 50px !important;
+  min-height: 50px !important;
+  position: relative !important;
+  background: rgba(4, 13, 30, 0.82) !important; /* bg-[#040d1e]/80 */
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border-radius: 6px !important;
+  /* Anodized space-blue and dark steel metallic border */
+  border: 1px solid rgba(30, 58, 138, 0.45) !important; /* #1e3a8a/40 subtle inactive */
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08), inset 0 0 14px rgba(4, 13, 30, 0.6) !important;
+  /* Chamfered (angled cybernetic) corners */
+  clip-path: polygon(0 6px, 6px 0, calc(100% - 6px) 0, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0 calc(100% - 6px)) !important;
+  padding: 6px 10px !important;
+  text-align: left !important;
+  color: #cbd5e1 !important;
+  cursor: pointer !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+}
+
+/* Inactive Hover: Energetic thin ice-blue outline */
+.hangar-slots button:hover:not([aria-pressed="true"]) {
+  border-color: rgba(56, 189, 248, 0.75) !important;
+  background: rgba(8, 47, 73, 0.55) !important;
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.35), inset 0 0 10px rgba(56, 189, 248, 0.15) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* ACTIVE / SELECTED CARD: Double-layered electric cyan (#00e5ff) pulsing neon border */
+.hangar-slots button[aria-pressed="true"] {
+  border: 1.5px solid #00E5FF !important; /* border-[#00e5ff] */
+  background: radial-gradient(circle at 50% 0%, rgba(8, 47, 73, 0.9) 0%, rgba(4, 13, 30, 0.95) 85%) !important;
+  box-shadow: 0 0 18px rgba(0, 229, 255, 0.45), inset 0 0 12px rgba(0, 229, 255, 0.2) !important;
+  animation: cyberActivePulse 3s ease-in-out infinite alternate !important;
+}
+
+@keyframes cyberActivePulse {
+  0% {
+    box-shadow: 0 0 14px rgba(0, 229, 255, 0.4), inset 0 0 8px rgba(0, 229, 255, 0.15);
+    border-color: #00e5ff;
+  }
+  100% {
+    box-shadow: 0 0 22px rgba(0, 229, 255, 0.65), inset 0 0 14px rgba(0, 229, 255, 0.3);
+    border-color: #38bdf8;
+  }
+}
+
+.slot-header-row {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  min-width: 0 !important;
+}
+
+.slot-header-row .slot-pill {
+  flex: none !important;
+  margin-bottom: 0 !important;
+}
+
+/* Category Numbers: Glowing neon border capsule / pill box */
+.hangar-slots button > span,
+.hangar-slots button .slot-pill,
+.cyber-num-pill {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: rgba(8, 47, 73, 0.6) !important;
+  border: 1px solid rgba(0, 229, 255, 0.5) !important;
+  color: #00E5FF !important;
+  font-size: 8.5px !important;
+  font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace !important;
+  font-weight: 700 !important;
+  padding: 0 5px !important;
+  border-radius: 3px !important;
+  box-shadow: 0 0 6px rgba(0, 229, 255, 0.3) !important;
+  letter-spacing: 0.06em !important;
+  margin-bottom: 0 !important;
+  width: fit-content !important;
+}
+
+.hangar-slots button[aria-pressed="true"] > span,
+.hangar-slots button[aria-pressed="true"] .slot-pill {
+  background: rgba(0, 229, 255, 0.2) !important;
+  border-color: #00e5ff !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.6) !important;
+}
+
+/* Card Titles */
+.hangar-slots button b,
+.hangar-slots button .slot-title {
+  display: block !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  font-style: normal !important;
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  margin: 0 !important;
+  line-height: 1.1 !important;
+  color: #ffffff !important;
+  background: none !important;
+  -webkit-text-fill-color: initial !important;
+  filter: drop-shadow(0 0 6px rgba(0, 229, 255, 0.35)) !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.slot-sub-row {
+  display: flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  margin-top: 1px !important;
+}
+
+.slot-slash {
+  color: rgba(0, 229, 255, 0.5) !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 9px !important;
+  font-weight: 400 !important;
+}
+
+.hangar-slots button small,
+.hangar-slots button .slot-sub {
+  display: inline-block !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 8.5px !important;
+  color: #7dd3fc !important;
+  letter-spacing: 0.04em !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  line-height: 1.2 !important;
+}
+
+/* Upper-right Corner Indicator: Glowing cyan cyber-indicator dot or checklist tick */
+.hangar-slots button::after {
+  content: "•" !important;
+  position: absolute !important;
+  right: 8px !important;
+  top: 6px !important;
+  color: rgba(0, 229, 255, 0.5) !important;
+  font-size: 12px !important;
+  line-height: 1 !important;
+  transition: all 0.2s ease !important;
+}
+
+.hangar-slots button:hover::after {
+  color: #00e5ff !important;
+  text-shadow: 0 0 8px #00e5ff !important;
+}
+
+.hangar-slots button[aria-pressed="true"]::after {
+  color: #00e5ff !important;
+  text-shadow: 0 0 10px #00e5ff, 0 0 20px #00e5ff !important;
+}
+
+.hangar-slots .socket-installed::after {
+  content: "✓" !important;
+  color: #4ade80 !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  filter: drop-shadow(0 0 8px rgba(74, 222, 128, 0.9)) !important;
+}
+
+/* 2. HORIZONTAL SUB-HEADER */
+.hangar-catalog {
+  position: relative !important;
+  margin-top: 6px !important;
+  flex: none !important;
+}
+
+.catalog-heading {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: 10px !important;
+  margin-bottom: 4px !important;
+  padding: 0 2px !important;
+}
+
+.catalog-heading h3#catalog-title {
+  margin: 0 !important;
+  font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  color: #7dd3fc !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  text-shadow: 0 0 8px rgba(0, 229, 255, 0.3) !important;
+}
+
+.aurora-auto-btn {
+  background: rgba(0, 229, 255, 0.15) !important;
+  border: 1px solid #00e5ff !important;
+  color: #00e5ff !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.12em !important;
+  padding: 5px 12px !important;
+  border-radius: 4px !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.25) !important;
+}
+
+.aurora-auto-btn:hover {
+  background: #00e5ff !important;
+  color: #020611 !important;
+  box-shadow: 0 0 20px #00e5ff !important;
+}
+
+.catalog-heading button[data-hangar="remove"] {
+  background: rgba(4, 13, 30, 0.75) !important;
+  border: 1px solid rgba(0, 229, 255, 0.3) !important;
+  border-radius: 4px !important;
+  color: #cbd5e1 !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 9.5px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.1em !important;
+  padding: 5px 10px !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+
+.catalog-heading button[data-hangar="remove"]:hover {
+  border-color: #ef4444 !important;
+  color: #ef4444 !important;
+}
+
+/* 3. BOTTOM EQUIPMENT CARDS (BALANCED / ENDURANCE / PERFORMANCE / MODULE SUB-STEPS) */
+.part-previews {
+  position: absolute !important;
+  top: 14px !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 50px !important;
+  pointer-events: none !important;
+  z-index: 5 !important;
+}
+
+.part-previews canvas {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.hangar-options {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 10px !important;
+  margin-top: 2px !important;
+}
+
+/* High-fidelity 3D Glassmorphic HUD Equipment Card */
+.hangar-options button {
+  position: relative !important;
+  min-width: 0 !important;
+  min-height: 148px !important;
+  max-height: 156px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  padding: 52px 10px 6px 10px !important;
+  background: rgba(4, 13, 30, 0.84) !important; /* bg-[#040d1e]/80 */
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border-radius: 6px !important;
+  /* Anodized space-blue and dark steel metallic border */
+  border: 1px solid rgba(30, 58, 138, 0.45) !important; /* #1e3a8a/40 subtle inactive */
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08), inset 0 0 16px rgba(4, 13, 30, 0.7) !important;
+  /* Chamfered (angled cybernetic) corners */
+  clip-path: polygon(0 8px, 8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px)) !important;
+  text-align: left !important;
+  color: #cbd5e1 !important;
+  cursor: pointer !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Inactive Hover: Energetic thin ice-blue outline */
+.hangar-options button:hover:not([aria-pressed="true"]) {
+  border-color: rgba(56, 189, 248, 0.75) !important;
+  background: rgba(8, 47, 73, 0.55) !important;
+  box-shadow: 0 0 14px rgba(56, 189, 248, 0.35), inset 0 0 10px rgba(56, 189, 248, 0.15) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* ACTIVE / SELECTED CARD: Double-layered electric cyan (#00e5ff) pulsing neon border */
+.hangar-options button[aria-pressed="true"] {
+  border: 1.5px solid #00E5FF !important; /* border-[#00e5ff] */
+  background: radial-gradient(circle at 50% 0%, rgba(8, 47, 73, 0.92) 0%, rgba(4, 13, 30, 0.96) 85%) !important;
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.5), inset 0 0 14px rgba(0, 229, 255, 0.22) !important;
+  animation: cyberActivePulse 3s ease-in-out infinite alternate !important;
+}
+
+/* Upper-Right Corner Indicator Tick on Option Card */
+.hangar-options button::after {
+  content: "◈" !important;
+  position: absolute !important;
+  top: 7px !important;
+  right: 10px !important;
+  color: rgba(0, 229, 255, 0.45) !important;
+  font-size: 10px !important;
+  line-height: 1 !important;
+  z-index: 6 !important;
+  transition: all 0.2s ease !important;
+}
+
+.hangar-options button:hover::after {
+  color: #00e5ff !important;
+  text-shadow: 0 0 8px #00e5ff !important;
+}
+
+.hangar-options button[aria-pressed="true"]::after {
+  content: "✓" !important;
+  color: #00e5ff !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  filter: drop-shadow(0 0 8px #00e5ff) !important;
+}
+
+/* Glowing Cyan Backdrop Pedestal & Halo */
+.part-preview-stage {
+  position: absolute !important;
+  top: 4px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 110px !important;
+  height: 46px !important;
+  pointer-events: none !important;
+  z-index: 2 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.pedestal-halo {
+  position: absolute !important;
+  inset: 0 !important;
+  border-radius: 50% !important;
+  background: radial-gradient(ellipse at 50% 55%, rgba(0, 229, 255, 0.24) 0%, rgba(0, 229, 255, 0.09) 45%, transparent 75%) !important;
+  filter: blur(6px) !important;
+  transition: all 0.3s ease !important;
+}
+
+.pedestal-disc {
+  position: absolute !important;
+  bottom: 4px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 68px !important;
+  height: 14px !important;
+  border-radius: 50% !important;
+  background: radial-gradient(ellipse at 50% 50%, rgba(0, 229, 255, 0.35) 0%, rgba(8, 47, 73, 0.5) 60%, transparent 85%) !important;
+  border: 1px solid rgba(0, 229, 255, 0.45) !important;
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.3), inset 0 0 6px rgba(0, 229, 255, 0.2) !important;
+  transition: all 0.3s ease !important;
+}
+
+.pedestal-ring {
+  position: absolute !important;
+  bottom: 2px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: 86px !important;
+  height: 18px !important;
+  border-radius: 50% !important;
+  border: 0.8px dashed rgba(0, 229, 255, 0.28) !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Active Card Pedestal Boost */
+.hangar-options button[aria-pressed="true"] .pedestal-halo {
+  background: radial-gradient(ellipse at 50% 55%, rgba(0, 229, 255, 0.42) 0%, rgba(0, 229, 255, 0.16) 48%, transparent 80%) !important;
+  filter: blur(8px) !important;
+}
+
+.hangar-options button[aria-pressed="true"] .pedestal-disc {
+  border-color: #00e5ff !important;
+  box-shadow: 0 0 18px rgba(0, 229, 255, 0.6), inset 0 0 10px rgba(0, 229, 255, 0.35) !important;
+}
+
+.hangar-options button[aria-pressed="true"] .pedestal-ring {
+  border-color: rgba(0, 229, 255, 0.6) !important;
+}
+
+/* Header Category / Number inside Option Card */
+.part-number {
+  position: absolute !important;
+  top: 7px !important;
+  left: 8px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  z-index: 6 !important;
+}
+
+.part-tag-text,
+.part-tag-badge {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 8px !important;
+  font-weight: 700 !important;
+  color: #7dd3fc !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+}
+
+/* Compact Card Titles */
+.hangar-options strong,
+.hangar-options strong.part-title {
+  display: block !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  font-style: normal !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+  line-height: 1.15 !important;
+  letter-spacing: 0.03em !important;
+  text-transform: none !important;
+  margin: 0 0 1px 0 !important;
+  color: #FFFFFF !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  text-shadow: 0 0 8px rgba(0, 229, 255, 0.35) !important;
+}
+
+/* Metadata Details: "6 t structure • $55M" */
+.part-specs-row,
+.hangar-options small {
+  display: block !important;
+  font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace !important;
+  font-size: 8.5px !important;
+  font-weight: 500 !important;
+  color: #7dd3fc !important; /* Sharp, pale cyan */
+  letter-spacing: 0.04em !important;
+  margin: 0 0 2px 0 !important;
+}
+
+/* Micro-styled compact descriptions */
+.part-description {
+  font-family: 'Space Grotesk', 'Inter', sans-serif !important;
+  font-size: 9px !important;
+  line-height: 1.25 !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  color: #cbd5e1 !important; /* slate-300 */
+  min-height: 22px !important;
+  max-height: 24px !important;
+  margin: 0 0 2px 0 !important;
+}
+
+/* Telemetry Specs Badge */
+.component-specs-label {
+  display: flex !important;
+  align-items: center !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 8px !important;
+  font-weight: 600 !important;
+  color: #38bdf8 !important;
+  letter-spacing: 0.04em !important;
+  padding: 2.5px 6px !important;
+  background: rgba(0, 229, 255, 0.06) !important;
+  border-left: 2px solid #00e5ff !important;
+  border-top: none !important;
+  border-right: none !important;
+  border-bottom: none !important;
+  border-radius: 0 3px 3px 0 !important;
+  margin: 2px 0 3px 0 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+/* Bottom Action Badges (mass, cost, power) pinned neatly */
+.part-bottom-icons {
+  display: flex !important;
+  align-items: center !important;
+  gap: 5px !important;
+  margin-top: auto !important;
+  padding-top: 3px !important;
+  border-top: 1px solid rgba(0, 229, 255, 0.14) !important;
+}
+
+.part-icon-item {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 3px !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 8px !important;
+  font-weight: 700 !important;
+  color: #cbd5e1 !important;
+  background: rgba(8, 47, 73, 0.5) !important;
+  padding: 1.5px 5px !important;
+  border-radius: 3px !important;
+  border: 1px solid rgba(0, 229, 255, 0.22) !important;
+}
+
+.part-icon-item .meta-icon {
+  width: 9.5px !important;
+  height: 9.5px !important;
+  color: #38bdf8 !important;
+  flex: none !important;
+}
+
+.part-icon-item .spark-icon {
+  color: #00e5ff !important;
+  flex: none !important;
+}
+
+.part-icon-item .currency-tag {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 10px !important;
+  height: 10px !important;
+  border-radius: 1.5px !important;
+  background: rgba(0, 229, 255, 0.2) !important;
+  border: 0.8px solid rgba(0, 229, 255, 0.6) !important;
+  color: #00e5ff !important;
+  font-size: 7px !important;
+  font-weight: 800 !important;
+  flex: none !important;
+}
+
+.part-icon-item .icon-label {
+  color: #e0f2fe !important;
+  font-size: 8px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.02em !important;
+  white-space: nowrap !important;
+}
+
+.hangar-options .component-specs,
+.hangar-options .part-comparison,
+.hangar-options .part-validity,
+.hangar-options button > b,
+.hangar-options .install-action-btn {
+  display: none !important;
+}
+
+.engineering-lesson {
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-size: 10.5px !important;
+  line-height: 1.45 !important;
+  color: #cbd5e1 !important;
+  background: rgba(4, 13, 30, 0.65) !important;
+  backdrop-filter: blur(8px) !important;
+  border-left: 2.5px solid #00e5ff !important;
+  border-radius: 0 4px 4px 0 !important;
+  padding: 5px 10px !important;
+  margin: 6px 0 0 0 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* ==========================================================================
+   FLIGHT ENGINEERING COLUMN (RIGHT SIDEBAR)
+   Single borderless glass pane
+   ========================================================================== */
+.hangar-readiness {
+  background: rgba(4, 13, 30, 0.6) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(0, 229, 255, 0.22) !important;
+  border-radius: 8px !important;
+  padding: 14px 16px !important;
+  box-shadow: 0 0 25px rgba(0, 180, 255, 0.06), 0 8px 32px rgba(0, 0, 0, 0.6) !important;
+  max-height: calc(100vh - 90px) !important;
+  overflow-y: auto !important;
+  scrollbar-width: thin !important;
+}
+
+/* Header row with hamburger button */
+.readiness-header-row {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: 8px !important;
+}
+
+.hangar-readiness .eyebrow {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 9.5px !important;
+  font-weight: 700 !important;
+  color: #00E5FF !important;
+  letter-spacing: 0.22em !important;
+  display: block !important;
+}
+
+.hangar-readiness h3 {
+  font-family: 'Rajdhani', sans-serif !important;
+  font-size: 19px !important;
+  font-weight: 800 !important;
+  color: #FFFFFF !important;
+  letter-spacing: 0.08em !important;
+  margin: 3px 0 2px 0 !important;
+  text-shadow: 0 0 10px rgba(0, 229, 255, 0.3) !important;
+}
+
+/* 3-bar cyber hamburger toggle icon button */
+.cyber-hamburger-btn {
+  background: rgba(4, 13, 30, 0.85) !important;
+  border: 1px solid rgba(0, 229, 255, 0.35) !important;
+  border-radius: 6px !important;
+  width: 30px !important;
+  height: 30px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  padding: 0 !important;
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.15) !important;
+  flex: none !important;
+}
+
+.cyber-hamburger-btn:hover {
+  border-color: #00e5ff !important;
+  background: rgba(8, 47, 73, 0.8) !important;
+  box-shadow: 0 0 14px rgba(0, 229, 255, 0.45) !important;
+}
+
+.cyber-hamburger {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 3.5px !important;
+  width: 14px !important;
+  pointer-events: none !important;
+}
+
+.cyber-hamburger i {
+  display: block !important;
+  width: 100% !important;
+  height: 2px !important;
+  background: #00e5ff !important;
+  border-radius: 1px !important;
+  box-shadow: 0 0 6px rgba(0, 229, 255, 0.6) !important;
+  transition: all 0.2s ease !important;
+}
+
+.cyber-hamburger-btn:hover .cyber-hamburger i {
+  background: #ffffff !important;
+  box-shadow: 0 0 8px #00e5ff !important;
+}
+
+.hangar-subtitle {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 9.5px !important;
+  color: #7dd3fc !important;
+  margin-bottom: 12px !important;
+}
+
+/* ==========================================================================
+   4 INDIVIDUAL FLOATING DARK-BLUE GLASS CARDS:
+   Card 1: MASS & BUDGET
+   Card 2: PROPULSION DYNAMICS
+   Card 3: POWER & THERMAL
+   Card 4: SYSTEMS VERIFICATION
+   bg-[#040d1e]/80, border border-cyan-500/25, rounded-lg p-3
+   ========================================================================== */
+.readiness-cards-container {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 9px !important;
+  margin-bottom: 10px !important;
+}
+
+.readiness-card {
+  background: rgba(4, 13, 30, 0.8) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  border: 1px solid rgba(0, 229, 255, 0.25) !important;
+  border-radius: 8px !important; /* rounded-lg */
+  padding: 10px 12px !important; /* p-3 */
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 229, 255, 0.05) !important;
+  transition: all 0.25s ease !important;
+}
+
+.readiness-card:hover {
+  border-color: rgba(0, 229, 255, 0.45) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), 0 0 18px rgba(0, 229, 255, 0.12) !important;
+}
+
+.readiness-card-header {
+  display: flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  margin-bottom: 7px !important;
+  padding-bottom: 5px !important;
+  border-bottom: 1px solid rgba(0, 229, 255, 0.12) !important;
+}
+
+.readiness-card-tag {
+  background: rgba(8, 47, 73, 0.7) !important;
+  border: 1px solid rgba(0, 229, 255, 0.45) !important;
+  color: #00e5ff !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 8.5px !important;
+  font-weight: 800 !important;
+  padding: 1px 5px !important;
+  border-radius: 3px !important;
+  letter-spacing: 0.05em !important;
+}
+
+.readiness-card-tag.verified {
+  background: rgba(5, 46, 22, 0.8) !important;
+  border-color: #4ade80 !important;
+  color: #4ade80 !important;
+  box-shadow: 0 0 8px rgba(74, 222, 128, 0.4) !important;
+}
+
+.readiness-card-title {
+  margin: 0 !important;
+  font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace !important;
+  font-size: 10.5px !important;
+  font-weight: 800 !important;
+  color: #ffffff !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  text-shadow: 0 0 8px rgba(0, 229, 255, 0.3) !important;
+}
+
+.readiness-card-body {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 5px !important;
+}
+
+.readiness-item {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: baseline !important;
+  gap: 8px !important;
+  padding: 2px 0 !important;
+}
+
+.readiness-item-label {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 8.5px !important;
+  font-weight: 600 !important;
+  color: #7dd3fc !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  flex: 0 0 auto !important;
+  max-width: 140px !important;
+}
+
+.readiness-item-val {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  letter-spacing: 0.02em !important;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.25) !important;
+  white-space: normal !important;
+  text-align: right !important;
+}
+
+.readiness-item.invalid .readiness-item-val {
+  color: #f87171 !important;
+  text-shadow: 0 0 8px rgba(248, 113, 113, 0.5) !important;
+}
+
+/* NASA Mission Architecture Card */
+.nasa-architecture-card {
+  margin-bottom: 9px !important;
+  border-color: rgba(0, 229, 255, 0.35) !important;
+}
+
+.readiness-card-tag.arch-tag {
+  background: rgba(14, 116, 144, 0.7) !important;
+  border-color: #00e5ff !important;
+  color: #ffffff !important;
+  font-weight: 800 !important;
+  box-shadow: 0 0 6px rgba(0, 229, 255, 0.4) !important;
+}
+
+.arch-control-group {
+  margin-bottom: 6px !important;
+}
+
+.arch-control-group:last-child {
+  margin-bottom: 0 !important;
+}
+
+.arch-hint {
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-size: 8.5px !important;
+  color: #94a3b8 !important;
+  line-height: 1.35 !important;
+  margin: 3px 0 0 0 !important;
+}
+
+/* Card 4: Systems Verification */
+.systems-verification-card {
+  border-color: rgba(0, 229, 255, 0.3) !important;
+}
+
+.systems-count-text {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 10.5px !important;
+  font-weight: 800 !important;
+  color: #00e5ff !important;
+  display: block !important;
+  letter-spacing: 0.08em !important;
+  text-shadow: 0 0 8px rgba(0, 229, 255, 0.4) !important;
+  margin-bottom: 4px !important;
+}
+
+.systems-status-copy {
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-size: 9.5px !important;
+  line-height: 1.45 !important;
+  color: #cbd5e1 !important;
+  margin: 0 !important;
+}
+
+.build-flexibility label,
+.hangar-readiness label {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 9px !important;
+  font-weight: 700 !important;
+  color: #7dd3fc !important;
+  letter-spacing: 0.16em !important;
+  text-transform: uppercase !important;
+  margin-bottom: 4px !important;
+  display: block !important;
+}
+
+.build-flexibility select,
+.hangar-readiness select {
+  width: 100% !important;
+  background: rgba(8, 47, 73, 0.5) !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(0, 229, 255, 0.3) !important;
+  border-radius: 4px !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 10px !important;
+  padding: 5px 8px !important;
+  outline: none !important;
+}
+
+.build-flexibility p {
+  font-size: 10px !important;
+  color: #94a3b8 !important;
+  line-height: 1.4 !important;
+  margin: 5px 0 !important;
+}
+
+.quick-components {
+  margin: 8px 0 !important;
+  border: 1px solid rgba(0, 229, 255, 0.18) !important;
+  border-radius: 4px !important;
+  padding: 6px 10px !important;
+  background: rgba(4, 13, 30, 0.5) !important;
+}
+
+.quick-components summary {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 9px !important;
+  color: #7dd3fc !important;
+  cursor: pointer !important;
+  letter-spacing: 0.12em !important;
+  padding: 2px 0 !important;
+}
+
+/* Flight Engineering Stats (fallback / more readouts) */
+.hangar-stat {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  gap: 8px !important;
+  border-bottom: 1px solid rgba(0, 229, 255, 0.12) !important;
+  padding: 6px 0 !important;
+}
+
+.hangar-stat span {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 9px !important;
+  font-weight: 600 !important;
+  color: #7dd3fc !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  max-width: 130px !important;
+}
+
+.hangar-stat b {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  color: #FFFFFF !important;
+  letter-spacing: 0.04em !important;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.3) !important;
+  white-space: nowrap !important;
+}
+
+.hangar-stat.invalid b {
+  color: #f87171 !important;
+}
+
+/* Assembly Checklist */
+.assembly-checklist {
+  display: none !important;
+}
+
+/* Science assumptions disclosure */
+.hangar-science summary {
+  cursor: pointer !important;
+  color: #7dd3fc !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 9px !important;
+  padding: 4px 0 !important;
+}
+
+.hangar-science p {
+  font-size: 9.5px !important;
+  color: #94a3b8 !important;
+  line-height: 1.45 !important;
+}
+
+/* ==========================================================================
+   SIGNATURE CTA: "COMMIT & LAUNCH ↗"
+   Project Aurora's signature electric neon cyan button
+   ========================================================================== */
+.hangar-footer {
+  margin-top: 8px !important;
+  padding-top: 8px !important;
+  border-top: 1px solid rgba(0, 229, 255, 0.15) !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+}
+
+#assembly-readiness {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 10px !important;
+  color: #7dd3fc !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+}
+
+#launch-button.primary-button {
+  background: linear-gradient(135deg, #00f0ff 0%, #00b4d8 100%) !important;
+  border: 1px solid #38f8ff !important;
+  border-radius: 6px !important;
+  color: #020611 !important;
+  -webkit-text-fill-color: #020611 !important;
+  font-family: 'Rajdhani', 'JetBrains Mono', sans-serif !important;
+  font-weight: 900 !important;
+  font-size: 13px !important;
+  letter-spacing: 0.18em !important;
+  text-transform: uppercase !important;
+  padding: 10px 22px !important;
+  min-height: 42px !important;
+  box-shadow: 0 0 25px rgba(0, 229, 255, 0.7), inset 0 1px 2px rgba(255, 255, 255, 0.4), 0 8px 24px rgba(0, 0, 0, 0.8) !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+#launch-button.primary-button span,
+#launch-button.primary-button b {
+  color: #020611 !important;
+  -webkit-text-fill-color: #020611 !important;
+  font-weight: 900 !important;
+}
+
+#launch-button.primary-button b {
+  font-size: 16px !important;
+  transition: transform 0.25s ease !important;
+}
+
+#launch-button.primary-button:hover:not(:disabled) {
+  background: linear-gradient(135deg, #38f8ff 0%, #00d4ff 100%) !important;
+  border-color: #ffffff !important;
+  box-shadow: 0 0 40px rgba(0, 229, 255, 0.95), 0 0 20px rgba(255, 255, 255, 0.7), inset 0 1px 3px rgba(255, 255, 255, 0.6) !important;
+  transform: translateY(-2px) scale(1.04) !important;
+}
+
+#launch-button.primary-button:hover:not(:disabled) b {
+  transform: translate(2px, -2px) !important;
+}
+
+#launch-button.primary-button:disabled {
+  opacity: 0.35 !important;
+  cursor: not-allowed !important;
+  filter: grayscale(0.7) !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+
+/* ==========================================================================
+   MISSION END / DEBRIEF & SCORE HUD UPGRADE (PROJECT AURORA STANDARDS)
+   High-contrast cyber glass debrief cards, glowing electric cyan score,
+   futuristic rank badges, and mission record display.
+   ========================================================================== */
+
+/* 1. Modal Layer Backdrop for End-Game Dialogs */
+.modal-layer {
+  background: radial-gradient(circle at center, rgba(4, 13, 30, 0.94) 0%, rgba(2, 6, 23, 0.98) 100%) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+}
+
+/* 2. Cybernetic Glass Dialog Container (Unbounded for 3D Carousel) */
+.dialog.complete-dialog,
+.dialog.failed-dialog {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  max-width: 1420px !important;
+  width: 96vw !important;
+  max-height: 96vh !important;
+  overflow: visible !important;
+  animation: dialog-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+/* Modal Inner Container */
+.debrief-modal-wrapper {
+  width: min(1380px, 96vw);
+  height: min(800px, 94vh);
+  background: linear-gradient(135deg, rgba(4, 13, 30, 0.95), rgba(2, 6, 23, 0.98));
+  border: 1px solid rgba(0, 229, 255, 0.35);
+  border-radius: 20px;
+  box-shadow: 0 30px 100px rgba(0, 0, 0, 0.9), 0 0 50px rgba(0, 229, 255, 0.18);
+  display: flex;
+  flex-direction: column;
+  padding: 24px 36px;
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.debrief-modal-wrapper.failed-debrief {
+  border-color: rgba(248, 113, 113, 0.45);
+  box-shadow: 0 30px 100px rgba(0, 0, 0, 0.9), 0 0 50px rgba(239, 68, 68, 0.22);
+}
+
+.debrief-modal-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #00e5ff 35%, #00e5ff 65%, transparent);
+  box-shadow: 0 0 15px #00e5ff;
+  pointer-events: none;
+}
+
+.debrief-modal-wrapper.failed-debrief::before {
+  background: linear-gradient(90deg, transparent, #f87171 35%, #f87171 65%, transparent);
+  box-shadow: 0 0 15px #f87171;
+}
+
+/* Top Score Banner */
+.debrief-top-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 229, 255, 0.2);
+  padding-bottom: 16px;
+  margin-bottom: 8px;
+}
+
+.failed-debrief .debrief-top-banner {
+  border-bottom-color: rgba(248, 113, 113, 0.25);
+}
+
+.banner-left .banner-kicker {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: #7dd3fc;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.failed-debrief .banner-left .banner-kicker {
+  color: #fca5a5;
+}
+
+.banner-left h2 {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.05em;
+  margin: 0;
+  text-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
+}
+
+.failed-debrief .banner-left h2 {
+  color: #fee2e2;
+  text-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+}
+
+.banner-score-box {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  background: rgba(4, 13, 30, 0.8);
+  border: 1px solid rgba(0, 229, 255, 0.35);
+  border-radius: 12px;
+  padding: 10px 24px;
+  box-shadow: inset 0 0 20px rgba(0, 229, 255, 0.1), 0 0 25px rgba(0, 229, 255, 0.25);
+}
+
+.failed-debrief .banner-score-box {
+  border-color: rgba(248, 113, 113, 0.35);
+  box-shadow: inset 0 0 20px rgba(239, 68, 68, 0.1), 0 0 25px rgba(239, 68, 68, 0.25);
+}
+
+.score-metric { text-align: right; }
+.score-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  color: #7dd3fc;
+  display: block;
+  margin-bottom: 2px;
+}
+.failed-debrief .score-label { color: #fca5a5; }
+
+.score-num {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: #00e5ff;
+  line-height: 1;
+  text-shadow: 0 0 20px rgba(0, 229, 255, 0.85);
+  display: block;
+}
+
+.failed-debrief .score-num {
+  color: #fca5a5;
+  text-shadow: 0 0 20px rgba(239, 68, 68, 0.85);
+}
+
+.score-num small {
+  font-size: 14px;
+  font-family: 'IBM Plex Mono', monospace;
+  color: #7dd3fc;
+  letter-spacing: 0.1em;
+  margin-left: 4px;
+}
+.failed-debrief .score-num small { color: #fca5a5; }
+
+.grade-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-left: 1px solid rgba(0, 229, 255, 0.25);
+  padding-left: 20px;
+}
+.failed-debrief .grade-pill {
+  border-left-color: rgba(248, 113, 113, 0.25);
+}
+
+.grade-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  color: #7dd3fc;
+  margin-bottom: 2px;
+}
+.failed-debrief .grade-label { color: #fca5a5; }
+
+.grade-badge {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 38px;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1;
+  text-shadow: 0 0 20px #00e5ff, 0 0 40px #00e5ff;
+}
+
+.grade-badge.failure {
+  color: #f87171;
+  text-shadow: 0 0 20px #f87171, 0 0 40px #ef4444;
+}
+
+/* 3. 3D Cylindrical Ring Carousel Stage */
+.debrief-carousel-viewport {
+  perspective: 1200px;
+  perspective-origin: 50% 50%;
+  width: 100%;
+  height: 530px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: visible;
+  user-select: none;
+  margin: auto 0;
+}
+
+.debrief-carousel-ring {
+  position: relative;
+  width: 320px;
+  height: 480px;
+  transform-style: preserve-3d;
+}
+
+/* Navigation Chevrons */
+.carousel-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 52px;
+  height: 52px;
+  background: rgba(4, 13, 30, 0.75);
+  border: 1px solid rgba(0, 229, 255, 0.35);
+  border-radius: 50%;
+  color: #00e5ff;
+  font-size: 26px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  z-index: 50;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.7), inset 0 0 10px rgba(0, 229, 255, 0.15);
+  transition: all 0.25s ease;
+}
+
+.failed-debrief .carousel-nav-btn {
+  border-color: rgba(248, 113, 113, 0.35);
+  color: #fca5a5;
+}
+
+.carousel-nav-btn:hover {
+  background: rgba(0, 229, 255, 0.15);
+  border-color: #00e5ff;
+  color: #ffffff;
+  box-shadow: 0 0 30px rgba(0, 229, 255, 0.6);
+  transform: translateY(-50%) scale(1.08);
+}
+
+.failed-debrief .carousel-nav-btn:hover {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: #f87171;
+  color: #ffffff;
+  box-shadow: 0 0 30px rgba(239, 68, 68, 0.6);
+}
+
+.carousel-nav-btn.prev { left: 40px; }
+.carousel-nav-btn.next { right: 40px; }
+
+/* Debrief Card Styling */
+.carousel-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 320px;
+  height: 480px;
+  border-radius: 18px;
+  background: rgba(4, 13, 30, 0.88);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(0, 229, 255, 0.22);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8), inset 0 0 15px rgba(0, 229, 255, 0.08);
+  padding: 24px 22px;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  will-change: transform, opacity;
+}
+
+.carousel-card.active {
+  opacity: 1 !important;
+  border-color: #00e5ff !important;
+  box-shadow: 0 0 35px rgba(0, 229, 255, 0.45), 0 20px 50px rgba(0, 0, 0, 0.9), inset 0 0 20px rgba(0, 229, 255, 0.15) !important;
+}
+
+.failed-debrief .carousel-card.active {
+  border-color: #f87171 !important;
+  box-shadow: 0 0 35px rgba(239, 68, 68, 0.45), 0 20px 50px rgba(0, 0, 0, 0.9), inset 0 0 20px rgba(239, 68, 68, 0.15) !important;
+}
+
+/* Card Header */
+.card-topline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.card-pill-tag {
+  background: rgba(0, 229, 255, 0.1);
+  border: 1px solid rgba(0, 229, 255, 0.35);
+  color: #00e5ff;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.card-corner-status {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #00e5ff;
+  box-shadow: 0 0 10px #00e5ff;
+}
+
+.card-corner-status.warning-dot {
+  background: #f87171 !important;
+  box-shadow: 0 0 10px #f87171 !important;
+}
+
+.card-title {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 4px 0 2px 0;
+  letter-spacing: 0.04em;
+}
+
+.card-subtitle {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  color: #7dd3fc;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: block;
+}
+
+/* Card Metric Rows */
+.card-metric-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.card-metric-row {
+  background: rgba(2, 6, 23, 0.6);
+  border: 1px solid rgba(0, 229, 255, 0.15);
+  border-radius: 8px;
+  padding: 8px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-metric-row .metric-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9.5px;
+  color: #94a3b8;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.card-metric-row .metric-val {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.card-metric-row .metric-val.highlight {
+  color: #00e5ff;
+  text-shadow: 0 0 10px rgba(0, 229, 255, 0.6);
+}
+
+.card-metric-row .metric-val.warning {
+  color: #f87171;
+}
+
+.card-desc-box {
+  background: rgba(2, 6, 23, 0.5);
+  border: 1px solid rgba(0, 229, 255, 0.12);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 11px;
+  line-height: 1.5;
+  color: #cbd5e1;
+  margin-top: 8px;
+}
+
+.cyber-link {
+  color: #00e5ff;
+  text-decoration: none;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  margin-top: 10px;
+  display: inline-block;
+  transition: all 0.2s ease;
+}
+
+.cyber-link:hover {
+  text-shadow: 0 0 12px #00e5ff;
+  color: #ffffff;
+}
+
+/* Card Action Buttons */
+.card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.card-actions button {
+  width: 100%;
+  padding: 10px;
+  font-size: 11px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
+}
+
+.btn-action-primary {
+  background: linear-gradient(135deg, #00f0ff 0%, #00b4d8 100%);
+  border: 1px solid #38f8ff;
+  color: #020611;
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
+}
+
+.btn-action-primary:hover {
+  background: linear-gradient(135deg, #38f8ff 0%, #00d4ff 100%);
+  box-shadow: 0 0 30px rgba(0, 229, 255, 0.8);
+  transform: translateY(-1px);
+}
+
+.btn-action-outline {
+  background: rgba(4, 13, 30, 0.8);
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  color: #7dd3fc;
+}
+
+.btn-action-outline:hover {
+  border-color: #00e5ff;
+  color: #ffffff;
+  box-shadow: 0 0 15px rgba(0, 229, 255, 0.3);
+}
+
+/* Bottom Status & Indicators */
+.debrief-bottom-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(0, 229, 255, 0.15);
+  padding-top: 14px;
+  margin-top: 6px;
+}
+
+.failed-debrief .debrief-bottom-bar {
+  border-top-color: rgba(248, 113, 113, 0.2);
+}
+
+.carousel-indicators {
+  display: flex;
+  gap: 10px;
+}
+
+.indicator-dot {
+  width: 24px;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(0, 229, 255, 0.2);
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.indicator-dot.active {
+  width: 48px;
+  background: #00e5ff;
+  box-shadow: 0 0 12px #00e5ff;
+}
+
+.failed-debrief .indicator-dot.active {
+  background: #f87171;
+  box-shadow: 0 0 12px #f87171;
+}
+
+.debrief-quick-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.debrief-quick-actions .primary-button {
+  background: linear-gradient(135deg, #00f0ff 0%, #00b4d8 100%) !important;
+  border: 1px solid #38f8ff !important;
+  border-radius: 6px !important;
+  color: #020611 !important;
+  -webkit-text-fill-color: #020611 !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 13.5px !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  padding: 10px 22px !important;
+  box-shadow: 0 0 25px rgba(0, 229, 255, 0.6) !important;
+  cursor: pointer !important;
+}
+
+.debrief-quick-actions .primary-button span,
+.debrief-quick-actions .primary-button b {
+  color: #020611 !important;
+  -webkit-text-fill-color: #020611 !important;
+  font-weight: 800 !important;
+}
+
+.debrief-quick-actions .outline-button {
+  background: rgba(4, 13, 30, 0.8) !important;
+  border: 1px solid rgba(0, 229, 255, 0.3) !important;
+  border-radius: 6px !important;
+  color: #7dd3fc !important;
+  font-family: 'IBM Plex Mono', monospace !important;
+  font-size: 11px !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  padding: 10px 18px !important;
+  cursor: pointer !important;
+}
+
+.debrief-quick-actions .outline-button:hover {
+  border-color: #00e5ff !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 15px rgba(0, 229, 255, 0.3) !important;
+  background: rgba(0, 229, 255, 0.1) !important;
+}
+
+@media (max-width: 900px) {
+  .carousel-nav-btn.prev { left: 10px; }
+  .carousel-nav-btn.next { right: 10px; }
+  .debrief-carousel-viewport { perspective: 800px; }
+  .debrief-modal-wrapper { padding: 16px 20px; }
+}
+
+/* 7. Briefing Screen Best Record Display */
+#record-label {
+  font-family: 'IBM Plex Mono', monospace !important;
+  font-size: 9px !important;
+  letter-spacing: 0.12em !important;
+  color: #00e5ff !important;
+  text-transform: uppercase !important;
+  text-shadow: 0 0 10px rgba(0, 229, 255, 0.6) !important;
+  font-weight: 600 !important;
+}
+
+.brief-footer {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding-top: 12px !important;
+  border-top: 1px solid rgba(0, 229, 255, 0.2) !important;
+}
+
+.brief-footer > span:last-child {
+  color: #00e5ff !important;
+  font-weight: 700 !important;
+}
+
+/* 8. Top Header Sound Toggle: Animated Cyan Equalizer Wave & Muted Red Slash Badge */
+#sound-button {
+  transition: all 0.25s ease !important;
+  position: relative !important;
+  border-radius: 6px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  padding: 4px 9px !important;
+  min-width: 46px !important;
+  height: 34px !important;
+  overflow: visible !important;
+  cursor: pointer !important;
+}
+
+#sound-button.active {
+  border-color: #00e5ff !important;
+  color: #00e5ff !important;
+  background: rgba(0, 229, 255, 0.15) !important;
+  box-shadow: 0 0 16px rgba(0, 229, 255, 0.5), inset 0 0 8px rgba(0, 229, 255, 0.2) !important;
+  text-shadow: 0 0 10px #00e5ff !important;
+}
+
+#sound-button.active::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #00e5ff;
+  box-shadow: 0 0 8px #00e5ff, 0 0 14px #00e5ff;
+}
+
+/* Animated Cyan Equalizer Wave */
+.sound-eq-wave {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2.5px;
+  height: 16px;
+}
+
+.sound-eq-wave .eq-bar {
+  display: block;
+  width: 2.5px;
+  border-radius: 1.5px;
+  background: #00e5ff;
+  box-shadow: 0 0 6px rgba(0, 229, 255, 0.85);
+  animation-duration: 0.8s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  animation-direction: alternate;
+}
+
+.sound-eq-wave .bar-1 {
+  height: 5px;
+  animation-name: eqWaveAnim1;
+  animation-duration: 0.65s;
+}
+
+.sound-eq-wave .bar-2 {
+  height: 14px;
+  animation-name: eqWaveAnim2;
+  animation-duration: 0.45s;
+}
+
+.sound-eq-wave .bar-3 {
+  height: 8px;
+  animation-name: eqWaveAnim3;
+  animation-duration: 0.75s;
+}
+
+.sound-eq-wave .bar-4 {
+  height: 12px;
+  animation-name: eqWaveAnim4;
+  animation-duration: 0.52s;
+}
+
+@keyframes eqWaveAnim1 {
+  0% { height: 4px; opacity: 0.6; }
+  100% { height: 14px; opacity: 1; }
+}
+
+@keyframes eqWaveAnim2 {
+  0% { height: 15px; opacity: 1; }
+  100% { height: 5px; opacity: 0.7; }
+}
+
+@keyframes eqWaveAnim3 {
+  0% { height: 6px; opacity: 0.7; }
+  100% { height: 16px; opacity: 1; }
+}
+
+@keyframes eqWaveAnim4 {
+  0% { height: 13px; opacity: 1; }
+  100% { height: 4px; opacity: 0.6; }
+}
+
+.sound-icon-note {
+  font-size: 14px;
+  line-height: 1;
+}
+
+/* Red Slash Badge when Muted */
+#sound-button.muted {
+  border-color: rgba(239, 68, 68, 0.45) !important;
+  color: #94a3b8 !important;
+  background: rgba(15, 23, 42, 0.7) !important;
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.2) !important;
+}
+
+.sound-mute-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sound-icon-note.muted {
+  color: #64748b;
+  opacity: 0.6;
+}
+
+.sound-mute-slash {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 2px;
+  background: #ef4444;
+  box-shadow: 0 0 6px #ef4444;
+  transform: translate(-50%, -50%) rotate(-45deg);
+  border-radius: 1px;
+}
+
+.sound-mute-badge {
+  position: absolute;
+  top: -4px;
+  right: -5px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ef4444;
+  box-shadow: 0 0 6px #ef4444;
+}
+
+/* Cinematic Overlay & Stage Transitions */
+#cinematic[hidden],
+.cinematic[hidden] {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+#cinematic:not([hidden]),
+.cinematic:not([hidden]) {
+  display: flex !important;
+  cursor: pointer;
+  z-index: 280 !important;
+  pointer-events: auto !important;
+}
+
+/* ==========================================================================
+   DSN SPEED-OF-LIGHT COMMS & DEEP SPACE ANOMALIES (NASA CYBER HUD)
+   ========================================================================== */
+
+.hud-panel.dsn-panel {
+  background: rgba(4, 10, 22, 0.72) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(0, 229, 255, 0.22) !important;
+  border-radius: 8px !important;
+  padding: 12px 14px !important;
+  margin-top: 10px !important;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45), 0 0 15px rgba(0, 229, 255, 0.06) !important;
+}
+
+.dsn-panel .panel-caption {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  color: rgba(148, 163, 184, 0.9);
+  margin-bottom: 8px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(0, 229, 255, 0.12);
+}
+
+.dsn-carrier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 8px;
+  font-weight: 600;
+  color: #34d399;
+}
+
+.dsn-pulse-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 8px #34d399;
+  animation: dsnPulse 1.8s infinite ease-in-out;
+}
+
+@keyframes dsnPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(0.75); }
+}
+
+.dsn-metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 12px;
+  margin-bottom: 9px;
+}
+
+.dsn-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dsn-metric-label {
+  font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace;
+  font-size: 7.5px;
+  color: rgba(148, 163, 184, 0.7);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.dsn-metric-value {
+  font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 600;
+  color: #f1f5f9;
+  letter-spacing: 0.04em;
+}
+
+.dsn-metric-value.highlight {
+  color: #00e5ff;
+  text-shadow: 0 0 10px rgba(0, 229, 255, 0.45);
+}
+
+.dsn-mode-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 8px;
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid rgba(0, 229, 255, 0.18);
+  border-radius: 4px;
+  font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  color: #94a3b8;
+  letter-spacing: 0.05em;
+  transition: all 0.25s ease;
+}
+
+.dsn-mode-pill.autonomous {
+  background: rgba(14, 116, 144, 0.25);
+  border-color: rgba(0, 229, 255, 0.4);
+  color: #a5f3fc;
+}
+
+.dsn-mode-icon {
+  color: #00e5ff;
+  font-size: 10px;
+}
+
+/* Deep Space Anomaly Emergency Modal Styles */
+.anomaly-meta-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0 14px 0;
+  padding: 6px 10px;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 6px;
+}
+
+.anomaly-type-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  color: #fbbf24;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.anomaly-station-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5px;
+  color: #38bdf8;
+  letter-spacing: 0.08em;
+}
+
+.dsn-delay-banner {
+  background: rgba(8, 28, 48, 0.65);
+  border-left: 3px solid #00e5ff;
+  padding: 10px 14px;
+  border-radius: 0 6px 6px 0;
+  margin-bottom: 14px;
+  box-shadow: inset 0 0 15px rgba(0, 229, 255, 0.05);
+}
+
+.dsn-delay-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  color: #00e5ff;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.dsn-delay-banner p {
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.5;
+  color: rgba(203, 213, 225, 0.95);
+}
+
+.dsn-delay-banner strong {
+  color: #f8fafc;
+}
+
+.choice-subsystem {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8px;
+  font-style: normal;
+  color: #00e5ff;
+  opacity: 0.85;
+  letter-spacing: 0.06em;
+  margin-top: 2px;
+}

@@ -1,0 +1,1788 @@
+:root{--cyan:#a1eced;--bright:#d9ffff;--muted:#71979f;--ink:#d5e9e9;--line:#91d6df35;--amber:#e8b77f;--red:#f27c75;--mono:'IBM Plex Mono',monospace;--display:'Rajdhani',sans-serif;--body:'Inter',sans-serif;color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#030910;color:var(--ink);font-family:var(--body);overflow:hidden}button,input,select{font:inherit}button{color:inherit;cursor:pointer}button:disabled{opacity:.4;cursor:not-allowed}button:focus-visible,a:focus-visible,select:focus-visible{outline:2px solid var(--bright);outline-offset:4px}button{transition:background .18s,border-color .18s,color .18s,box-shadow .18s}button:hover:not(:disabled){color:var(--bright)}[hidden]{display:none!important}#world,#world canvas{position:fixed;inset:0;width:100%;height:100%;display:block}.vignette{position:fixed;inset:0;pointer-events:none;background:linear-gradient(0deg,#02090ef2 0,transparent 38%,transparent 75%,#020910c2),radial-gradient(ellipse at center,transparent 24%,#030c1670 72%,#01050bd0)}.scanlines{position:fixed;inset:0;pointer-events:none;opacity:.09;background:repeating-linear-gradient(0deg,transparent 0 3px,#58838b66 4px);z-index:10}.hud-frame{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:20;fill:none;stroke:#8fd0dd70;stroke-width:1;filter:drop-shadow(0 0 4px #88dae526)}.hud-frame .frame-inner{stroke:#9cdeeaa0;stroke-width:1.5}.hud-frame .frame-accent{stroke:var(--bright);stroke-width:2}.topbar{height:83px;padding:20px 3.2vw 12px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:12}.brand{background:none;border:0;display:flex;align-items:center;gap:12px;text-align:left;font:700 25px/.85 var(--display);letter-spacing:.15em}.brand small{display:block;font:8px var(--mono);color:var(--muted);letter-spacing:.1em;margin-top:6px}.brand-emblem{height:38px;width:38px;display:grid;place-items:center;border:1px solid #8bd5df66;border-radius:50%;font-size:34px;color:var(--cyan);transform:rotate(-30deg);box-shadow:inset 0 0 18px #56cbd520}.topbar nav{display:flex;gap:32px;height:100%;align-items:center}.nav-button{font:10px var(--mono);border:0;border-bottom:1px solid transparent;padding:12px 0;background:none;color:#577b85;letter-spacing:.05em}.nav-button span{margin-left:7px;color:#87a8af}.nav-button.active{border-color:var(--cyan);color:var(--cyan)}.nav-button.active span{color:#d2f5f6}.header-right{display:flex;align-items:center;gap:12px}.connection{font:8px var(--mono);letter-spacing:.07em;color:#8cadb1;margin-right:10px}.connection i,.status-dot{display:inline-block;width:4px;height:4px;border-radius:50%;background:#9be0cc;box-shadow:0 0 8px #76dcbb80;margin-right:7px}.icon-button{width:29px;height:29px;border:1px solid var(--line);background:#0a1d2a33;color:var(--cyan);font-size:17px}.icon-button:hover{background:#a0e7ec20}.menu-view{position:absolute;inset:83px 3.4vw 43px}.menu-topline{display:flex;justify-content:space-between;align-items:center;color:#648d98;font:8px var(--mono);letter-spacing:.09em;border-top:1px solid #81c5d325;padding-top:12px}.menu-topline b{color:#b3d6d5;margin:0 12px}.hud-panel{background:linear-gradient(110deg,#091b28b8,#06121a72);border:1px solid #78bfd033;position:relative;box-shadow:inset 0 0 25px #183d4510}.hud-panel:before,.hud-panel:after{content:'';position:absolute;width:9px;height:9px;border-color:#99dfe490;border-style:solid;pointer-events:none}.hud-panel:before{left:-1px;top:-1px;border-width:1px 0 0 1px}.hud-panel:after{right:-1px;bottom:-1px;border-width:0 1px 1px 0}.panel-caption{display:flex;justify-content:space-between;color:#a6d5d9;font:600 12px var(--display);letter-spacing:.08em;border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:14px}.panel-caption>span:last-child{font:8px var(--mono);color:#789da6}.brief-panel{position:absolute;left:0;top:52px;width:258px;padding:16px}.eyebrow{font:8px var(--mono);letter-spacing:.16em;color:var(--cyan);margin:20px 0 9px}h1{font:600 38px/.95 var(--display);letter-spacing:.015em;margin:0 0 13px;white-space:nowrap}h1 span{color:#edffff}.mission-tags{display:flex;justify-content:space-between;font:7px var(--mono);letter-spacing:.04em;color:#94c5ce}.mission-tags>span:last-child{color:var(--amber);border-left:1px solid var(--line);padding-left:9px}.brief-copy{font-size:11px;line-height:1.95;color:#90abb4;margin:18px 0}.brief-stats{display:flex;flex-direction:column;gap:12px;margin:16px 0}.brief-stats>div{display:flex;justify-content:space-between;gap:10px;align-items:center;font:7px var(--mono);color:#648894}.brief-stats b{font-size:8px;color:#bad7db;font-weight:400}.mission-goal{display:flex;align-items:center;gap:10px;border-top:1px solid var(--line);padding:13px 0}.target-icon{font-size:27px;color:var(--cyan)}.mission-goal small{display:block;color:#628b99;font:7px var(--mono);margin-bottom:5px}.mission-goal strong{font:600 12px var(--display);letter-spacing:.04em}.brief-footer{display:flex;justify-content:space-between;font:7px var(--mono);color:#78a7af;border-top:1px solid #8bdde11c;padding-top:12px}.brief-footer>span:last-child{font-size:13px;color:var(--cyan)}.planet-overlay{position:absolute;top:25px;left:26%;width:49%;height:calc(100% - 218px);pointer-events:none}.planet-overlay svg{width:100%;height:100%;fill:none;stroke:#b0eaf04d;stroke-width:.75}.planet-overlay svg .fine{stroke:#b0eaf02b}.planet-coordinate{position:absolute;font:7px var(--mono);letter-spacing:.13em;color:#89b0bc88;text-align:center;left:0;right:0}.planet-coordinate.top{top:16px}.planet-coordinate.bottom{bottom:0}.planet-coordinate.bottom span{color:var(--cyan);margin-left:25px}.planet-coordinate.bottom i{display:inline-block;width:4px;height:4px;background:var(--cyan);border-radius:50%;margin:0 8px 1px 0}.right-panels{position:absolute;right:0;top:52px;width:218px;display:flex;flex-direction:column;gap:13px}.right-panels .hud-panel{padding:13px}.ship-blueprint{height:82px;position:relative;margin-top:-10px}.ship-blueprint svg{display:block;fill:none;stroke:#a3dfe7;stroke-width:.7;width:100%;height:72px;filter:drop-shadow(0 0 5px #72d9ea66)}.ship-blueprint>span{display:block;font:6px var(--mono);letter-spacing:.14em;color:#648e99;text-align:center}.mini-resource{display:grid;grid-template-columns:1fr auto;margin-top:13px;gap:5px;font:7px var(--mono);color:#769ca5}.mini-resource b{color:#caeef0;font-weight:400;font-size:11px}.mini-resource b span{font-size:7px;color:#648a94}.mini-resource i{grid-column:1/-1;width:100%;height:2px;background:#6998a02b;position:relative}.mini-resource i:before{content:'';display:block;width:var(--value);height:100%;background:#8bcdd6;box-shadow:0 0 6px #78d0d94d}.route-preview .panel-caption{margin-bottom:4px}.route-art{position:relative;height:69px}.route-art svg{width:100%;height:100%;fill:none;stroke:#8ce0dc80;stroke-width:1;stroke-dasharray:3 4}.route-art svg circle{fill:#b7feff;stroke:none;animation:orbit-dot 6s ease-in-out infinite}.route-earth,.route-target{position:absolute;width:15px;height:15px;border-radius:50%;background:radial-gradient(circle at 30% 25%,#91d5e4,#15436b 57%,#040912);border:1px solid #739bad;left:13px;bottom:4px;box-shadow:0 0 16px #76c6e427}.route-target{left:auto;right:18px;bottom:41px;width:24px;height:24px;background:radial-gradient(circle at 25% 20%,#e5b491,#8e523a 50%,#231715);border-color:#b3a099}.route-labels{display:flex;justify-content:space-between;margin:0 10px;font:7px var(--mono);color:#9cb4bc}.journey-dots{display:flex;align-items:center;gap:7px;border-top:1px solid #8ed8e026;margin-top:10px;padding-top:9px;font:6px var(--mono);color:#658891}.journey-dots i{height:1px;flex:1;background:#6c9ea14d}.menu-center-caption{position:absolute;left:53%;top:61%;display:flex;align-items:center;gap:10px;font:600 16px var(--display);letter-spacing:.1em;color:#c8e9e9;pointer-events:none}.menu-center-caption small{display:block;font:6px var(--mono);color:#7c9ba5;letter-spacing:.14em;margin-top:3px}.ship-label-line{width:47px;height:1px;background:#8dbdc770;transform:rotate(-20deg);transform-origin:right}.destination-strip{position:absolute;left:0;right:0;bottom:70px}.strip-heading{display:flex;justify-content:space-between;align-items:center;font:8px var(--mono);color:#a0c5cf;margin:0 0 12px;letter-spacing:.07em}.strip-heading b{font-weight:400}.dim{color:#507480;margin-left:14px}.keyboard-hint{color:#618893;font-size:7px}.destination-cards{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}.destination-card{height:112px;position:relative;overflow:hidden;border:1px solid #619bad45;background:linear-gradient(115deg,#112b3ba6,#081522b3);text-align:left;padding:17px 13px;clip-path:polygon(0 0,calc(100% - 13px) 0,100% 13px,100% 100%,0 100%)}.destination-card:hover{background:#17405488;border-color:#99e0e9a6}.destination-card.selected{border-color:#a3f2ef;background:linear-gradient(120deg,#234753a6,#0a1a25bf);box-shadow:inset 0 2px #b9ffff,inset 0 0 20px #77dbe31f}.card-index{font:7px var(--mono);letter-spacing:.12em;color:#638995;display:block}.destination-card.selected .card-index{color:var(--cyan)}.card-planet{position:absolute;width:83px;height:83px;right:-13px;top:13px;border-radius:50%;background-size:auto 100%;box-shadow:inset -19px -7px 21px #000e,0 0 20px #72add915;opacity:.65;transition:opacity .3s;animation:rotate-planet 100s linear infinite}.destination-card.selected .card-planet{opacity:.95}.destination-card:nth-child(4) .card-planet{width:65px;height:67px;top:24px;right:5px;border-radius:42% 55% 38% 51%;filter:sepia(.3)}.card-text{display:block;position:relative;z-index:1;font:600 27px/.95 var(--display);letter-spacing:.025em;margin-top:14px;text-shadow:0 2px 9px #02101a}.card-text small{font:6px var(--mono);letter-spacing:.08em;display:block;color:#7dabb3;margin-top:7px}.card-corner{position:absolute;right:9px;top:6px;color:var(--cyan);font-size:13px;z-index:2}.menu-bottom{position:absolute;bottom:7px;left:0;right:0;display:flex;justify-content:space-between;align-items:center}.menu-save{display:flex;gap:10px;align-items:center;font:7px var(--mono);letter-spacing:.07em;color:#618996}.tiny-cross{color:var(--cyan);font-size:18px}.primary-button{display:inline-flex;justify-content:space-between;align-items:center;gap:35px;border:1px solid #b3f4ef9c;background:linear-gradient(110deg,#9bdcd5,#a2e3df);color:#082431;font:600 15px var(--display);letter-spacing:.07em;min-height:43px;padding:0 17px;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,0 100%)}.primary-button:hover:not(:disabled){background:#c6fffa;color:#06171c;box-shadow:0 0 27px #6bdddf66}.primary-button b{font:400 21px var(--display);border-left:1px solid #36636b55;padding:9px 0 9px 19px}.text-button{background:none;border:0;padding:4px 0;color:var(--cyan);font:8px var(--mono);letter-spacing:.06em}.bottom-status{position:fixed;bottom:19px;left:3.3%;right:3.3%;display:flex;justify-content:space-between;align-items:center;font:6px var(--mono);letter-spacing:.08em;color:#4f7888;z-index:25;pointer-events:none}.bottom-status b{font-weight:400;color:#91c9cb;margin:0 7px}.bottom-status button{pointer-events:auto;background:none;border:0;color:#688e9a;font:6px var(--mono);letter-spacing:.1em}.loading-screen{position:fixed;inset:0;z-index:100;background:#040b12;display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity .8s}.loading-screen.done{opacity:0;pointer-events:none}.loading-mark{font:300 82px var(--display);position:relative;color:#b8f3f0}.loading-mark>span{font:12px var(--mono);position:absolute;top:18px;right:-9px;color:#6b959f}.loading-screen p{font:9px var(--mono);letter-spacing:.25em}.loading-screen small{font:7px var(--mono);letter-spacing:.12em;color:#5f8492;margin-top:13px}.load-line{width:205px;height:2px;background:#1a313c;margin-top:16px;overflow:hidden}.load-line i{display:block;height:100%;background:var(--cyan);animation:load 1.5s ease both}.flight-view{position:absolute;inset:99px 3.4vw 53px;pointer-events:none}.flight-view button{pointer-events:auto}.flight-top{display:flex;justify-content:space-between;align-items:flex-start;border-top:1px solid #83c7d126;padding-top:14px}.flight-top .eyebrow{margin:0;display:block;font-size:8px;color:#8ab3be}.flight-top h2{font:600 27px var(--display);letter-spacing:.03em;margin:4px 0;color:#e0f7f7}.mission-clock{display:flex;align-items:center;gap:13px;font:7px var(--mono);color:#648895}.mission-clock strong{font:300 22px var(--display);color:var(--cyan)}.small-button{border:1px solid #83c7d13d;background:#0a1d2985;padding:8px 10px;font:7px var(--mono);color:#8aafb7;letter-spacing:.05em}.small-button:hover{background:#27576470}.small-button.active{border-color:#9cf2deaa;color:#aeeddd}kbd{font:8px var(--mono);padding:2px 4px;border:1px solid #78b8c14d;background:#6198a01a;border-radius:2px;color:#bce4e7;display:inline-block;line-height:1.2;min-width:16px;text-align:center}.small-button kbd{margin-left:6px;font-size:7px}.flight-left{position:absolute;top:93px;left:0;width:218px;display:flex;flex-direction:column;gap:13px}.flight-right{position:absolute;right:0;top:93px;width:224px;display:flex;flex-direction:column;gap:14px}.telemetry{padding:13px}.telemetry .panel-caption{margin-bottom:12px}.panel-caption .live{color:#a9e3c9;font-size:7px}.resource-row{margin-bottom:12px}.resource-row>div{display:flex;justify-content:space-between;align-items:center;font:8px var(--mono);color:#80a5ad}.resource-row b{font:600 17px var(--display);color:#d2eded}.resource-row b small{font:8px var(--mono);color:#638e99}.resource-track{height:4px;background:#6997a32b;display:block;margin-top:5px}.resource-track i{display:block;background:var(--bar-color,var(--cyan));height:100%;box-shadow:0 0 8px #85e5e638;transition:width .2s}.resource-row.warning b{color:var(--red)}.resource-row.warning .resource-track i{background:var(--red)}.telemetry-extra{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding-top:9px;font:7px var(--mono);color:#688e97}.telemetry-extra b{margin-left:8px;color:#b1d4db;font-weight:400}.radar-panel{padding:11px 12px}.radar-panel .panel-caption{margin-bottom:0}.radar-panel canvas{width:100%;height:133px;display:block}.radar-key{display:flex;justify-content:space-between;font:6px var(--mono);color:#668d97}.radar-key i{width:4px;height:4px;display:inline-block;background:var(--cyan);margin-right:5px}.radar-key span:last-child i{background:var(--amber)}.telemetry-readouts{display:flex;justify-content:space-between;padding:0 2px}.telemetry-readouts>div>span{display:block;font:7px var(--mono);color:#7195a0}.telemetry-readouts b{display:block;font:500 25px var(--display);color:var(--cyan);margin-top:3px}.telemetry-readouts small{font:9px var(--mono);color:#7195a0}.objective-panel,.power-panel{padding:13px}.objective-panel>p{font:500 16px/1.2 var(--display);margin:0 0 14px;color:#e1f4f4}.objective-panel ol{padding:0;list-style:none;font:8px/1.8 var(--mono);color:#638692;margin:0}.objective-panel li{display:flex;align-items:center;gap:7px;margin:7px 0}.objective-panel li:before{content:'';width:5px;height:5px;border:1px solid #507789;display:block;flex-shrink:0}.objective-panel li.active{color:var(--cyan)}.objective-panel li.active:before{border-color:var(--cyan);background:#82e1e555}.objective-panel li.done{color:#78ae95;text-decoration:line-through}.objective-panel li.done:before{background:#8fe4b9;border-color:#8fe4b9}.target-range{border-top:1px solid var(--line);padding-top:12px;margin-top:13px;display:flex;align-items:center;justify-content:space-between}.target-range>span{font:7px var(--mono);color:#6d96a0}.target-range strong{font:500 26px var(--display);color:var(--cyan)}.target-range small{font:9px var(--mono);color:#638791}.power-panel .panel-caption{margin-bottom:7px}.power-panel>button{display:flex;align-items:center;gap:10px;width:100%;background:#13313e40;border:1px solid #658f9e25;color:#8eb3bc;font:9px var(--mono);padding:8px;margin-top:5px}.power-panel>button>span{margin-left:auto}.power-panel>button.active{border-color:#a7e4e97a;background:#377b8333;color:#d5ffff}.power-panel p{font:7px/1.6 var(--mono);color:#688d99;margin:9px 0 0}.science-readout{display:flex;align-items:center;gap:12px;padding:5px 4px}.science-symbol{font-size:39px;color:#84c8ce}.science-readout small{display:block;font:7px var(--mono);color:#709ba8;letter-spacing:.08em}.science-readout b{font:500 37px var(--display);color:#d7fffa}.science-readout div>span{font:7px var(--mono);color:#658d98}.flight-reticle{position:fixed;left:50%;top:44%;width:40px;height:40px;transform:translate(-50%,-50%);opacity:.65}.flight-reticle span,.flight-reticle i{position:absolute;top:20px;left:0;width:9px;height:1px;background:#b2e7ea}.flight-reticle i{left:auto;right:0}.flight-reticle b{position:absolute;left:20px;top:20px;width:2px;height:2px;background:#eaffff;box-shadow:0 0 7px #bfffff}.target-marker{position:fixed;top:40%;left:50%;display:flex;align-items:center;flex-direction:column;transform:translate(-50%,-50%);font:8px var(--mono);text-shadow:0 0 8px #020811,0 1px 3px #000;transition:opacity .2s;white-space:nowrap}.target-bracket{font:300 51px/.85 var(--display);color:var(--cyan);filter:drop-shadow(0 0 6px #75dce770)}.target-marker strong{font-weight:400;font-size:7px;letter-spacing:.07em;margin-top:7px;color:#c8f9f4}.target-marker small{font:7px var(--mono);margin-top:4px;color:#8ac4ce}.target-marker.ready{color:#a5ffcc}.target-marker.ready .target-bracket{color:#a5ffcc}.flight-center-bottom{position:absolute;left:50%;transform:translateX(-50%);bottom:159px;text-align:center;white-space:nowrap}.flight-tip{font:7px var(--mono);color:#8eb3bf;text-shadow:0 1px 4px #000}.pilot-controls{display:flex;gap:9px;justify-content:center;margin-top:13px}.pilot-controls b{color:#bddde1;font-weight:400}.interact-prompt{display:inline-flex;align-items:center;flex-wrap:wrap;gap:9px;justify-content:center;width:240px;margin:0 auto 15px;padding:9px 14px;background:#0c2633d6;border:1px solid #b0eae670;font:10px var(--mono);color:#b9f2e8;box-shadow:0 0 20px #66dbdc14}.interact-prompt>div{width:100%;height:3px;background:#86c5ca26}.interact-prompt i{display:block;height:100%;background:#b7ffe3;width:0}.comm-panel{position:absolute;bottom:53px;left:calc(218px + 24px);right:calc(224px + 24px);display:flex;align-items:center;gap:15px;min-height:79px;padding:13px 15px;border:1px solid #76b6c347;background:linear-gradient(90deg,#09202de6,#071924b8);border-left:2px solid #99ece4;pointer-events:auto}.comm-avatar{width:36px;height:39px;border:1px solid #7dc1c752;background:#8cddd715;display:grid;place-items:center;font-size:28px;color:#a6dedf;flex-shrink:0}.comm-panel>div:nth-child(2){flex:1}.comm-header{display:flex;justify-content:space-between;gap:12px;font:7px var(--mono);letter-spacing:.06em;color:#b3e1e0}.comm-header b{font-weight:400}.comm-header>span{font-size:6px;color:#5d8c9b}.comm-panel p{color:#90b3bd;font-size:10px;line-height:1.75;margin:6px 0 0;max-width:660px;min-height:17px}.comm-wave{display:flex;align-items:center;gap:2px;height:23px}.comm-wave i{width:2px;height:9px;background:#8cd8d2;animation:wave .9s ease-in-out infinite alternate}.comm-wave i:nth-child(2n){height:19px;animation-delay:.15s}.comm-wave i:nth-child(3n){height:14px;animation-delay:.35s}.flight-progress{position:absolute;left:0;right:0;bottom:2px;display:grid;grid-template-columns:repeat(6,1fr);gap:4px;border-top:1px solid var(--line);padding-top:13px}.flight-progress span{font:7px var(--mono);letter-spacing:.07em;color:#486c7a;display:flex;align-items:center;gap:9px}.flight-progress b{font:500 13px var(--display);color:#557e8c}.flight-progress .active,.flight-progress .active b{color:var(--cyan)}.flight-progress .done{color:#739d8e}.flight-progress .active:after{content:'';width:4px;height:4px;background:var(--cyan);border-radius:50%;box-shadow:0 0 6px var(--cyan)}
+.modal-layer{position:fixed;inset:0;display:grid;place-items:center;z-index:50;padding:25px;background:#01070dbd;backdrop-filter:blur(7px)}.dialog{width:min(750px,92vw);max-height:88vh;overflow:auto;position:relative;background:linear-gradient(125deg,#102532f7,#07131ffc);border:1px solid #8fc5d560;padding:30px 34px;box-shadow:0 20px 100px #0009,0 0 60px #316f7820;animation:dialog-in .3s ease}.dialog.wide{width:min(1090px,94vw)}.dialog h2{font:600 38px/1.04 var(--display);letter-spacing:.03em;margin:7px 0 18px;color:#e3fcfc}.dialog .eyebrow{margin:0;color:#82b2c2;display:block}.dialog .close-dialog{position:absolute;right:20px;top:20px;border:1px solid var(--line);background:#1b364344;width:28px;height:28px;color:#9ac6d0;font-size:18px}.dialog p{font-size:12px;line-height:1.95;color:#93afbc}.dialog .dialog-lead{font-size:14px;color:#c5ddde}.dialog .dialog-footer{border-top:1px solid var(--line);margin-top:24px;padding-top:20px;display:flex;justify-content:space-between;align-items:center;gap:15px}.dialog-footer>span{font:8px var(--mono);color:#6b95a5}.outline-button{border:1px solid #78b6c355;background:#1a394666;padding:11px 16px;color:#addadf;font:10px var(--mono);letter-spacing:.04em}.outline-button:hover{border-color:var(--cyan);background:#35707c55}.dialog-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:21px}.design-layout{display:grid;grid-template-columns:1fr 235px;gap:24px}.design-systems{display:flex;flex-direction:column;gap:17px}.system-group>h3{font:10px var(--mono);letter-spacing:.06em;color:#83b7c4;font-weight:400;margin:0 0 8px}.module-choices{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.module-option{padding:11px 10px;border:1px solid #608f9f45;background:#06152066;min-height:102px;text-align:left;display:flex;flex-direction:column}.module-option.selected{border-color:#a5eadbc2;background:#2a63613d;box-shadow:inset 0 2px #adf7e9}.module-option strong{font:600 15px var(--display);color:#c9e4e7}.module-option small{font-size:9px;line-height:1.6;color:#7099a8;margin:4px 0 8px}.module-option>span{font:8px var(--mono);color:#93cfc7;margin-top:auto}.design-summary{border:1px solid var(--line);background:#06121d70;padding:17px;height:fit-content;position:sticky;top:0}.design-summary h3{font:11px var(--mono);letter-spacing:.08em;color:var(--cyan);margin:0 0 22px;font-weight:400}.design-stat{margin-bottom:19px}.design-stat span{font:8px var(--mono);color:#739caa;display:block}.design-stat b{font:500 28px var(--display);color:#cee8e7;display:block;margin-top:4px}.design-stat b small{font:9px var(--mono);color:#6f95a2}.design-summary p{font:8px/1.9 var(--mono);color:#678e9e;margin:10px 0}.design-summary .invalid{color:var(--red)}.design-summary label{display:block;font:8px var(--mono);color:#8db1bc;margin:16px 0 7px}.design-summary select{width:100%;padding:8px;background:#102734;border:1px solid var(--line);color:#aed2d8;font:9px var(--mono)}.stage-preview{display:flex;gap:3px;margin:20px 0 23px}.stage-preview>span{flex:1;height:3px;background:#335666}.stage-preview>span.active{background:var(--cyan);box-shadow:0 0 10px #72d5df66}.briefing-fact{display:flex;align-items:flex-start;gap:15px;padding:14px 17px;border:1px solid #78c2cb2b;background:#14344140;margin-top:22px}.briefing-fact>span{font-size:23px;color:#95dfe2}.briefing-fact p{margin:0;font-size:10px;line-height:1.8}.briefing-tip{font:9px/1.9 var(--mono)!important;color:#b6dddd!important;margin-top:15px}.event-choices{display:flex;flex-direction:column;gap:9px;margin-top:25px}.event-choice{border:1px solid #80c7c844;background:#0d273766;padding:15px 17px;text-align:left;display:flex;align-items:center;gap:16px}.event-choice:hover{border-color:#c7e1b9;background:#37524c55}.event-choice strong{font:600 18px var(--display);display:block;color:#d5ebe7}.event-choice small{font:9px var(--mono);color:#93b7ad;display:block;margin-top:5px}.event-warning{color:var(--amber)!important}.controls-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 30px}.control-row{border-bottom:1px solid #6697a329;padding:12px 0;display:flex;align-items:center;justify-content:space-between;font-size:11px;color:#a4bcc6}.control-row kbd{margin-left:3px}.settings-row{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap}.journal-list{max-height:440px;overflow:auto}.journal-entry{padding:15px 0;border-bottom:1px solid var(--line)}.journal-entry small{font:7px var(--mono);color:#6f99a7}.journal-entry h3{font:600 19px var(--display);margin:6px 0}.journal-entry p{font-size:11px;margin:0}.source-list{display:flex;flex-direction:column;gap:12px;margin-top:18px}.source-list a{color:#a6dada;text-decoration:none;font-size:11px;border-bottom:1px solid #6caaaf33;padding-bottom:9px}.debrief-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:25px 0}.debrief-stats>div{padding:13px;background:#173d4b44;border:1px solid var(--line)}.debrief-stats b{font:500 34px var(--display);color:#b5f3df;display:block}.debrief-stats span{font:7px var(--mono);color:#749fac;display:block;margin-top:6px}.rank-badge{width:62px;height:62px;float:right;display:grid;place-items:center;border:1px solid #abecd988;color:#cbffe9;font:500 43px var(--display);transform:rotate(4deg);background:#57cfa718;box-shadow:0 0 20px #84ead419}.cinematic{position:fixed;inset:0;z-index:45;background:linear-gradient(#000d,#020c13d9,#000e);display:flex;justify-content:center;align-items:center;flex-direction:column;backdrop-filter:blur(2px);pointer-events:none;animation:dialog-in .8s ease}.cinematic small{font:8px var(--mono);letter-spacing:.3em;color:#76b0be}.cinematic h2{font:500 54px var(--display);letter-spacing:.18em;margin:20px 0 12px;color:#d4f5ef;text-shadow:0 0 20px #a2f9ed30}.cinematic p{font:10px var(--mono);color:#86aebd}.cinematic-line{height:50px;width:1px;background:linear-gradient(transparent,var(--cyan));margin-bottom:22px}.cinematic-progress{width:220px;height:1px;background:#376677;margin-top:25px}.cinematic-progress i{display:block;height:100%;background:var(--cyan);animation:load 3.8s linear both}.notifications{position:fixed;left:50%;top:99px;transform:translateX(-50%);z-index:65;pointer-events:none}.notification{font:9px var(--mono);color:#b3e7e5;background:#0a2832ed;border:1px solid #8ccdd578;padding:11px 18px;margin-bottom:6px;box-shadow:0 6px 23px #0008;text-align:center;animation:notice .25s ease}.notification.warning{color:#f0c29b;border-color:#ddad7470}.touch-controls{position:fixed;bottom:180px;left:25px;right:25px;display:flex;justify-content:space-between;z-index:32;pointer-events:none}.touch-controls button{pointer-events:auto;touch-action:none;border:1px solid #8ac6d071;background:#0c273cad;color:#bdedee;padding:12px 15px;margin:3px;font:9px var(--mono)}.touch-controls>div{display:flex;flex-direction:column;align-items:center}#impact-flash{position:fixed;inset:0;z-index:30;pointer-events:none;opacity:0;background:radial-gradient(ellipse,transparent 28%,#f559303d 85%,#ff392b7d)}#impact-flash.flash{animation:impact .6s ease-out}.error-detail{font:10px var(--mono);color:var(--red);padding:20px;max-width:80vw;white-space:pre-wrap}.overflow-note{display:none}@keyframes impact{0%{opacity:1}100%{opacity:0}}@keyframes load{from{width:0}to{width:100%}}@keyframes dialog-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}@keyframes notice{from{opacity:0;translate:0 -8px}to{opacity:1;translate:0 0}}@keyframes wave{to{height:4px;opacity:.4}}@keyframes rotate-planet{from{background-position:0 0}to{background-position:200px 0}}@keyframes orbit-dot{0%,100%{translate:-20px 9px}50%{translate:40px -7px}}
+@media(min-width:1600px){.brief-panel{width:295px;padding:20px}.right-panels{width:253px}.brief-copy{font-size:12px;line-height:2}.brief-stats{gap:18px}.mission-goal{padding:20px 0}h1{font-size:44px}.destination-card{height:132px;padding:20px}.card-planet{width:105px;height:105px}.card-text{font-size:32px}.destination-strip{bottom:80px}.menu-bottom{bottom:15px}.planet-overlay{height:calc(100% - 255px)}.mini-resource{margin-top:17px}.flight-left{width:244px}.flight-right{width:250px}.comm-panel{left:275px;right:280px}.radar-panel canvas{height:165px}.comm-panel p{font-size:12px}.resource-row{margin-bottom:16px}.flight-top h2{font-size:32px}}
+@media(max-height:760px) and (min-width:901px){.topbar{height:70px;padding-top:14px}.menu-view{top:70px}.brief-panel,.right-panels{top:43px}.brief-panel{padding:12px}.brief-copy{font-size:10px;line-height:1.8;margin:12px 0}.brief-stats{gap:10px;margin:12px 0}.brief-panel .eyebrow{margin-top:15px}.brief-footer{padding-top:9px}.brief-panel h1{font-size:32px}.right-panels{gap:9px}.right-panels .hud-panel{padding:10px}.ship-blueprint{height:65px}.ship-blueprint svg{height:58px}.mini-resource{margin-top:10px}.route-art{height:56px}.route-target{bottom:30px}.destination-card{height:96px;padding:12px}.destination-strip{bottom:62px}.card-text{font-size:25px;margin-top:11px}.card-planet{width:75px;height:75px;top:10px}.strip-heading{margin-bottom:9px}.menu-center-caption{top:57%}.flight-view{top:83px}.flight-left,.flight-right{top:75px;gap:10px}.radar-panel canvas{height:96px}.resource-row{margin-bottom:9px}.power-panel{padding:10px}.power-panel>button{padding:6px}.objective-panel{padding:11px}.objective-panel li{font-size:7px;margin:5px 0}.flight-center-bottom{bottom:140px}.comm-panel{min-height:73px}.comm-header>span{display:none}.comm-panel p{font-size:9px}.telemetry-readouts b{font-size:20px}}
+@media(max-width:1100px){.topbar nav{gap:18px}.connection{display:none}.brief-panel{width:226px}.brief-copy{font-size:10px}.right-panels{width:189px}h1{font-size:32px}.menu-view{left:3.8%;right:3.8%}.card-text{font-size:24px}.destination-card{padding-left:11px}.card-text small{font-size:5px}.dim{display:none}.menu-save{font-size:6px}.flight-left{width:178px}.flight-right{width:183px}.flight-top h2{font-size:23px}.comm-panel{left:198px;right:203px;padding:10px}.comm-avatar{display:none}.comm-panel p{font-size:9px}.comm-header>span{display:none}.objective-panel li{font-size:7px}.panel-caption{font-size:10px}.pilot-controls{gap:5px}.small-button{padding:7px;font-size:6px}.flight-tip{font-size:6px}.design-layout{grid-template-columns:1fr 195px;gap:17px}.module-option{padding:9px}.module-option strong{font-size:13px}}
+@media(max-width:800px){body{overflow-y:auto}.hud-frame{display:none}.topbar{height:65px;padding:14px 18px}.topbar nav{gap:15px}.nav-button{font-size:8px}.nav-button span{display:none}.brand{font-size:22px}.brand small{font-size:6px}.brand-emblem{width:30px;height:30px;font-size:25px}.header-right{gap:6px}.menu-view{position:relative;inset:auto;margin:8px 20px 55px;min-height:900px}.menu-topline{font-size:6px}.menu-topline>span:last-child{display:none}.brief-panel{top:365px;left:0;width:100%;padding:16px}.brief-panel h1{font-size:35px}.brief-copy{font-size:11px;margin:12px 0}.brief-panel .eyebrow{margin:0 0 8px}.brief-panel .panel-caption{display:none}.brief-stats{display:none}.brief-footer{display:none}.mission-goal{padding-bottom:0;margin-top:12px}.right-panels{display:none}.planet-overlay{left:0;right:0;width:100%;top:5px;height:340px}.planet-coordinate.top{display:none}.menu-center-caption{top:302px;left:48%;font-size:14px}.destination-strip{position:relative;top:635px;bottom:auto}.destination-cards{gap:7px;grid-template-columns:repeat(5,128px);overflow-x:auto;padding-bottom:12px}.destination-card{height:111px}.card-text{font-size:24px}.card-planet{width:70px;height:70px}.strip-heading{font-size:7px}.keyboard-hint{display:none}.menu-bottom{position:relative;top:655px;bottom:auto;display:flex;flex-direction:column;align-items:stretch;gap:17px}.menu-save{justify-content:center;font-size:6px}.primary-button{min-height:46px}.bottom-status{bottom:10px;left:20px;right:20px;font-size:5px;background:#040c14c9;padding:6px}.bottom-status>span:nth-child(2){display:none}.bottom-status button{font-size:5px}.flight-view{inset:73px 15px 45px;position:fixed}.flight-top{padding-top:9px}.flight-top h2{font-size:20px;max-width:230px}.flight-top .eyebrow{font-size:6px}.mission-clock{gap:7px}.mission-clock>span{display:none}.mission-clock strong{font-size:19px}.mission-clock .small-button{font-size:0}.mission-clock kbd{font-size:6px}.flight-left{top:68px;width:132px;gap:10px}.telemetry{padding:9px}.resource-row{margin-bottom:8px}.resource-row>div{font-size:6px}.resource-row b{font-size:14px}.resource-row b small{font-size:6px}.telemetry-extra{font-size:5px;flex-direction:column;gap:4px}.telemetry-extra .text-button{font-size:6px}.telemetry .panel-caption{font-size:9px;margin-bottom:8px}.telemetry .panel-caption span{display:none}.radar-panel{display:none}.telemetry-readouts{flex-direction:column;gap:6px}.telemetry-readouts>div>span{font-size:6px}.telemetry-readouts b{font-size:20px}.flight-right{width:143px;top:68px}.objective-panel{padding:9px}.objective-panel>.panel-caption{font-size:8px;margin-bottom:9px}.objective-panel>.panel-caption span{font-size:6px}.objective-panel>p{font-size:12px}.objective-panel li{font-size:6px;line-height:1.4}.target-range>span{font-size:6px}.target-range strong{font-size:21px}.power-panel{padding:7px}.power-panel .panel-caption{font-size:8px;margin-bottom:4px}.power-panel .panel-caption span{display:none}.power-panel>button{font-size:7px;padding:5px}.power-panel p{display:none}.science-readout{gap:5px}.science-symbol{font-size:26px}.science-readout small{font-size:6px}.science-readout b{font-size:25px}.science-readout div>span{font-size:6px}.flight-center-bottom{bottom:162px;width:100%}.flight-tip{display:none}.pilot-controls .small-button{font-size:6px;padding:6px}.pilot-controls kbd{font-size:6px;margin-left:3px}.comm-panel{left:0;right:0;bottom:45px;min-height:75px;padding:10px}.comm-panel p{font-size:10px}.comm-wave{display:none}.flight-progress{padding-top:9px;gap:3px}.flight-progress span{font-size:5px;gap:3px;display:block;text-align:center}.flight-progress b{display:block;font-size:11px;margin-bottom:3px}.flight-progress .active:after{display:none}.dialog{padding:24px 20px;max-height:90vh}.dialog h2{font-size:30px}.dialog p{font-size:11px}.dialog .close-dialog{right:12px;top:12px}.dialog .dialog-footer{flex-direction:column;align-items:stretch;gap:15px}.design-layout{display:flex;flex-direction:column}.design-summary{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:5px 15px}.design-summary h3{grid-column:1/-1;margin-bottom:12px}.design-summary p{grid-column:1/-1}.design-summary label{margin-top:8px}.design-summary select{grid-column:1/-1}.design-stat{margin-bottom:12px}.module-option{min-height:116px;padding:8px}.module-option strong{font-size:13px}.module-option small{font-size:8px;line-height:1.5}.module-option span{font-size:7px}.controls-grid{grid-template-columns:1fr}.control-row{font-size:10px}.cinematic h2{font-size:31px;text-align:center;padding:0 20px}.cinematic p{font-size:8px;padding:0 25px;text-align:center}.debrief-stats{grid-template-columns:repeat(2,1fr)}.notifications{top:75px;width:90%;font-size:8px}.notification{font-size:8px}.touch-controls{bottom:230px;left:10px;right:10px}.touch-controls button{padding:9px 12px;font-size:7px}.interact-prompt{margin-bottom:9px}.target-marker strong{max-width:130px;white-space:normal;text-align:center;line-height:1.6}.mission-goal strong{font-size:11px}}
+@media(prefers-reduced-motion:reduce){.card-planet,.route-art svg circle,.comm-wave i{animation:none}.scanlines{display:none}.dialog,.notification,.cinematic{animation:none}}
+
+@media(min-width:1101px) and (max-width:1599px) and (min-height:801px){h1{font-size:35px}.brief-copy{font-size:12px;line-height:1.85}.brief-stats span{font-size:8px}}
+
+/* Mission phase 00: spacecraft assembly */
+.dialog.assembly-dialog{width:min(1460px,97vw);max-width:1460px;padding:24px 28px;background:linear-gradient(135deg,rgba(9,25,37,.99),rgba(3,11,21,.99));max-height:96vh;overflow:auto}.assembly-dialog h2{font-size:clamp(23px,2.6vw,36px);margin:4px 0 15px}.hangar-layout{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:24px}.hangar-workbench{min-width:0}.hangar-topline{display:flex;justify-content:space-between;font:10px 'IBM Plex Mono',monospace;letter-spacing:1.3px;color:#799da8;padding:0 0 10px}.hangar-topline b{color:#83eaff}.hangar-stage{height:clamp(270px,36vh,430px);position:relative;border:1px solid #2a5265;background:#07131f;overflow:hidden}.hangar-canvas{position:absolute;inset:0}.hangar-canvas canvas{display:block;width:100%;height:100%;touch-action:none}.hangar-overlay{position:absolute;left:18px;top:15px;pointer-events:none;max-width:70%}.hangar-overlay p{font-size:11px;color:#aac7d0;margin:7px 0}.hangar-tools{position:absolute;right:10px;bottom:32px;display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}.hangar-tools button,.catalog-heading button{background:#0d2433e8;border:1px solid #396575;color:#b6dce4;font:10px 'IBM Plex Mono',monospace;padding:8px;cursor:pointer}.hangar-tools button[aria-pressed=true]{background:#236174;color:white}.hangar-hint{position:absolute;bottom:12px;left:15px;color:#7aa0b1;font:9px 'IBM Plex Mono',monospace;letter-spacing:.5px}.hangar-slots{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:10px}.hangar-slots button{background:#091b28;border:1px solid #284651;color:#a1b8c6;text-align:left;min-width:0;padding:10px;cursor:pointer;position:relative}.hangar-slots button>span{font:10px 'IBM Plex Mono';color:#5a8395}.hangar-slots b{display:block;font:600 15px Rajdhani,sans-serif;text-transform:uppercase;letter-spacing:.8px;margin:4px 0}.hangar-slots small{display:block;font-size:9px;line-height:1.5;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.hangar-slots button[aria-pressed=true]{border-color:#80e8f9;background:#11303d;box-shadow:inset 0 2px #8aecff}.hangar-slots .socket-installed:after{content:'✓';position:absolute;right:9px;top:8px;color:#86e3c2}.hangar-catalog{position:relative;margin-top:14px}.catalog-heading{display:flex;justify-content:space-between;align-items:center;gap:12px}.catalog-heading h3{margin:0;font:600 13px Rajdhani;letter-spacing:1.4px}.catalog-heading button{padding:5px 8px;font-size:9px}.part-previews{position:absolute;top:32px;left:0;right:0;height:100px;pointer-events:none;z-index:1}.part-previews canvas{display:block}.hangar-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px}.hangar-options button{position:relative;min-width:0;padding:102px 12px 11px;background:linear-gradient(135deg,#0d2536,#081720);border:1px solid #284756;text-align:left;color:#c2d6df;cursor:pointer;transition:border-color .2s,background .2s}.hangar-options button:hover{border-color:#71cddd;background:#102e40}.hangar-options button[aria-pressed=true]{border-color:#81ead9;background:#123238}.part-number{position:absolute;top:9px;left:10px;font:10px 'IBM Plex Mono';color:#7190a2}.hangar-options strong{display:block;font:600 17px Rajdhani}.hangar-options small{font:10px 'IBM Plex Mono';color:#a7c7cf;display:block;margin:5px 0}.part-description{font-size:10px;line-height:1.5;display:block;color:#8eabb9;min-height:30px}.hangar-options button>b{font:10px 'IBM Plex Mono';letter-spacing:.6px;display:block;margin-top:10px;color:#83e4e6}.engineering-lesson{font-size:11px!important;line-height:1.65!important;color:#8da9ba!important;margin:10px 0 0!important}.hangar-readiness{border-left:1px solid #294758;padding-left:23px}.hangar-readiness h3{font:600 21px Rajdhani;letter-spacing:1px;margin:6px 0}.hangar-subtitle{font-size:10px!important;color:#82a8b7!important;margin-bottom:15px!important}.hangar-stat{display:flex;justify-content:space-between;align-items:center;gap:10px;border-bottom:1px solid #203b4a;padding:10px 0}.hangar-stat span{font:9px 'IBM Plex Mono';color:#7da1b1;max-width:130px}.hangar-stat b{font:600 17px Rajdhani;color:#cce5ec;white-space:nowrap}.hangar-stat.invalid b{color:#ffa682}.projection-note{font-size:10px!important;line-height:1.5!important;color:#7195a5!important}.assembly-checklist{border:1px solid #376271;background:#11303b;padding:11px;margin:14px 0}.assembly-checklist b{font:11px 'IBM Plex Mono';color:#a1e8e0}.assembly-checklist p{font-size:11px;line-height:1.5;margin:8px 0 0;color:#b3c9d0}.hangar-science{font-size:10px;line-height:1.6;color:#829eaf;margin-bottom:15px}.hangar-science summary{cursor:pointer;color:#abd4df;font:10px 'IBM Plex Mono';padding:6px 0}.hangar-science p{font-size:11px!important;line-height:1.6!important}.hangar-science a{display:block;color:#87d7e9;padding:4px 0}.hangar-readiness label{display:block;font:9px 'IBM Plex Mono';color:#8bacba;margin-bottom:8px}.hangar-readiness select{width:100%;padding:9px;background:#112535;color:#bdd8e3;border:1px solid #355261;font-size:10px}.hangar-footer{margin-top:17px!important;padding-top:15px!important}.hangar-footer>span{font-size:10px!important}.assembly-dialog button:focus-visible,.assembly-dialog summary:focus-visible{outline:2px solid #effcff;outline-offset:3px}.assembly-dialog button:disabled{opacity:.4;cursor:not-allowed}
+@media(max-width:1000px){.hangar-layout{grid-template-columns:minmax(0,1fr) 220px;gap:14px}.hangar-readiness{padding-left:13px}.dialog.assembly-dialog{padding:20px}.hangar-stat{display:block;padding:6px 0}.hangar-stat b{display:block;font-size:16px}.hangar-stage{height:310px}}
+@media(max-width:700px){.hangar-layout{display:block}.hangar-readiness{border-left:0;border-top:1px solid #294758;padding:18px 0 0;margin-top:18px}.hangar-stage{height:330px}.hangar-topline{font-size:8px}.hangar-overlay{max-width:90%}.hangar-overlay p{font-size:10px}.hangar-tools{left:8px;right:8px}.hangar-tools button{font-size:8px;padding:7px}.hangar-hint{font-size:7px}.hangar-slots{grid-template-columns:repeat(2,1fr)}.hangar-options{gap:4px}.hangar-options button{padding:98px 7px 9px}.hangar-options strong{font-size:14px}.hangar-options small{font-size:8px}.part-description{font-size:9px}.hangar-options button>b{font-size:8px}.hangar-stat{display:flex}.hangar-stat span{max-width:none}#hangar-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 18px}.hangar-stat{display:block}.projection-note{grid-column:1/-1}.hangar-footer{align-items:stretch;gap:14px}.dialog.assembly-dialog{padding:18px 12px}.catalog-heading h3{font-size:11px}}
+
+/* Branching expedition and field instruments */
+.transfer-map{display:grid;grid-template-columns:1.2fr 1fr;gap:24px;align-items:center;border:1px solid #294f62;background:radial-gradient(ellipse at 35% 55%,#142c3b,#06121d);padding:18px}.transfer-map svg{width:100%;overflow:visible}.transfer-map ellipse{fill:none;stroke:#547c883e;stroke-width:1}.transfer-arc{fill:none;stroke:#80e6dd;stroke-width:2;stroke-dasharray:8 6;animation:transfer-flow 3s linear infinite}.map-earth{fill:#80c9f0}.map-mars{fill:#d98e63}.map-sun{fill:#e8bc7a}.transfer-map text{fill:#7e9ca9;font:9px monospace}.planner-story h3{font:600 27px Rajdhani;margin:10px 0}.planner-story p{font-size:12px!important;line-height:1.8}.route-cards,.site-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}.route-cards button,.site-cards button{padding:18px;background:#0b2030;border:1px solid #345366;color:#bfd7df;text-align:left;cursor:pointer;transition:border .2s,background .2s}.route-cards button[aria-pressed=true],.site-cards button[aria-pressed=true],.claim-options button[aria-pressed=true]{background:#163942;border-color:#97ede0;box-shadow:inset 0 2px #a3e7df}.route-cards small,.site-cards small{font:9px 'IBM Plex Mono';color:#7d9dac;letter-spacing:1px}.route-cards h3,.site-cards h3{font:600 21px Rajdhani;margin:12px 0}.route-cards button>b{font:500 40px Rajdhani;color:#d8f1ef;display:block}.route-cards button>b span{font:8px 'IBM Plex Mono';display:block;color:#7d9dac}.route-cards p,.site-cards p{font-size:11px!important;line-height:1.7;min-height:58px}.route-cards button>div{border-top:1px solid #304858;padding-top:10px;margin-top:10px;font-size:10px;display:flex;justify-content:space-between;gap:10px}.route-cards strong{color:#9ce6cc}.model-caption{font-size:10px!important;line-height:1.65!important;color:#89a5b5!important}.operation-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px}.power-diagram{margin:22px 0;text-align:center;display:flex;flex-direction:column;align-items:center;gap:9px}.power-diagram>div{width:85%;padding:14px;background:#0b2230;border:1px solid #3b6473;font:11px 'IBM Plex Mono'}.power-diagram b{display:block;color:#92dfcb;font-size:14px;margin-top:8px}.power-diagram .fault-text{color:#ffb58a;animation:fault-pulse 1.8s ease-in-out infinite}.procedure-panel{background:#0b1e2b;padding:22px;border:1px solid #345360}.procedure-panel h3{font:600 19px Rajdhani}.procedure-panel p{font-size:11px!important;line-height:1.8}.circuit-switch{display:flex;align-items:center;gap:12px;width:100%;margin:10px 0;padding:16px 12px;background:#102d3a;color:#b8d5dc;border:1px solid #395967;cursor:pointer;text-align:left;font:11px Rajdhani}.circuit-switch>span{color:#739eae}.circuit-switch>b{font:8px 'IBM Plex Mono';margin-left:auto;color:#e0b77c}.circuit-switch[aria-pressed=true]{border-color:#7cd9c3;background:#183c3d;opacity:1}.circuit-switch[aria-pressed=true]>b{color:#89e8bc}.procedure-panel .primary-button,.procedure-panel .outline-button{width:100%;margin-top:12px;justify-content:center}#operation-feedback{font-size:12px;line-height:1.7;color:#a4d8df;min-height:35px}.data-badge{display:inline-block;border:1px solid #8d7048;color:#d7ba8b;font:9px 'IBM Plex Mono';padding:8px 10px;letter-spacing:.5px}.spectrum-console{border:1px solid #345c6c;background:#071a26;margin-top:20px;padding:16px 22px}.spectrum-plot svg{width:100%;height:160px}.plot-grid{fill:none;stroke:#23414e;stroke-width:1}.clay-trace{fill:none;stroke:#8bdbc2;stroke-width:2}.sulfate-trace{fill:none;stroke:#d9b47a;stroke-width:2}#band-cursor{stroke:#e7f6ff;stroke-width:1.5;stroke-dasharray:3 3}.spectrum-plot text{fill:#7d9eac;font:8px monospace}.spectrum-console label{display:flex;justify-content:space-between;font:10px 'IBM Plex Mono';color:#80a5b4}.spectrum-console input{width:100%;margin:18px 0;accent-color:#8cead9;cursor:ew-resize}.spectrum-actions{display:flex;align-items:center;gap:20px}.spectrum-actions #operation-feedback{margin:0;min-height:0;font-size:11px}.site-cards strong{font:10px 'IBM Plex Mono';color:#9bd7cf}.mineral-bar{font:9px 'IBM Plex Mono';display:grid;grid-template-columns:52px 1fr 52px;align-items:center;gap:7px;margin:13px 0}.mineral-bar i{height:6px;background:linear-gradient(to right,#88cbb9 var(--mineral),#223c46 var(--mineral));opacity:.12}.sulfate i{background:linear-gradient(to right,#d6b175 var(--mineral),#223c46 var(--mineral))}.has-clay .mineral-bar:not(.sulfate) i,.has-sulfate .sulfate i{opacity:1}.mineral-bar b{font-size:8px}.science-link{color:#a2d6df;font-size:11px;display:inline-block;margin:7px 0}.evidence-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0}.evidence-grid article{border:1px solid #315567;padding:20px;background:#0c2432}.evidence-grid span{font:9px 'IBM Plex Mono';color:#8ab1bb}.evidence-grid h3{font:600 21px Rajdhani}.evidence-grid p{font-size:12px;line-height:1.7}.claim-options{display:grid;gap:10px}.claim-options button{text-align:left;padding:17px;background:#102637;border:1px solid #395565;color:#c6dbe4;cursor:pointer}.claim-options strong{display:block;font:600 18px Rajdhani}.claim-options span{display:block;font-size:11px;margin-top:6px;color:#98b4c0}.engineering-debrief{border-top:1px solid #365565;padding-top:20px;margin:24px 0}.engineering-debrief h3{font:600 23px Rajdhani}.engineering-debrief>div{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.engineering-debrief article{background:#112a37;padding:15px;border-left:2px solid #6ac5bd}.engineering-debrief article b{font:600 17px Rajdhani}.engineering-debrief article p{font-size:11px;line-height:1.7}@keyframes transfer-flow{to{stroke-dashoffset:-84}}@keyframes fault-pulse{50%{opacity:.45}}@media(prefers-reduced-motion:reduce){.transfer-arc,.fault-text{animation:none!important}}@media(max-width:740px){.transfer-map,.operation-grid{grid-template-columns:1fr}.route-cards,.site-cards,.evidence-grid,.engineering-debrief>div{grid-template-columns:1fr}.route-cards p,.site-cards p{min-height:0}.transfer-map svg{max-height:190px}.planner-story h3{font-size:23px}.spectrum-actions{align-items:flex-start;flex-direction:column;gap:8px}.spectrum-console{padding:14px}.operation-grid{gap:12px}}
+
+.approach-guide{position:absolute;top:180px;left:50%;transform:translateX(-50%);width:250px;padding:12px 16px;border:1px solid #60939b;background:#071a27bf;backdrop-filter:blur(5px);pointer-events:none}.approach-heading{display:flex;justify-content:space-between;gap:10px;font:8px 'IBM Plex Mono';color:#9cc3cc}.approach-heading b{color:#e4b978}.approach-guide svg{display:block;width:160px;height:100px;margin:auto;fill:none;stroke:#59838f;stroke-width:1}.approach-guide #approach-dot{fill:#ffc798;stroke:none}.approach-guide.ready{border-color:#84e7c4}.approach-guide.ready #approach-state{color:#92ebc7}.approach-guide.ready #approach-dot{fill:#9aefcf}.approach-guide #approach-values{font:9px 'IBM Plex Mono';text-align:center;color:#c4e4e5}.approach-guide small{display:block;font-size:9px;text-align:center;margin-top:8px;color:#789ba9}@media(max-width:800px){.approach-guide{top:150px;width:190px;padding:9px}.approach-guide svg{height:65px;width:105px}.approach-guide #approach-values{font-size:7px}}
+
+#modal-layer:not([hidden])~#notifications{display:none}.operation-dialog .dialog-footer,.planning-dialog .dialog-footer{position:sticky;bottom:-34px;background:#0a1d29;padding:16px 0;margin-bottom:-10px;z-index:3;border-top:1px solid #456575}.operation-dialog input:focus-visible{outline:2px solid #bef6ed;outline-offset:5px}.operation-dialog button:focus-visible,.planning-dialog button:focus-visible{outline:2px solid #d7ffff;outline-offset:3px}@media(max-width:740px){.operation-dialog .dialog-footer,.planning-dialog .dialog-footer{bottom:-22px;flex-wrap:wrap;gap:12px}}
+
+/* Keep the assembly decision visible while the workbench scrolls. */
+.dialog.assembly-dialog{display:flex;flex-direction:column;height:min(96vh,940px);overflow:hidden}
+.assembly-dialog #assembly-root{display:flex;flex-direction:column;flex:1;min-height:0}
+.assembly-dialog .hangar-layout{flex:1;min-height:0;overflow-y:auto;scrollbar-color:#477887 #0b202c;padding-right:5px}
+.assembly-dialog .hangar-footer{flex:none;min-height:66px;margin-top:0!important;padding:12px 0 0!important;background:#091c27;border-top:1px solid #426779;z-index:2}
+.assembly-dialog .hangar-slots .socket-next:not([aria-pressed=true]){border-color:#619eaa;background:#102c37}
+.assembly-dialog .hangar-slots .socket-next small{color:#a8e3dc}
+.assembly-dialog .hangar-overlay p{color:#c1e9e7}
+@media(max-width:700px){.modal-layer:has(.assembly-dialog){padding:12px}.dialog.assembly-dialog{box-sizing:border-box;width:calc(100vw - 24px);max-width:calc(100vw - 24px);height:min(96dvh,940px)}.assembly-dialog .hangar-layout{padding-right:0}.assembly-dialog .hangar-footer{min-height:70px}.assembly-dialog .hangar-footer .primary-button{min-width:168px}}
+
+/* Surface expedition: selectable leads and an explicit return decision. */
+.rover-target{width:100%;display:flex;align-items:center;gap:7px;text-align:left;border:1px solid #527e8866;background:#0a2430;padding:7px 6px;color:#adced3;font:9px var(--mono);line-height:1.4}
+.rover-target>span{color:#8ddfd4;min-width:20px}
+.rover-target[aria-pressed=true]{border-color:#9be6dc;background:#13414b;color:#effffb;box-shadow:inset 2px 0 #a5efe1}
+.rover-target:disabled{opacity:.58;cursor:default}
+.rover-depart{width:100%;margin-top:10px;border:1px solid #94e0d4;background:#18444a;padding:10px 8px;color:#c9fff1;font:10px var(--mono);letter-spacing:.02em}
+.rover-depart:disabled{border-color:#49616b;color:#6e8d97;background:#10252e;font-size:8px}
+.rover-depart kbd{font:9px var(--mono);border:1px solid #a7e6d677;padding:1px 3px}
+@media(max-width:800px){.rover-target{font-size:7px;padding:5px 3px;gap:3px}.rover-target>span{min-width:13px}.rover-depart{font-size:7px;padding:8px 3px}.rover-depart:disabled{font-size:6px}}
+.evidence-grid .missing-evidence{border-color:#b8836859;background:#241c1e}
+.evidence-grid .missing-evidence span{color:#e9b28f}
+#rover-map{display:block;width:100%;height:100px;margin:9px 0 3px;border:1px solid #477280;cursor:crosshair}
+@media(max-width:800px){#rover-map{height:76px}}
+
+/* Red Alert HUD */
+.hud-alert-critical .hud-frame {
+  filter: drop-shadow(0 0 12px rgba(255, 60, 60, 0.85));
+}
+.hud-alert-critical .frame-inner {
+  stroke: #ff4c4c !important;
+  animation: pulse-alert 0.75s ease-in-out infinite alternate;
+}
+.hud-alert-critical .telemetry {
+  border-color: rgba(255, 76, 76, 0.7) !important;
+  box-shadow: inset 0 0 20px rgba(255, 60, 60, 0.2);
+}
+.hud-alert-warning .frame-inner {
+  stroke: #e5b876 !important;
+}
+@keyframes pulse-alert {
+  0% { stroke: #ff4c4c; opacity: 0.7; }
+  100% { stroke: #ff8888; opacity: 1; }
+}
+
+/* CRT Screen Glitch */
+.screen-glitch {
+  animation: glitch-burst 0.25s steps(2) 2;
+}
+@keyframes glitch-burst {
+  0% { transform: translate(2px, -1px); filter: hue-rotate(90deg) contrast(1.5); }
+  50% { transform: translate(-3px, 2px); filter: invert(0.2); }
+  100% { transform: translate(0, 0); filter: none; }
+}
+.spectrum-presets{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 15px}.spectrum-presets button{border:1px solid #628a93;background:#12303a;color:#d3edeb;padding:10px 13px;font:10px var(--mono);letter-spacing:.03em}.spectrum-presets button:hover,.spectrum-presets button:focus-visible{border-color:#a0ede0;background:#1c4650}.spectrum-presets button.acquired{border-color:#81c8a3;background:#173b35;color:#bbf5d5}.spectrum-presets button.acquired::after{content:' ✓'}
+.assembly-dialog .hangar-slots{grid-template-columns:repeat(3,minmax(0,1fr))}.assembly-dialog .hangar-slots b{font-size:13px;letter-spacing:.4px}.assembly-dialog .hangar-slots button{padding:8px 10px}.assembly-dialog .hangar-stage{height:360px}.assembly-dialog .hangar-hint{font-size:8px}@media(max-width:700px){.assembly-dialog .hangar-slots{grid-template-columns:repeat(2,minmax(0,1fr))}.assembly-dialog .hangar-stage{height:300px}.assembly-dialog .hangar-slots b{font-size:12px}}
+/* Keep the craft and component catalog on screen while subsystems slide horizontally. */
+.assembly-dialog .hangar-layout{position:relative;overflow:hidden;align-items:stretch;padding-right:0}
+.assembly-dialog .hangar-workbench{display:flex;flex-direction:column;min-height:0;overflow:hidden}
+.assembly-dialog .hangar-topline{flex:none;align-items:center}
+.assembly-dialog .hangar-stage{flex:1;min-height:160px;height:auto}
+.assembly-dialog .hangar-section-nav{display:flex;align-items:stretch;gap:7px;flex:none;min-width:0;margin-top:10px}
+.hangar-section-nav>[data-hangar]{flex:none;width:32px;border:1px solid #4e8492;background:#102b38;color:#b8f2ee;font:30px var(--display);padding:0;line-height:1}
+.assembly-dialog .hangar-slots{position:relative;display:flex;gap:7px;min-width:0;flex:1;margin:0;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;scroll-snap-type:x proximity}
+.hangar-slots::-webkit-scrollbar{display:none}
+.assembly-dialog .hangar-slots button{flex:0 0 calc((100% - 14px)/3);min-width:150px;height:48px;scroll-snap-align:center}
+.assembly-dialog .hangar-catalog{flex:0 1 auto;min-height:0;max-height:52%;overflow-y:auto;overflow-x:hidden;scrollbar-color:#477887 #0b202c;padding:0 3px 3px;margin-top:6px}
+.assembly-dialog .part-previews{height:50px}
+.assembly-dialog .hangar-options button{padding-top:52px;min-height:0}
+.assembly-dialog .hangar-readiness{min-height:0;overflow-y:auto;scrollbar-color:#477887 #0b202c;padding-right:4px}
+.hangar-topline [data-hangar=engineering]{display:none}
+@media(max-width:700px){
+ .assembly-dialog .hangar-layout{display:flex}
+ .assembly-dialog .hangar-workbench{width:100%;flex:1}
+ .assembly-dialog .hangar-stage{height:auto;min-height:160px}
+ .assembly-dialog .hangar-readiness{display:none}
+ .assembly-dialog .hangar-topline>span:last-child{font-size:0}
+ .hangar-topline [data-hangar=engineering]{display:inline-block;border:1px solid #4e8492;background:#102b38;color:#b8f2ee;padding:6px;font:8px var(--mono);position:relative;z-index:7}
+ .assembly-dialog [data-engineering=true] .hangar-readiness{display:block;position:absolute;right:0;top:30px;bottom:0;width:min(300px,90%);z-index:6;background:#0b1f2d;border:1px solid #4e8492;padding:14px;margin:0;box-shadow:-12px 0 35px #0009}
+ .assembly-dialog .hangar-slots button{min-width:155px;height:70px}
+ .assembly-dialog .hangar-catalog{max-height:53%}
+ .assembly-dialog .part-previews{height:65px}
+ .assembly-dialog .hangar-options button{padding-top:68px}
+}
+.component-specs,.part-comparison{display:grid;gap:4px;margin-top:9px;padding-top:8px;border-top:1px solid #42606b66;font:9px var(--mono);color:#b8d7de}.component-specs>span,.part-comparison>span{display:flex;justify-content:space-between;gap:5px}.component-specs em,.part-comparison em{font-style:normal;color:#809fab;font-size:8px}.component-specs b,.part-comparison b{font-size:9px;font-weight:400;text-align:right}.part-comparison>em{font-size:7px;line-height:1.5}.part-validity{display:block;margin-top:8px;font:8px var(--mono);color:#9ae1bb;line-height:1.5}.component-specs .invalid,.part-comparison .invalid,.part-validity.invalid{color:#ffb194}.engineering-extra{margin-top:8px;font:9px var(--mono);color:#a2c8d1}.engineering-extra summary{cursor:pointer;padding:9px 0}.assembly-dialog .catalog-heading{position:sticky;top:0;z-index:3;background:#091d29;padding:3px 0;flex-wrap:wrap}.assembly-dialog .catalog-heading h3{flex:1;min-width:170px}.assembly-dialog .part-previews{top:38px}.assembly-dialog .hangar-options strong{font-size:16px}.assembly-dialog .hangar-options small{font-size:9px}
+.mission-guidance{width:420px;max-width:calc(100vw - 48px);white-space:normal;background:#091d29e8;border:1px solid #55798499;padding:10px 13px;margin:0 auto 10px;text-align:left;box-shadow:0 7px 30px #0006}.mission-guidance>span{font:8px var(--mono);color:#8cbbc5;letter-spacing:.12em}.mission-guidance h3{font:600 19px var(--display);margin:4px 0;color:#d8f5ed}.mission-guidance p{font:10px/1.55 var(--body);margin:0;color:#aac5ce}.mission-guidance[data-state=ready]{border-color:#91e6c2}.mission-guidance[data-state=blocked]{border-color:#dda373}.mission-guidance[data-state=working]{box-shadow:0 0 18px #7bd1c329}#pilot-practice{margin-top:9px;border-top:1px solid #517d8966;padding-top:8px}#pilot-practice b{font:8px var(--mono);color:#ead1a1}#pilot-practice p{margin-top:4px}#skip-practice{font:8px var(--mono);background:transparent;border:0;padding:5px 0;color:#85b5c3}.target-marker.ready .target-bracket{animation:capture-glow 1.4s ease-in-out infinite}@keyframes capture-glow{50%{text-shadow:0 0 15px #9be8d0}}
+.target-marker.stage-departure .target-bracket{color:#ffb703;filter:drop-shadow(0 0 8px rgba(255,183,3,0.85))}
+.target-marker.stage-departure strong{color:#ffe082}
+.target-marker.stage-departure.ready .target-bracket{color:#38ef7d;filter:drop-shadow(0 0 12px rgba(56,239,125,0.95))}
+@media(max-width:700px){.assembly-dialog .catalog-heading h3{min-width:100%;font-size:10px}.assembly-dialog .catalog-heading button{font-size:7px}.assembly-dialog .part-previews{top:66px}.assembly-dialog .hangar-options button{padding-top:72px}.component-specs>span,.part-comparison>span{display:block}.component-specs em,.part-comparison em{display:block;font-size:7px}.component-specs b,.part-comparison b{display:block;text-align:left;font-size:8px}.part-validity{font-size:7px}.mission-guidance{width:300px;max-width:calc(100vw - 70px);padding:8px 10px;margin-bottom:7px}.mission-guidance h3{font-size:16px}.mission-guidance p{font-size:9px}.mission-guidance>span{font-size:7px}#pilot-practice{margin-top:6px;padding-top:6px}}
+@media(prefers-reduced-motion:reduce){.target-marker.ready .target-bracket{animation:none}}
+/* Optional flight help stays inside the cockpit sidebar, leaving the flight view clear. */
+.objective-panel .mission-guidance{width:100%;max-width:none;margin:10px 0 0;padding:0;white-space:normal;background:transparent;border:0;border-top:1px solid var(--line);box-shadow:none;text-align:left}
+.mission-guidance summary{display:flex;justify-content:space-between;align-items:center;cursor:pointer;pointer-events:auto;list-style:none;padding:9px 0 2px;font:8px var(--mono);color:#8cbbc5;letter-spacing:.08em}
+.mission-guidance summary::-webkit-details-marker{display:none}
+.mission-guidance summary:focus-visible{outline:2px solid var(--bright);outline-offset:3px}
+.mission-guidance[open] .help-chevron{transform:rotate(180deg)}
+.objective-panel .guidance-content{padding-top:7px;max-height:180px;overflow:auto;scrollbar-width:thin;pointer-events:auto}
+.objective-panel .mission-guidance h3{font-size:15px;margin:0 0 5px}
+.objective-panel .mission-guidance p{font-size:9px;line-height:1.5}
+.objective-panel .mission-guidance[data-state=working]{box-shadow:none}
+@media(max-width:700px){.objective-panel .guidance-content{max-height:130px}.objective-panel .mission-guidance h3{font-size:12px}.objective-panel .mission-guidance p{font-size:8px}.mission-guidance summary{font-size:7px}}
+ .build-flexibility{margin:12px 0 18px;padding:12px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+ .build-flexibility label{display:block;font:8px var(--mono);color:#91bbc4;margin:8px 0 6px}
+ .build-flexibility select{width:100%;min-width:0;background:#102430;border:1px solid #466673;color:var(--ink);padding:8px 6px;font:10px var(--body)}
+ .build-flexibility p{font:9px/1.5 var(--body);color:var(--muted)}
+ .quick-components summary{cursor:pointer;color:var(--cyan);font:9px var(--mono);padding:8px 0}
+ .quick-components[open]{padding-bottom:8px}
+
+ /* NASA Mission Architecture Configuration */
+ .nasa-architecture-box {
+   margin: 14px 0 18px;
+   padding: 14px 12px;
+   background: rgba(10, 28, 42, 0.65);
+   border: 1px solid rgba(0, 229, 255, 0.25);
+   border-radius: 4px;
+   box-shadow: inset 0 0 16px rgba(0, 229, 255, 0.05);
+ }
+ .arch-control-group {
+   margin-bottom: 12px;
+ }
+ .arch-control-group label {
+   display: block;
+   font: 700 9px/1.2 var(--mono, 'IBM Plex Mono', monospace);
+   color: #79dce9;
+   letter-spacing: 0.8px;
+   margin-bottom: 5px;
+   text-transform: uppercase;
+ }
+ .arch-control-group select {
+   width: 100%;
+   min-width: 0;
+   background: #091b27;
+   border: 1px solid #2e5567;
+   color: #d8f1ef;
+   padding: 8px 10px;
+   font: 600 12px/1.4 var(--body, 'Rajdhani', sans-serif);
+   border-radius: 3px;
+   cursor: pointer;
+   transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+ }
+ .arch-control-group select:hover,
+ .arch-control-group select:focus {
+   border-color: #00e5ff;
+   background: #0e293a;
+   outline: none;
+   box-shadow: 0 0 8px rgba(0, 229, 255, 0.25);
+ }
+ .arch-hint {
+   font: 11px/1.45 var(--body, 'Rajdhani', sans-serif);
+   color: #92b4c2;
+   margin: 5px 0 0;
+ }
+
+ /* Mission Planner Architecture Banner */
+ .planner-arch-banner {
+   display: grid;
+   grid-template-columns: repeat(4, 1fr);
+   gap: 10px;
+   margin-bottom: 16px;
+   padding: 10px 14px;
+   background: rgba(7, 24, 36, 0.85);
+   border: 1px solid rgba(0, 229, 255, 0.3);
+   border-radius: 4px;
+ }
+ .arch-badge-item {
+   display: flex;
+   flex-direction: column;
+   gap: 2px;
+ }
+ .arch-badge-label {
+   font: 700 8px/1 var(--mono, monospace);
+   color: #72a5b8;
+   letter-spacing: 0.5px;
+ }
+ .arch-badge-item b {
+   font: 600 12px/1.3 var(--body, 'Rajdhani', sans-serif);
+   color: #c9eff7;
+ }
+ .cost-ok {
+   color: #89e8bc !important;
+ }
+ .cost-warn {
+   color: #ff9175 !important;
+ }
+
+ /* Debrief Architecture Pills & Commendation */
+ .debrief-arch-pills {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 8px;
+   margin: 12px 0;
+ }
+ .debrief-pill {
+   font: 600 11px/1.2 var(--mono, monospace);
+   background: rgba(14, 43, 58, 0.8);
+   border: 1px solid rgba(0, 229, 255, 0.4);
+   color: #79e0f2;
+   padding: 5px 10px;
+   border-radius: 3px;
+   letter-spacing: 0.5px;
+ }
+ .debrief-commendation {
+   font: 700 13px/1.5 var(--body, 'Rajdhani', sans-serif);
+   color: #ffd875;
+   background: rgba(212, 175, 55, 0.12);
+   border-left: 3px solid #d4af37;
+   padding: 8px 12px;
+   margin: 10px 0 16px;
+ }
+ @media (max-width: 740px) {
+   .planner-arch-banner {
+     grid-template-columns: 1fr 1fr;
+     gap: 8px;
+   }
+ }
+
+/* ==========================================================================
+   NASA FLIGHT COMMENDATION CERTIFICATE & SETTINGS MODAL STYLES
+   ========================================================================== */
+.nasa-certificate-modal {
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+.cert-border-outer {
+  border: 3px double #d4af37;
+  padding: 12px;
+  background: radial-gradient(circle at 50% 30%, #0d1e2e 0%, #06101a 100%);
+  box-shadow: 0 0 35px rgba(212, 175, 55, 0.25), inset 0 0 40px rgba(0, 229, 255, 0.1);
+  border-radius: 4px;
+}
+.cert-border-inner {
+  border: 1px solid rgba(0, 229, 255, 0.4);
+  padding: 24px 30px;
+  text-align: center;
+  position: relative;
+}
+.cert-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.35);
+  padding-bottom: 16px;
+}
+.cert-titles h3 {
+  font-family: 'Orbitron', 'Rajdhani', sans-serif;
+  font-size: 16px;
+  letter-spacing: 0.15em;
+  color: #fff;
+  margin: 0 0 4px;
+}
+.cert-titles h4 {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  color: #d4af37;
+  margin: 0 0 4px;
+  text-transform: uppercase;
+}
+.cert-directive {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: #00e5ff;
+  letter-spacing: 0.08em;
+}
+.cert-intro {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 14px;
+  color: #9cb3c9;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0 0 8px;
+}
+.cert-pilot-name {
+  font-family: 'Orbitron', 'Rajdhani', sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #ffffff;
+  text-shadow: 0 0 15px rgba(0, 229, 255, 0.7);
+  margin: 0 0 14px;
+  padding: 4px 12px;
+  border-bottom: 2px solid #00e5ff;
+  display: inline-block;
+  cursor: text;
+}
+.cert-mission-statement {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #cfdeee;
+  max-width: 680px;
+  margin: 0 auto 20px;
+}
+.cert-mission-statement strong {
+  color: #00e5ff;
+}
+.cert-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin: 0 0 24px;
+  background: rgba(3, 15, 27, 0.75);
+  border: 1px solid rgba(0, 229, 255, 0.25);
+  padding: 12px;
+  border-radius: 4px;
+}
+.cert-metric-cell small {
+  display: block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.08em;
+  color: #7b9cb8;
+  margin-bottom: 4px;
+}
+.cert-metric-cell b {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  color: #d4af37;
+  letter-spacing: 0.05em;
+}
+.cert-signatures-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px dashed rgba(212, 175, 55, 0.3);
+}
+.cert-sign-col {
+  width: 220px;
+  text-align: center;
+}
+.cert-sign-line {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: #00e5ff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  padding-bottom: 4px;
+  margin-bottom: 4px;
+}
+.cert-sign-col small {
+  font-size: 9px;
+  color: #7a93a8;
+  font-family: 'Rajdhani', sans-serif;
+  letter-spacing: 0.06em;
+}
+.cert-hologram-seal {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 2px dashed #d4af37;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle, rgba(212,175,55,0.2) 0%, rgba(0,229,255,0.1) 70%);
+  box-shadow: 0 0 16px rgba(212, 175, 55, 0.4);
+}
+.cert-hologram-seal span {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 8px;
+  color: #d4af37;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+.cert-hologram-seal small {
+  font-size: 7px;
+  color: #00e5ff;
+  letter-spacing: 0.1em;
+}
+.cert-modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+/* Settings Modal */
+.settings-modal-content {
+  padding: 10px 0;
+}
+.setting-group {
+  margin-bottom: 16px;
+}
+.setting-group label {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: #8bbecb;
+  margin-bottom: 6px;
+}
+.setting-group input[type="range"] {
+  width: 100%;
+  accent-color: #00e5ff;
+}
+.setting-row-toggles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 18px 0;
+}
+
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .nasa-certificate-modal, .nasa-certificate-modal * {
+    visibility: visible;
+  }
+  .nasa-certificate-modal {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  .cert-modal-actions {
+    display: none !important;
+  }
+}
+
+/* BGM Soundtrack Control Button in Flight & Menu HUD */
+.bgm-selector-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(6, 24, 38, 0.75);
+  border: 1px solid rgba(0, 229, 255, 0.4);
+  color: #00E5FF;
+  font: 600 9px var(--mono, monospace);
+  letter-spacing: 0.08em;
+  padding: 6px 11px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.bgm-selector-btn:hover {
+  background: rgba(0, 229, 255, 0.18);
+  border-color: #38F8FF;
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.4);
+  color: #FFFFFF;
+}
+.bgm-mode-buttons .outline-button.active {
+  background: rgba(0, 229, 255, 0.25) !important;
+  border-color: #00E5FF !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.35);
+}
+
+/* ==========================================================================
+   NASA OPEN DATA & PDS PROVENANCE SYSTEM STYLES
+   ========================================================================== */
+
+/* Header Badge Button */
+.nasa-provenance-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(0, 50, 90, 0.55);
+  border: 1px solid rgba(0, 229, 255, 0.45);
+  color: #c7f4ff;
+  font: 600 10px var(--mono);
+  letter-spacing: 0.08em;
+  padding: 6px 12px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  white-space: nowrap;
+}
+.nasa-provenance-btn:hover {
+  background: rgba(0, 80, 140, 0.75);
+  border-color: #00e5ff;
+  box-shadow: 0 0 14px rgba(0, 229, 255, 0.45);
+  color: #ffffff;
+}
+.nasa-provenance-btn .meatball-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ff3b30;
+  box-shadow: 0 0 8px #ff453a;
+  display: inline-block;
+  animation: pulse-nasa 2.2s infinite ease-in-out;
+}
+@keyframes pulse-nasa {
+  0%, 100% { opacity: 0.6; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.15); box-shadow: 0 0 12px #ff453a; }
+}
+
+/* Scan HUD Provenance Card (Docked in upper-right periphery to NEVER block the flight path or ship) */
+.nasa-scan-card {
+  position: absolute;
+  top: 96px;
+  right: 236px;
+  width: min(340px, 80vw);
+  background: linear-gradient(135deg, rgba(6, 18, 30, 0.88), rgba(3, 10, 18, 0.92));
+  border: 1px solid rgba(0, 229, 255, 0.45);
+  border-left: 3px solid #00e5ff;
+  padding: 8px 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.65), 0 0 18px rgba(0, 229, 255, 0.15);
+  z-index: 40;
+  border-radius: 4px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  pointer-events: auto;
+  opacity: 0;
+  transform: translateY(-8px) scale(0.98);
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.nasa-scan-card.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+.nasa-scan-card.compact .nasa-card-body,
+.nasa-scan-card.compact .nasa-card-footer {
+  display: none !important;
+}
+.nasa-scan-card.compact {
+  padding: 6px 10px;
+}
+.nasa-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  border-bottom: 1px solid rgba(0, 229, 255, 0.2);
+  padding-bottom: 6px;
+  margin-bottom: 6px;
+}
+.nasa-scan-card.compact .nasa-card-header {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+.nasa-insignia-pill {
+  font: 700 8px var(--mono);
+  background: #c71610;
+  color: #ffffff;
+  padding: 2px 6px;
+  border-radius: 2px;
+  letter-spacing: 0.08em;
+}
+.nasa-card-badge {
+  font: 700 8px var(--mono);
+  color: #38f8ff;
+  letter-spacing: 0.09em;
+  margin-right: auto;
+  padding-left: 4px;
+}
+.nasa-card-toggle {
+  background: rgba(0, 229, 255, 0.12);
+  border: 1px solid rgba(0, 229, 255, 0.35);
+  color: #38f8ff;
+  font: 700 7px var(--mono);
+  padding: 2px 6px;
+  border-radius: 2px;
+  cursor: pointer;
+  margin-left: auto;
+  margin-right: 4px;
+  letter-spacing: 0.05em;
+  transition: background 0.15s, border-color 0.15s;
+}
+.nasa-card-toggle:hover {
+  background: rgba(0, 229, 255, 0.25);
+  border-color: #00e5ff;
+  color: #ffffff;
+}
+.nasa-card-close {
+  background: transparent;
+  border: none;
+  color: #72a2b0;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 2px 6px;
+}
+.nasa-card-close:hover {
+  color: #ffffff;
+}
+.nasa-card-body h4 {
+  font: 600 15px var(--display);
+  letter-spacing: 0.04em;
+  color: #e2f8ff;
+  margin: 0 0 6px 0;
+}
+.nasa-card-meta {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3px;
+  font: 8px var(--mono);
+  color: #8bb3c2;
+  margin-bottom: 7px;
+}
+.nasa-card-meta strong {
+  color: #72f0db;
+}
+.nasa-card-meta code {
+  color: #ffd07d;
+  font-family: var(--mono);
+}
+.nasa-card-meta b {
+  color: #aed9e8;
+  font-weight: 500;
+}
+.nasa-card-body p {
+  font-size: 10px !important;
+  line-height: 1.6 !important;
+  color: #b0cacf !important;
+  margin: 0 0 9px 0 !important;
+  background: rgba(0, 229, 255, 0.05);
+  border-left: 2px solid rgba(0, 229, 255, 0.4);
+  padding: 5px 8px;
+}
+.nasa-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 7px;
+}
+.nasa-card-footer a {
+  font: 700 8px var(--mono);
+  color: #00e5ff;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  border-bottom: 1px dashed rgba(0, 229, 255, 0.4);
+  padding-bottom: 1px;
+}
+.nasa-card-footer a:hover {
+  color: #ffffff;
+  border-bottom-style: solid;
+}
+.nasa-card-footer .text-button {
+  font: 8px var(--mono);
+  color: #88c0cf;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px 4px;
+}
+.nasa-card-footer .text-button:hover {
+  color: #ffffff;
+}
+
+/* NASA Data Drawer (Slide-out Panel) */
+.nasa-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(1, 8, 15, 0.72);
+  backdrop-filter: blur(4px);
+  z-index: 60;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: auto;
+}
+.nasa-drawer-backdrop.visible {
+  opacity: 1;
+}
+.nasa-data-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(640px, 92vw);
+  background: linear-gradient(180deg, #071926f7, #030d17fc);
+  border-left: 1px solid rgba(0, 229, 255, 0.45);
+  box-shadow: -20px 0 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 229, 255, 0.15);
+  z-index: 61;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+.nasa-data-drawer.open {
+  transform: translateX(0);
+}
+.drawer-header {
+  padding: 20px 24px;
+  background: rgba(3, 15, 25, 0.9);
+  border-bottom: 1px solid rgba(0, 229, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+}
+.drawer-header-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.meatball-circle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #004d99, #001f4d);
+  border: 1px solid rgba(0, 229, 255, 0.5);
+  color: #ffffff;
+  display: grid;
+  place-items: center;
+  font: 800 11px var(--display);
+  letter-spacing: 0.05em;
+  box-shadow: 0 0 10px rgba(0, 102, 255, 0.4);
+}
+.drawer-header-brand h3 {
+  font: 600 21px var(--display);
+  color: #e2f7ff;
+  letter-spacing: 0.03em;
+  margin: 3px 0 0 0;
+}
+.drawer-body {
+  padding: 24px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  flex: 1;
+}
+.drawer-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.pds-highlight-banner {
+  padding: 14px 18px;
+  background: rgba(0, 229, 255, 0.06);
+  border: 1px solid rgba(0, 229, 255, 0.35);
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.pds-code code {
+  font: 600 11px var(--mono);
+  color: #5cf4e2;
+  word-break: break-word;
+}
+.instruments-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 10px;
+}
+.instrument-card {
+  background: rgba(7, 24, 38, 0.7);
+  border: 1px solid rgba(100, 160, 180, 0.25);
+  padding: 11px 13px;
+  border-radius: 3px;
+}
+.inst-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 5px;
+}
+.inst-top strong {
+  font: 700 14px var(--display);
+  color: #e2f7ff;
+}
+.inst-top code {
+  font: 8px var(--mono);
+  color: #e8bd78;
+}
+.inst-full {
+  font-size: 10px !important;
+  line-height: 1.5 !important;
+  color: #8cb1c0 !important;
+  margin: 0 0 6px 0 !important;
+}
+.inst-spec {
+  font: 8px var(--mono);
+  color: #6ed1cf;
+  border-top: 1px dashed rgba(255, 255, 255, 0.08);
+  padding-top: 5px;
+}
+.inst-spec b {
+  color: #799ea8;
+}
+.bands-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.band-pill {
+  padding: 7px 11px;
+  background: rgba(14, 37, 52, 0.75);
+  border: 1px solid rgba(0, 229, 255, 0.25);
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.band-pill b {
+  font: 700 12px var(--display);
+  color: #00e5ff;
+}
+.band-pill span {
+  font: 8px var(--mono);
+  color: #ffd07d;
+}
+.band-pill small {
+  font-size: 9px;
+  color: #8daeb9;
+}
+.evidence-provenance-list {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.provenance-log-entry {
+  background: rgba(11, 33, 48, 0.85);
+  border: 1px solid rgba(0, 229, 255, 0.35);
+  border-left: 3px solid #72f0db;
+  padding: 12px 14px;
+  border-radius: 2px;
+}
+.entry-header {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 5px;
+}
+.entry-tag {
+  font: 700 7px var(--mono);
+  background: rgba(0, 229, 255, 0.2);
+  color: #38f8ff;
+  padding: 2px 5px;
+  border-radius: 2px;
+}
+.entry-header strong {
+  font: 600 14px var(--display);
+  color: #eefbff;
+}
+.entry-header code {
+  font: 8px var(--mono);
+  color: #f7ca80;
+  margin-left: auto;
+}
+.entry-inst {
+  font: 8px var(--mono);
+  color: #6cded4;
+  margin-bottom: 5px;
+}
+.entry-inst b {
+  color: #82a8b5;
+}
+.entry-finding {
+  font-size: 10px !important;
+  line-height: 1.6 !important;
+  color: #aed1de !important;
+  margin: 0 0 7px 0 !important;
+}
+.link-small {
+  font: 700 8px var(--mono);
+  color: #00e5ff;
+  text-decoration: none;
+}
+.link-small:hover {
+  text-decoration: underline;
+  color: #ffffff;
+}
+.empty-log-box {
+  padding: 16px;
+  border: 1px dashed rgba(100, 160, 180, 0.3);
+  text-align: center;
+}
+.empty-log-box p {
+  font: 9px/1.8 var(--mono) !important;
+  color: #799ea8 !important;
+  margin: 0 !important;
+}
+
+@media (max-width: 800px) {
+  .nasa-provenance-btn {
+    font-size: 8px;
+    padding: 5px 8px;
+  }
+  .nasa-scan-card {
+    right: 15px;
+    left: auto;
+    top: 75px;
+    bottom: auto;
+    width: min(320px, 90vw);
+  }
+  .nasa-data-drawer {
+    width: 100vw;
+  }
+}
+
+/* =========================================================================
+   ROCKET LAUNCH SIMULATION (Super Heavy-Lift Earth -> Orbit)
+   ========================================================================= */
+.launch-view {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  background: #020710;
+  overflow: hidden;
+}
+
+body.in-launch-simulation .topbar,
+body.in-launch-simulation .menu-view,
+body.in-launch-simulation .flight-view,
+body.in-launch-simulation .hud-frame {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.launch-view canvas {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+.rocket-launch-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px 24px;
+  box-sizing: border-box;
+}
+
+.cloud-mist-flash {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.75) 0%, rgba(200, 235, 255, 0.4) 60%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.45s ease-out;
+  z-index: 5;
+}
+
+.cloud-mist-flash.active {
+  opacity: 0.85;
+  transition: opacity 0.15s ease-in;
+}
+
+.launch-hud-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Launch Top Bar */
+.launch-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(4, 16, 26, 0.88);
+  border: 1px solid rgba(0, 229, 255, 0.35);
+  box-shadow: 0 4px 28px rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(14px);
+  padding: 8px 18px;
+  border-radius: 4px;
+  pointer-events: auto;
+  gap: 16px;
+}
+
+.launch-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.launch-brand strong {
+  font: 700 12px/1.2 var(--sans);
+  letter-spacing: 0.12em;
+  color: #ffffff;
+  display: block;
+}
+
+.launch-brand small {
+  font: 500 9px var(--mono);
+  color: #00e5ff;
+  letter-spacing: 0.08em;
+}
+
+/* Cinematic Director Broadcast Badge */
+.launch-director-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(6, 24, 38, 0.85);
+  padding: 6px 14px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 229, 255, 0.35);
+  box-shadow: 0 0 16px rgba(0, 229, 255, 0.15);
+  backdrop-filter: blur(10px);
+}
+
+.director-rec-dot {
+  width: 8px;
+  height: 8px;
+  background: #ff3344;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #ff3344;
+  animation: recBlink 1.2s infinite ease-in-out;
+}
+
+@keyframes recBlink {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(0.8); }
+}
+
+.director-tag {
+  font: 700 9px var(--mono);
+  letter-spacing: 0.14em;
+  color: #ff3344;
+}
+
+.director-sep {
+  font: 700 9px var(--mono);
+  color: rgba(255, 255, 255, 0.3);
+}
+
+#director-cam-title {
+  font: 700 9px var(--mono);
+  letter-spacing: 0.1em;
+  color: #00e5ff;
+  text-shadow: 0 0 8px rgba(0, 229, 255, 0.5);
+}
+
+.launch-top-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.outline-btn-small {
+  background: rgba(10, 28, 42, 0.7);
+  border: 1px solid rgba(0, 229, 255, 0.35);
+  color: #00e5ff;
+  font: 700 9px var(--mono);
+  letter-spacing: 0.08em;
+  padding: 6px 12px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.outline-btn-small:hover {
+  background: rgba(0, 229, 255, 0.2);
+  color: #ffffff;
+}
+
+.launch-skip-btn {
+  font: 700 10px var(--mono);
+  letter-spacing: 0.12em;
+  color: #8edbff;
+  background: rgba(14, 40, 60, 0.75);
+  border: 1px solid rgba(0, 229, 255, 0.45);
+  padding: 8px 16px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.launch-skip-btn:hover {
+  background: #00e5ff;
+  color: #04101a;
+  box-shadow: 0 0 18px rgba(0, 229, 255, 0.7);
+}
+
+/* Telemetry Grid */
+.launch-telemetry-grid {
+  display: grid;
+  grid-template-columns: 250px 1fr 270px;
+  gap: 20px;
+  align-items: stretch;
+  margin: 10px 0;
+  flex: 1;
+  min-height: 0;
+}
+
+.telemetry-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.telemetry-card {
+  background: rgba(5, 18, 30, 0.85);
+  border: 1px solid rgba(100, 160, 190, 0.25);
+  backdrop-filter: blur(12px);
+  padding: 9px 13px;
+  border-radius: 4px;
+}
+
+.telemetry-card.warning {
+  border-color: rgba(255, 80, 80, 0.6);
+  background: rgba(40, 12, 14, 0.85);
+}
+
+.telemetry-label {
+  font: 700 8px var(--mono);
+  letter-spacing: 0.14em;
+  color: #8ab0be;
+  display: block;
+  margin-bottom: 3px;
+}
+
+.telemetry-val-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.telemetry-val-row strong {
+  font: 700 20px/1 var(--mono);
+  color: #ffffff;
+}
+
+.telemetry-val-row small {
+  font: 700 9px var(--mono);
+  color: #00e5ff;
+}
+
+.mach-tag, .stress-tag {
+  font: 700 8px var(--mono) !important;
+  padding: 1px 5px;
+  border-radius: 2px;
+  letter-spacing: 0.06em;
+}
+
+.mach-tag {
+  color: #89b7c9 !important;
+  border: 1px solid rgba(137, 183, 201, 0.4);
+}
+
+.mach-tag.supersonic {
+  color: #ffaa00 !important;
+  border-color: #ffaa00;
+  background: rgba(255, 170, 0, 0.15);
+}
+
+.stress-tag.nominal {
+  color: #38ef7d !important;
+  border: 1px solid #38ef7d;
+  background: rgba(56, 239, 125, 0.12);
+}
+
+.stress-tag.warning {
+  color: #ffaa00 !important;
+  border: 1px solid #ffaa00;
+  background: rgba(255, 170, 0, 0.18);
+}
+
+.stress-tag.critical {
+  color: #ff4444 !important;
+  border: 1px solid #ff4444;
+  background: rgba(255, 68, 68, 0.25);
+  animation: promptPulse 0.6s infinite alternate;
+}
+
+.gauge-track {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.12);
+  margin: 6px 0 3px;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.gauge-fill {
+  height: 100%;
+  background: #00e5ff;
+  box-shadow: 0 0 8px #00e5ff;
+  transition: width 0.1s linear;
+}
+
+.gauge-fill.q-fill {
+  background: #ff9100;
+  box-shadow: 0 0 8px #ff9100;
+}
+
+.gauge-fill.stress-fill {
+  background: #38ef7d;
+  box-shadow: 0 0 8px #38ef7d;
+}
+
+.sub-metric {
+  font: 500 8px var(--mono);
+  color: #799ea8;
+  display: block;
+}
+
+/* Staging Status Card */
+.stages-status-card {
+  background: rgba(5, 18, 30, 0.85);
+  border: 1px solid rgba(100, 160, 190, 0.25);
+  backdrop-filter: blur(12px);
+  padding: 9px 13px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.stage-pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 5px 8px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.04);
+  border-left: 3px solid #526875;
+}
+
+.stage-pill span {
+  font: 700 8px var(--mono);
+  color: #799ea8;
+}
+
+.stage-pill b {
+  font: 600 9px var(--sans);
+  color: #cfe5ef;
+  flex: 1;
+}
+
+.stage-pill small {
+  font: 700 8px var(--mono);
+  color: #799ea8;
+}
+
+.stage-pill.active {
+  border-left-color: #00e5ff;
+  background: rgba(0, 229, 255, 0.12);
+}
+
+.stage-pill.active small {
+  color: #00e5ff;
+}
+
+.stage-pill.done {
+  border-left-color: #38ef7d;
+  opacity: 0.65;
+}
+
+.stage-pill.done small {
+  color: #38ef7d;
+}
+
+/* Center HUD & Action Prompts - Central Viewport Kept 100% Clear */
+.launch-center-hud {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  pointer-events: none;
+  text-align: center;
+}
+
+.launch-center-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  margin-top: 0;
+  pointer-events: auto;
+}
+
+.launch-center-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  margin-bottom: 0;
+  pointer-events: auto;
+}
+
+.timer-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(4, 16, 26, 0.72);
+  border: 1px solid rgba(0, 229, 255, 0.28);
+  padding: 4px 16px;
+  border-radius: 4px;
+  backdrop-filter: blur(8px);
+}
+
+.timer-label {
+  font: 700 8px var(--mono);
+  letter-spacing: 0.14em;
+  color: #799ea8;
+}
+
+.timer-val {
+  font: 700 20px/1.1 var(--mono);
+  letter-spacing: 0.1em;
+  color: #00e5ff;
+  text-shadow: 0 0 10px rgba(0, 229, 255, 0.6);
+}
+
+.timer-val.countdown {
+  color: #ffaa00;
+  text-shadow: 0 0 10px rgba(255, 170, 0, 0.6);
+}
+
+.phase-banner {
+  background: rgba(4, 16, 26, 0.65);
+  border: 1px solid rgba(0, 229, 255, 0.25);
+  padding: 6px 20px;
+  border-radius: 4px;
+  backdrop-filter: blur(10px);
+}
+
+.phase-banner .eyebrow {
+  font: 700 8px var(--mono);
+  letter-spacing: 0.14em;
+  color: #8edbff;
+}
+
+.phase-banner h2 {
+  font: 700 13px var(--sans);
+  letter-spacing: 0.12em;
+  color: #ffffff;
+  margin: 2px 0 0 0;
+  text-shadow: 0 0 12px rgba(0, 229, 255, 0.45);
+}
+
+.launch-action-prompt {
+  background: rgba(6, 22, 36, 0.95);
+  border: 1.5px solid #00e5ff;
+  box-shadow: 0 0 24px rgba(0, 229, 255, 0.45);
+  padding: 10px 18px;
+  border-radius: 6px;
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  animation: promptPulse 1.4s infinite alternate;
+}
+
+.launch-action-prompt.docked {
+  position: absolute;
+  bottom: 82px;
+  right: 24px;
+  width: auto;
+  max-width: min(580px, 94vw);
+  z-index: 120;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1.5px solid #00e5ff;
+  box-shadow: 0 0 28px rgba(0, 229, 255, 0.5), inset 0 0 12px rgba(0, 229, 255, 0.12);
+  gap: 16px;
+  padding: 12px 18px;
+}
+
+.prompt-icon {
+  font-size: 18px;
+  color: #00e5ff;
+  text-shadow: 0 0 10px #00e5ff;
+  animation: iconPulse 1s infinite alternate ease-in-out;
+  flex-shrink: 0;
+}
+
+@keyframes iconPulse {
+  from { transform: scale(0.95); opacity: 0.8; }
+  to { transform: scale(1.15); opacity: 1; }
+}
+
+.prompt-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1 1 auto;
+  min-width: 0;
+  text-align: left;
+}
+
+@keyframes promptPulse {
+  from { box-shadow: 0 0 16px rgba(0, 229, 255, 0.3); }
+  to { box-shadow: 0 0 32px rgba(0, 229, 255, 0.8); }
+}
+
+.prompt-text b {
+  font: 700 12px var(--sans, 'Inter', sans-serif);
+  letter-spacing: 0.1em;
+  color: #ffffff;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.prompt-text span {
+  font: 500 10px var(--mono, monospace);
+  color: #8edbff;
+  white-space: nowrap;
+}
+
+.auto-stage-bar-wrap {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.auto-stage-fill {
+  height: 100%;
+  width: 100%;
+  background: #00e5ff;
+  box-shadow: 0 0 8px #00e5ff;
+  transition: width 0.1s linear;
+}
+
+#launch-stage-trigger-btn,
+.launch-stage-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 10px 18px;
+  background: linear-gradient(135deg, #00f0ff 0%, #00b4d8 100%);
+  color: #020b14;
+  border: 1px solid #7df9ff;
+  border-radius: 6px;
+  font: 700 12px var(--sans, 'Inter', sans-serif);
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 0 18px rgba(0, 240, 255, 0.65);
+  flex-shrink: 0;
+  transition: all 0.18s ease;
+  clip-path: none;
+}
+
+#launch-stage-trigger-btn:hover,
+.launch-stage-btn:hover {
+  background: linear-gradient(135deg, #5ef7ff 0%, #00c9e8 100%);
+  box-shadow: 0 0 26px rgba(0, 240, 255, 0.9);
+  transform: translateY(-1px);
+}
+
+#launch-stage-trigger-btn #launch-trigger-label {
+  font: 700 12px var(--sans, 'Inter', sans-serif);
+  color: #020b14;
+  letter-spacing: 0.1em;
+  display: inline;
+}
+
+#launch-stage-trigger-btn kbd,
+#launch-stage-trigger-btn b {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: rgba(2, 11, 20, 0.9);
+  color: #00f0ff;
+  border: 1px solid rgba(0, 240, 255, 0.7);
+  font: 700 11px var(--mono, monospace);
+  letter-spacing: 0.05em;
+  box-shadow: 0 0 8px rgba(0, 240, 255, 0.35);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.pitch-corridor-box {
+  background: rgba(4, 16, 26, 0.78);
+  border: 1px solid rgba(100, 160, 190, 0.28);
+  padding: 8px 16px;
+  border-radius: 4px;
+  width: 320px;
+  backdrop-filter: blur(8px);
+}
+
+.corridor-row {
+  display: flex;
+  justify-content: space-between;
+  font: 600 8px var(--mono);
+  color: #799ea8;
+  margin-bottom: 6px;
+}
+
+.corridor-row b {
+  color: #00e5ff;
+}
+
+.corridor-bar-track {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  position: relative;
+  border-radius: 4px;
+}
+
+.corridor-optimal-zone {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 32%;
+  right: 32%;
+  background: rgba(56, 239, 125, 0.28);
+  border-left: 1px solid #38ef7d;
+  border-right: 1px solid #38ef7d;
+}
+
+.pitch-pointer {
+  position: absolute;
+  top: -3px;
+  width: 4px;
+  height: 14px;
+  background: #00e5ff;
+  border-radius: 2px;
+  box-shadow: 0 0 8px #00e5ff;
+  transform: translateX(-50%);
+  transition: left 0.12s ease-out;
+}
+
+.corridor-subtext {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  font: 700 7px var(--mono);
+  color: #5d828f;
+}
+
+.sas-active {
+  color: #38ef7d;
+}
+
+.sas-manual {
+  color: #ffaa00;
+}
+
+/* Bottom Bar */
+.launch-bottom-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  background: rgba(4, 16, 26, 0.88);
+  border: 1px solid rgba(0, 229, 255, 0.35);
+  backdrop-filter: blur(14px);
+  padding: 9px 18px;
+  border-radius: 4px;
+  pointer-events: auto;
+}
+
+.launch-comms-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.launch-comms-box .comm-avatar {
+  width: 32px;
+  height: 32px;
+  background: rgba(0, 229, 255, 0.14);
+  border: 1px solid #00e5ff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #00e5ff;
+  font-size: 14px;
+}
+
+.comm-text-wrap strong {
+  font: 700 10px var(--sans);
+  letter-spacing: 0.12em;
+  color: #ffffff;
+}
+
+.comm-live-tag {
+  font: 700 8px var(--mono);
+  color: #38ef7d;
+  margin-left: 8px;
+  letter-spacing: 0.08em;
+}
+
+.comm-text-wrap p {
+  font: 500 11px/1.3 var(--mono);
+  color: #b8dbe8;
+  margin: 3px 0 0 0;
+}
+
+.launch-pilot-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.launch-pilot-actions .outline-button.active {
+  border-color: #00e5ff;
+  background: rgba(0, 229, 255, 0.18);
+  color: #ffffff;
+}
+
+.steering-arrows {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font: 700 8px var(--mono);
+  color: #799ea8;
+}
+
+.small-arrow-btn {
+  background: rgba(20, 50, 75, 0.65);
+  border: 1px solid rgba(0, 229, 255, 0.4);
+  color: #00e5ff;
+  font: 700 10px var(--mono);
+  padding: 6px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.small-arrow-btn:hover {
+  background: #00e5ff;
+  color: #04101a;
+}
+
+/* Cloud Penetration Moisture Vignette */
+.cloud-mist-flash {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.45) 0%, rgba(200, 230, 255, 0.75) 70%, rgba(255, 255, 255, 0.95) 100%);
+  opacity: 0;
+  transition: opacity 0.35s ease-out;
+  backdrop-filter: blur(8px);
+  z-index: 15;
+}
+
+.cloud-mist-flash.active {
+  opacity: 0.85;
+  transition: opacity 0.15s ease-in;
+}
+
+/* Auto-Stage Countdown Bar */
+.auto-stage-bar-wrap {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 5px;
+}
+
+.auto-stage-fill {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #ff9900, #ffdd00);
+  border-radius: 2px;
+  transition: width 0.08s linear;
+}
+
+/* NASA Optical Long-Range Tracking Reticle */
+.pad-optics-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 40px;
+  z-index: 5;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.pad-optics-overlay.active {
+  opacity: 1;
+}
+
+.optics-reticle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 130px;
+  height: 130px;
+  pointer-events: none;
+}
+
+.optics-crosshair-h {
+  position: absolute;
+  top: 50%;
+  left: -24px;
+  right: -24px;
+  height: 1px;
+  background: rgba(0, 229, 255, 0.45);
+}
+
+.optics-crosshair-v {
+  position: absolute;
+  left: 50%;
+  top: -24px;
+  bottom: -24px;
+  width: 1px;
+  background: rgba(0, 229, 255, 0.45);
+}
+
+.optics-box {
+  position: absolute;
+  inset: 24px;
+  border: 1px solid rgba(0, 229, 255, 0.55);
+}
+
+.optics-bracket {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: #00e5ff;
+  border-style: solid;
+}
+
+.optics-bracket.tl { top: 0; left: 0; border-width: 2px 0 0 2px; }
+.optics-bracket.tr { top: 0; right: 0; border-width: 2px 2px 0 0; }
+.optics-bracket.bl { bottom: 0; left: 0; border-width: 0 0 2px 2px; }
+.optics-bracket.br { bottom: 0; right: 0; border-width: 0 2px 2px 0; }
+
+.optics-data {
+  position: absolute;
+  bottom: 84px;
+  left: 24px;
+  transform: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  font: 700 9px var(--mono);
+  letter-spacing: 0.12em;
+  color: #00e5ff;
+  text-shadow: 0 0 8px rgba(0, 229, 255, 0.6);
+  background: rgba(4, 16, 26, 0.72);
+  padding: 6px 18px;
+  border-radius: 3px;
+  border: 1px solid rgba(0, 229, 255, 0.35);
+  backdrop-filter: blur(8px);
+}
+
+.optics-data .lock-tag {
+  color: #38ef7d;
+  font-weight: 800;
+}
+

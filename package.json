@@ -1,0 +1,20 @@
+{
+  "name": "mission-nasa-game",
+  "version": "1.0.0",
+  "description": "**NASA Space Apps Challenge 2026 // Category: Space Mission Game Design**",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "npm test --prefix src/game",
+    "build": "npm run build --prefix src/game",
+    "dev": "npm run dev --prefix src/game"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "postprocessing": "^6.39.5",
+    "three": "^0.186.1"
+  }
+}

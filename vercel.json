@@ -1,0 +1,51 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "services": {
+    "app": {
+      "root": ".",
+      "runtime": "node",
+      "entrypoint": "server.js",
+      "bindings": [
+        {
+          "type": "service",
+          "service": "game",
+          "format": "url",
+          "env": "GAME_SERVICE_URL"
+        }
+      ]
+    },
+    "game": {
+      "root": "src/game",
+      "framework": "vite",
+      "installCommand": "npm install --include=dev",
+      "buildCommand": "npm run build",
+      "outputDirectory": "dist"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/game/(.*)",
+      "destination": {
+        "service": "game"
+      }
+    },
+    {
+      "source": "/game",
+      "destination": {
+        "service": "game"
+      }
+    },
+    {
+      "source": "/src/game/dist/(.*)",
+      "destination": {
+        "service": "game"
+      }
+    },
+    {
+      "source": "/(.*)",
+      "destination": {
+        "service": "app"
+      }
+    }
+  ]
+}

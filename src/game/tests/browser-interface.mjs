@@ -1,0 +1,24 @@
+import {assemble,launch} from './helpers.mjs';
+import {chromium,expect} from '@playwright/test';
+const browser=await chromium.launch({channel:'msedge',headless:true,args:['--enable-webgl','--ignore-gpu-blocklist']});
+const page=await browser.newPage({viewport:{width:1440,height:900}});const errors=[];page.on('pageerror',e=>errors.push(e.message));
+await page.addInitScript(()=>localStorage.setItem('odyssey-settings',JSON.stringify({voice:false,quality:true,muted:true})));
+await page.goto('http://127.0.0.1:4174');await page.locator('#loading').waitFor({state:'hidden'});
+await page.keyboard.press('ArrowLeft');await expect(page.locator('#planet-name')).toHaveText('MOON');await page.keyboard.press('ArrowRight');await expect(page.locator('#planet-name')).toHaveText('MARS');
+await page.screenshot({path:'previews/01-mission-control.png'});
+await page.locator('#design-button').click();await assemble(page,[2,2,2,2]);await expect(page.locator('#launch-button')).toBeDisabled();
+await assemble(page);await expect(page.locator('#launch-button')).toBeEnabled();
+await page.screenshot({path:'previews/02-mission-design.png'});await launch(page);await page.locator('#begin-stage').click();
+await page.keyboard.down('w');await page.waitForTimeout(1500);await page.keyboard.up('w');await expect.poll(async()=>Number(await page.locator('#speed-value').innerText())).toBeGreaterThan(5);
+await page.screenshot({path:'previews/03-flight.png'});await page.keyboard.press('Escape');await page.waitForTimeout(200);const pausedTime=await page.locator('#elapsed').innerText();await page.waitForTimeout(1100);await expect(page.locator('#elapsed')).toHaveText(pausedTime);
+await page.keyboard.press('Escape');await page.keyboard.press('h');await expect(page.locator('#dialog-title')).toHaveText('YOU HAVE THE CONTROLS.');await page.keyboard.press('Escape');
+await page.keyboard.press('Digit3');await expect(page.locator('[data-route="shield"]')).toHaveClass(/active/);await page.keyboard.press('c');await expect(page.locator('#camera-button')).toContainText('COCKPIT');
+await page.reload();await page.locator('#loading').waitFor({state:'hidden'});await expect(page.locator('#resume-button')).toBeVisible();await page.locator('#resume-button').click();await expect(page.locator('#dialog-title')).toHaveText('LEAVE THE BLUE BEHIND');
+// A stored chapter fixture exercises the real checkpoint loader and surface renderer independently of the full-campaign test.
+await page.evaluate(()=>{const checkpoint=JSON.parse(localStorage.getItem('odyssey-checkpoint'));checkpoint.stage=4;localStorage.setItem('odyssey-checkpoint',JSON.stringify(checkpoint));});
+await page.reload();await page.locator('#loading').waitFor({state:'hidden'});await page.locator('#resume-button').click();await page.locator('#begin-stage').click();await page.waitForTimeout(2000);
+await page.keyboard.down('w');await page.waitForTimeout(700);await page.keyboard.up('w');await page.screenshot({path:'previews/05-rover.png'});
+await page.keyboard.press('Escape');await page.locator('[data-menu]').click();await page.setViewportSize({width:390,height:844});await page.screenshot({path:'previews/06-mobile.png',fullPage:true});
+expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(391);
+await page.locator('#design-button').click();await page.screenshot({path:'previews/07-mobile-design.png'});await expect(page.locator('#launch-button')).toBeDisabled();
+expect(errors).toEqual([]);console.log('INTERFACE_OK: keyboard navigation, design limits, thrust, pause, settings, power, camera, checkpoint, rover, mobile.');await browser.close();

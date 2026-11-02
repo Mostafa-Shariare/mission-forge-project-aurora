@@ -1,0 +1,12 @@
+import {assemble,launch} from './helpers.mjs';
+import {chromium,expect} from '@playwright/test';
+const browser=await chromium.launch({channel:'msedge',headless:true,args:['--enable-webgl','--ignore-gpu-blocklist']});
+const page=await browser.newPage({viewport:{width:1440,height:900}});const errors=[],failed=[];
+page.on('pageerror',e=>errors.push(e.message));page.on('requestfailed',r=>failed.push(r.url()));
+await page.goto('http://127.0.0.1:4174');await page.locator('#loading').waitFor({state:'hidden',timeout:30000});
+await expect(page.locator('#planet-name')).toHaveText('MARS');await page.screenshot({path:'previews/odyssey-final.png'});
+await page.locator('#design-button').click();await assemble(page);await launch(page);
+await page.keyboard.press('m');await expect(page.locator('#sound-button')).toHaveAttribute('aria-pressed','false');
+await page.locator('#begin-stage').click();await page.keyboard.down('w');await page.waitForTimeout(900);await page.keyboard.up('w');await expect.poll(async()=>Number(await page.locator('#speed-value').innerText())).toBeGreaterThan(5);
+await page.keyboard.press('Escape');expect(errors).toEqual([]);expect(failed).toEqual([]);
+console.log('PRODUCTION_OK: local launcher, all bundled assets, keyboard flight, dialog mute. No browser errors or failed requests.');await browser.close();

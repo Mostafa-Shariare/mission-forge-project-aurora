@@ -1,0 +1,16 @@
+import {assemble,launch} from './helpers.mjs';
+import {chromium} from '@playwright/test';
+import {mkdir} from 'node:fs/promises';
+await mkdir('previews',{recursive:true});
+const browser=await chromium.launch({channel:'msedge',headless:true,args:['--enable-webgl','--ignore-gpu-blocklist']});
+const page=await browser.newPage({viewport:{width:1440,height:900},deviceScaleFactor:1});
+const errors=[];page.on('pageerror',error=>errors.push(error.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
+await page.goto('http://127.0.0.1:4174');await page.locator('#loading').waitFor({state:'hidden',timeout:30000});
+await page.screenshot({path:'previews/01-mission-control.png'});
+await page.locator('#design-button').click();await page.screenshot({path:'previews/02-mission-design.png'});
+await assemble(page);await launch(page);await page.locator('#begin-stage').click();
+await page.keyboard.down('w');await page.waitForTimeout(2400);await page.keyboard.up('w');
+console.log('Flight speed after manual thrust:',await page.locator('#speed-value').innerText());
+await page.screenshot({path:'previews/03-flight.png'});
+await page.keyboard.press('Escape');await page.screenshot({path:'previews/04-pause.png'});
+console.log('BROWSER_ERRORS',JSON.stringify(errors));await browser.close();
