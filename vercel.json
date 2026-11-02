@@ -1,54 +1,62 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "services": {
-    "app": {
-      "root": ".",
-      "runtime": "node",
-      "entrypoint": "server.js",
-      "bindings": [
+  "cleanUrls": true,
+  "outputDirectory": ".",
+  "buildCommand": "npm run build",
+  "rewrites": [
+    {
+      "source": "/game",
+      "destination": "/src/game/dist/index.html"
+    },
+    {
+      "source": "/game/(.*)",
+      "destination": "/src/game/dist/$1"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
         {
-          "type": "service",
-          "service": "game",
-          "format": "url",
-          "env": "GAME_SERVICE_URL"
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, HEAD, OPTIONS"
         }
       ]
     },
-    "game": {
-      "root": "src/game",
-      "framework": "vite",
-      "installCommand": "npm install --include=dev",
-      "buildCommand": "npm run build",
-      "outputDirectory": "dist"
-    }
-  },
-  "rewrites": [
     {
-      "source": "/game/(.*)",
-      "destination": {
-        "service": "game",
-        "path": "/$1"
-      }
+      "source": "/(.*)\\.(glb|gltf|wasm|bin)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
     },
     {
-      "source": "/game",
-      "destination": {
-        "service": "game",
-        "path": "/"
-      }
+      "source": "/(.*)\\.(mp3|ogg|wav)",
+      "headers": [
+        {
+          "key": "Accept-Ranges",
+          "value": "bytes"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
+        }
+      ]
     },
     {
-      "source": "/src/game/dist/(.*)",
-      "destination": {
-        "service": "game",
-        "path": "/$1"
-      }
-    },
-    {
-      "source": "/(.*)",
-      "destination": {
-        "service": "app"
-      }
+      "source": "/(.*)\\.(jpg|jpeg|png|svg|ico|webp)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
+        }
+      ]
     }
   ]
 }
