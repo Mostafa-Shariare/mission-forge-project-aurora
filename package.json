@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "test": "npm test --prefix src/game",
-    "build": "npm run build --prefix src/game",
+    "build": "npm --prefix src/game install && npm --prefix src/game run build",
     "dev": "npm run dev --prefix src/game"
   },
   "keywords": [],
