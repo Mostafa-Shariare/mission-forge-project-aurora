@@ -17,8 +17,8 @@
 The simulation models real-world aerospace tradeoffs—balancing budget constraints, structural mass budgets, and single-stage ideal $\Delta v$ (Tsiolkovsky rocket equation)—with high-stakes in-flight emergencies, Martian rover surface traversals, and scientific sample return. Designed with an authentic **NASA Jet Propulsion Laboratory (JPL) Mission Control & Cockpit HUD** aesthetic, the application combines hardware-accelerated WebGL graphics, post-processing bloom shaders, dynamic camera choreography, and a zero-dependency procedural **Web Audio API** soundscape.
 
 * **Live Demo (Vercel):** [https://mission-forge-project-aurora.vercel.app](https://mission-forge-project-aurora.vercel.app)
-* **Live Demo (GitHub Pages):** [https://<your-username>.github.io/mission-forge-project-aurora/](https://<your-username>.github.io/mission-forge-project-aurora/)
-* **Repository:** [https://github.com/<your-username>/mission-forge-project-aurora](https://github.com/<your-username>/mission-forge-project-aurora)
+* **Live Demo (GitHub Pages):** [https://Mostafa-Shariare.github.io/mission-forge-project-aurora/](https://Mostafa-Shariare.github.io/mission-forge-project-aurora/)
+* **Repository:** [https://github.com/Mostafa-Shariare/mission-forge-project-aurora](https://github.com/Mostafa-Shariare/mission-forge-project-aurora)
 
 ---
 
@@ -207,7 +207,7 @@ Open **[http://localhost:8080](http://localhost:8080)** in any modern web browse
 ### 2. Full Development Environment
 ```bash
 # Clone the repository
-git clone https://github.com/<your-username>/mission-forge-project-aurora.git
+git clone https://github.com/Mostafa-Shariare/mission-forge-project-aurora.git
 cd mission-forge-project-aurora
 
 # Start local server
