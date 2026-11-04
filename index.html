@@ -14,19 +14,19 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Orbitron:wght@500;600;700;800;900&family=Rajdhani:wght@500;600;700;800&family=Share+Tech+Mono&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Three.js, OrbitControls, Tween.js, and Post-Processing -->
-  <script src="three.min.js"></script>
+  <script src="lib/three.min.js"></script>
   <script>
     if (typeof THREE === 'undefined') {
       document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>');
     }
   </script>
-  <script src="OrbitControls.js"></script>
+  <script src="lib/OrbitControls.js"></script>
   <script>
     if (typeof THREE.OrbitControls === 'undefined') {
       document.write('<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"><\/script>');
     }
   </script>
-  <script src="tween.umd.js"></script>
+  <script src="lib/tween.umd.js"></script>
   <script>
     if (typeof TWEEN === 'undefined') {
       document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js"><\/script>');
@@ -34,55 +34,55 @@
   </script>
 
   <!-- Three.js r128 Native UnrealBloomPass Post-Processing & GLTF/Draco Loaders -->
-  <script src="Pass.js"></script>
+  <script src="lib/Pass.js"></script>
   <script>
     if (typeof THREE.Pass === 'undefined') {
       document.write('<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/Pass.js"><\/script>');
     }
   </script>
-  <script src="CopyShader.js"></script>
+  <script src="lib/CopyShader.js"></script>
   <script>
     if (typeof THREE.CopyShader === 'undefined') {
       document.write('<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"><\/script>');
     }
   </script>
-  <script src="LuminosityHighPassShader.js"></script>
+  <script src="lib/LuminosityHighPassShader.js"></script>
   <script>
     if (typeof THREE.LuminosityHighPassShader === 'undefined') {
       document.write('<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"><\/script>');
     }
   </script>
-  <script src="ShaderPass.js"></script>
+  <script src="lib/ShaderPass.js"></script>
   <script>
     if (typeof THREE.ShaderPass === 'undefined') {
       document.write('<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"><\/script>');
     }
   </script>
-  <script src="RenderPass.js"></script>
+  <script src="lib/RenderPass.js"></script>
   <script>
     if (typeof THREE.RenderPass === 'undefined') {
       document.write('<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"><\/script>');
     }
   </script>
-  <script src="EffectComposer.js"></script>
+  <script src="lib/EffectComposer.js"></script>
   <script>
     if (typeof THREE.EffectComposer === 'undefined') {
       document.write('<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"><\/script>');
     }
   </script>
-  <script src="UnrealBloomPass.js"></script>
+  <script src="lib/UnrealBloomPass.js"></script>
   <script>
     if (typeof THREE.UnrealBloomPass === 'undefined') {
       document.write('<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"><\/script>');
     }
   </script>
-  <script src="DRACOLoader.js"></script>
+  <script src="lib/DRACOLoader.js"></script>
   <script>
     if (typeof THREE.DRACOLoader === 'undefined') {
       document.write('<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/DRACOLoader.js"><\/script>');
     }
   </script>
-  <script src="GLTFLoader.js"></script>
+  <script src="lib/GLTFLoader.js"></script>
   <script>
     if (typeof THREE.GLTFLoader === 'undefined') {
       document.write('<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"><\/script>');
@@ -5818,7 +5818,7 @@
 
         if (typeof THREE.DRACOLoader !== 'undefined') {
           const dracoLoader = new THREE.DRACOLoader();
-          dracoLoader.setDecoderPath('draco/');
+          dracoLoader.setDecoderPath('lib/draco/');
           loader.setDRACOLoader(dracoLoader);
         }
 
@@ -6348,7 +6348,7 @@
         const gltfLoader = new THREE.GLTFLoader();
         if (typeof THREE.DRACOLoader !== 'undefined') {
           const dracoLoader = new THREE.DRACOLoader();
-          dracoLoader.setDecoderPath('draco/');
+          dracoLoader.setDecoderPath('lib/draco/');
           gltfLoader.setDRACOLoader(dracoLoader);
         }
 
