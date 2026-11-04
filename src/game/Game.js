@@ -29,7 +29,7 @@ export class MissionGame {
     // Create iframe pointing to the Aurora-styled game engine
     this.iframe = document.createElement('iframe');
     this.iframe.id = 'auroraGameIframe';
-    this.iframe.src = `/src/game/dist/index.html?v=${Date.now()}&destination=${encodeURIComponent(this.destination)}`;
+    this.iframe.src = `./src/game/dist/index.html?v=${Date.now()}&destination=${encodeURIComponent(this.destination)}`;
     this.iframe.style.width = '100%';
     this.iframe.style.height = '100%';
     this.iframe.style.border = 'none';

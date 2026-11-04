@@ -7659,7 +7659,7 @@
       } catch (err) {
         console.warn('Fallback mounting via iframe:', err);
         gameMountRoot.innerHTML = `
-          <iframe id="auroraGameIframe" src="/src/game/dist/index.html?destination=${encodeURIComponent(planetKey)}" 
+          <iframe id="auroraGameIframe" src="./src/game/dist/index.html?destination=${encodeURIComponent(planetKey)}" 
                   style="width: 100%; height: 100%; border: none; display: block;" 
                   allow="autoplay; fullscreen"></iframe>
         `;
