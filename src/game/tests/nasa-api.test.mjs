@@ -42,3 +42,4 @@ test('fetchSpaceWeatherStatus returns non-blocking status with baseline', async 
   assert.ok(typeof weather.kpIndex === 'number');
   assert.ok(weather.status);
 });
+

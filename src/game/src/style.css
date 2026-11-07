@@ -1786,3 +1786,204 @@ body.in-launch-simulation .hud-frame {
   font-weight: 800;
 }
 
+
+
+/* ==========================================================================
+   CADET MODE / KID-FRIENDLY SPACECRAFT ASSEMBLY STYLING
+   ========================================================================== */
+.cadet-mode-switcher {
+  display: flex;
+  gap: 6px;
+  margin: 10px 0 14px 0;
+  background: rgba(3, 14, 26, 0.85);
+  padding: 4px;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 229, 255, 0.25);
+}
+
+.mode-toggle-btn {
+  flex: 1;
+  padding: 8px 10px;
+  font-family: var(--font-title, 'Rajdhani', sans-serif);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #7da1b1;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.mode-toggle-btn:hover {
+  color: #00E5FF;
+  background: rgba(0, 229, 255, 0.08);
+}
+
+.mode-toggle-btn.active {
+  color: #031422 !important;
+  background: #00E5FF !important;
+  border-color: #00E5FF !important;
+  box-shadow: 0 0 14px rgba(0, 229, 255, 0.5) !important;
+  font-weight: 800 !important;
+}
+
+.cadet-meters-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-bottom: 14px;
+}
+
+.cadet-meter-card {
+  background: rgba(6, 20, 34, 0.85);
+  border: 1px solid rgba(0, 229, 255, 0.22);
+  border-radius: 6px;
+  padding: 10px 12px;
+  transition: all 0.25s ease;
+}
+
+.cadet-meter-card:hover {
+  border-color: rgba(0, 229, 255, 0.55);
+  background: rgba(8, 26, 44, 0.95);
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.15);
+}
+
+.cadet-meter-card.highlight {
+  border-color: rgba(34, 197, 94, 0.4);
+  background: rgba(6, 26, 22, 0.85);
+}
+
+.cadet-meter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #8bb1c2;
+  margin-bottom: 6px;
+}
+
+.cadet-meter-val {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 11px;
+  font-weight: 700;
+  color: #00E5FF;
+}
+
+.cadet-meter-val.good { color: #22c55e; }
+.cadet-meter-val.warn { color: #f59e0b; }
+.cadet-meter-val.bad { color: #ef4444; }
+
+.cadet-progress-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+  overflow: hidden;
+  margin: 4px 0 6px;
+}
+
+.cadet-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cadet-fill.speed-fill {
+  background: linear-gradient(90deg, #0284c7, #00E5FF);
+  box-shadow: 0 0 8px rgba(0, 229, 255, 0.6);
+}
+
+.cadet-fill.good-fill {
+  background: linear-gradient(90deg, #10b981, #22c55e);
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
+}
+
+.cadet-fill.warn-fill {
+  background: linear-gradient(90deg, #d97706, #f59e0b);
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.6);
+}
+
+.cadet-fill.bad-fill {
+  background: linear-gradient(90deg, #dc2626, #ef4444);
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
+}
+
+.cadet-meter-footer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.cadet-tag {
+  font-family: var(--font-title, 'Rajdhani', sans-serif);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 2px 7px;
+  border-radius: 3px;
+}
+
+.cadet-tag.good {
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.cadet-tag.warn {
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.cadet-tag.bad {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* Cadet Tip Callout */
+.engineering-lesson {
+  font-size: 11.5px !important;
+  line-height: 1.55 !important;
+  color: #D6E8F7 !important;
+  background: rgba(0, 229, 255, 0.08) !important;
+  border-left: 3px solid #00E5FF !important;
+  border-radius: 4px !important;
+  padding: 9px 13px !important;
+  margin: 12px 0 0 !important;
+  box-shadow: inset 0 0 12px rgba(0, 229, 255, 0.04);
+}
+
+/* Auto-build button */
+.btn-suggested-build {
+  background: rgba(0, 229, 255, 0.14) !important;
+  border: 1px solid #00E5FF !important;
+  color: #00E5FF !important;
+  font-weight: 700 !important;
+  padding: 6px 12px !important;
+  border-radius: 3px !important;
+  cursor: pointer;
+  transition: all 0.2s ease !important;
+}
+
+.btn-suggested-build:hover {
+  background: #00E5FF !important;
+  color: #04101A !important;
+  box-shadow: 0 0 14px rgba(0, 229, 255, 0.6) !important;
+}
+
+/* Component card kid improvements */
+.kid-part-desc {
+  font-size: 11px !important;
+  line-height: 1.45 !important;
+  color: #cde4ee !important;
+  display: block;
+  min-height: 32px;
+  margin: 4px 0 6px;
+}

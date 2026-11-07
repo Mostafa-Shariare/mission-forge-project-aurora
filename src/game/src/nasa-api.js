@@ -204,3 +204,4 @@ export async function fetchSpaceWeatherStatus() {
     source: 'NOAA SWPC / NASA SOHO Baseline'
   };
 }
+

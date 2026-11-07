@@ -205,7 +205,7 @@ export const NASA_MISSION_CLASSES = [
     baseMassLimit: 85, // 85 t payload mass cap
     tag: 'COST-CAPPED · COMPETITIVE',
     badge: 'DISCOVERY · $500M CAP',
-    description: 'NASA\'s cost-capped planetary exploration program ($500M cap, e.g. Dawn, Kepler, InSight, Psyche). Enforces tight mass and payload trade-offs.',
+    description: '💡 Smart-budget NASA mission ($500M cap). Great for lean robotic scouts like Dawn and Kepler!',
     icon: '🔭',
     examples: 'Dawn, Kepler, InSight, Psyche'
   },
@@ -217,7 +217,7 @@ export const NASA_MISSION_CLASSES = [
     baseMassLimit: 110, // 110 t payload mass cap
     tag: 'DECADAL PRIORITY · MID-SCALE',
     badge: 'NEW FRONTIERS · $1.0B CAP',
-    description: 'Medium-class missions addressing decadal survey priorities ($1.0B cap, e.g. New Horizons, Juno, OSIRIS-REx, Dragonfly). Balanced multi-sensor exploration.',
+    description: '💡 Mid-sized NASA missions ($1.0B cap). Balanced exploration like New Horizons and Juno!',
     icon: '🛰',
     examples: 'New Horizons, Juno, OSIRIS-REx'
   },
@@ -229,7 +229,7 @@ export const NASA_MISSION_CLASSES = [
     baseMassLimit: 150, // 150 t payload mass cap
     tag: 'LARGE STRATEGIC · MULTI-BILLION',
     badge: 'FLAGSHIP · $3.25B CAP',
-    description: 'NASA\'s highest priority, multi-instrument strategic missions ($3.25B cap, e.g. Curiosity, Perseverance, Europa Clipper, Cassini). Allows heavy radiation shielding, nuclear RTGs, and deep-space laboratories.',
+    description: '💡 Mega NASA missions ($3.25B cap). Heavy rovers & deep-space labs like Perseverance and Europa Clipper!',
     icon: '🪐',
     examples: 'Europa Clipper, Perseverance, Cassini'
   }
@@ -248,7 +248,7 @@ export const LAUNCH_VEHICLES = [
     deltaVBonus: 0.0, // baseline trans-injection
     c3Capability: 'Standard C3 (Inner Solar System & LEO)',
     tag: '5.2m COMPOSITE FAIRING · 76 t',
-    description: 'Cost-effective commercial workhorse with 5.2m fairing. High reliability and low launch procurement cost ($85M).',
+    description: '💡 Reliable rocket with 5.2m cargo hood ($85M). Perfect for light & medium explorers.',
     icon: '🚀'
   },
   {
@@ -263,7 +263,7 @@ export const LAUNCH_VEHICLES = [
     deltaVBonus: 0.65, // +0.65 km/s injection boost
     c3Capability: 'High C3 (Direct Mars & Asteroid Injection)',
     tag: '5.4m EXTENDED FAIRING · 98 t',
-    description: 'Triple-core heavy-lift launcher with 5.4m payload fairing ($160M). Delivers high characteristic energy (C3) for direct planetary transfer (+0.65 km/s Δv).',
+    description: '💡 Powerful triple-core booster ($160M). Extra turbo boost for far planets (+0.65 km/s).',
     icon: '⚡'
   },
   {
@@ -278,7 +278,7 @@ export const LAUNCH_VEHICLES = [
     deltaVBonus: 1.45, // +1.45 km/s direct Jovian injection
     c3Capability: 'Ultra-High C3 (Direct Jovian Injection)',
     tag: '8.4m HEAVY FAIRING · 135 t',
-    description: 'NASA\'s super heavy-lift rocket with Exploration Upper Stage (EUS) and 8.4m fairing ($320M). Injects heavy Flagship laboratories directly to deep space (+1.45 km/s Δv).',
+    description: '💡 Giant NASA deep-space rocket ($320M). Maximum boost for distant Moon and Jupiter voyages.',
     icon: '🛸'
   },
   {
