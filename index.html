@@ -5323,14 +5323,14 @@
           main: {
             id: 'main',
             title: 'THEME 1: PRIME',
-            src: '/assets/bgm/mission-forge-main.mp3',
-            fallbackSrc: './assets/bgm/mission-forge-main.mp3'
+            src: './assets/bgm/mission-forge-main.mp3',
+            fallbackSrc: './src/game/dist/bgm/mission-forge-main.mp3'
           },
           alt: {
             id: 'alt',
             title: 'THEME 2: ALT',
-            src: '/assets/bgm/mission-forge-alt.mp3',
-            fallbackSrc: './assets/bgm/mission-forge-alt.mp3'
+            src: './assets/bgm/mission-forge-alt.mp3',
+            fallbackSrc: './src/game/dist/bgm/mission-forge-alt.mp3'
           }
         };
       }
@@ -5354,13 +5354,20 @@
           this.bgmAudio.src = this.tracks[this.bgmTrack].src;
 
           this.bgmAudio.addEventListener('error', (e) => {
-            console.warn('BGM track error on src, applying fallback:', this.bgmAudio.src);
-            const fallback = this.tracks[this.bgmTrack]?.fallbackSrc;
-            if (fallback && this.bgmAudio.src !== fallback) {
+            const trackKey = this.bgmTrack;
+            if (!this._bgmFallbackAttempted) this._bgmFallbackAttempted = {};
+            if (this._bgmFallbackAttempted[trackKey]) {
+              console.warn('[CarouselAudio] BGM track audio failed or unavailable:', trackKey);
+              return;
+            }
+            this._bgmFallbackAttempted[trackKey] = true;
+            const fallback = this.tracks[trackKey]?.fallbackSrc;
+            if (fallback) {
+              console.warn('[CarouselAudio] Primary BGM load error, attempting fallback once:', fallback);
               this.bgmAudio.src = fallback;
               this.bgmAudio.load();
               if (this.isAudioEnabled) {
-                this.bgmAudio.play().catch(err => console.warn('Fallback BGM play error:', err));
+                this.bgmAudio.play().catch(err => console.warn('[CarouselAudio] Fallback BGM play rejected or unavailable:', err?.message || err));
               }
             }
           });

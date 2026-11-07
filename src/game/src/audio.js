@@ -112,11 +112,15 @@ export class FlightAudio {
           el.loop = this.bgmMode !== 'playlist';
           el.src = BGM_TRACKS[key].src;
 
-          // Error fallback to absolute asset route
+          // Error fallback to absolute asset route (single attempt guard against loops)
           el.addEventListener('error', () => {
-            if(el.src && !el.src.includes('assets/bgm')){
+            if(el.src && !el._fallbackAttempted && !el.src.includes('assets/bgm')){
+              el._fallbackAttempted = true;
+              console.warn(`[FlightAudio] Primary BGM source error for ${key}, falling back to:`, BGM_TRACKS[key].fallbackSrc);
               el.src = BGM_TRACKS[key].fallbackSrc;
               el.load();
+            } else if (el._fallbackAttempted) {
+              console.warn(`[FlightAudio] BGM source unavailable for ${key}; continuing in silent mode.`);
             }
           });
 
