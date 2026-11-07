@@ -1349,593 +1349,6 @@ body:has(#modal-layer:not([hidden])) .menu-bottom {
 }
 
 /* ==========================================================================
-   10B. ULTRA-PREMIUM SCI-FI HUD GLASS DESIGN: MIDDLE STEPS & BOTTOM CARDS
-   ========================================================================== */
-
-/* 1. MIDDLE CAROUSEL: 01-09 MODULAR SUBSYSTEM CARDS */
-.hangar-slots {
-  position: relative !important;
-  display: flex !important;
-  gap: 8px !important; /* Soft visual separation */
-  min-width: 0 !important;
-  flex: 1 !important;
-  margin: 0 !important;
-  padding: 2px !important;
-  overflow-x: auto !important;
-  overflow-y: hidden !important;
-  scrollbar-width: none !important;
-  scroll-behavior: smooth !important;
-}
-
-.hangar-slots::-webkit-scrollbar {
-  display: none !important;
-}
-
-/* 3D Glassmorphic Depth & Chamfered Cybernetic Corners */
-.hangar-slots button {
-  flex: 0 0 calc((100% - 16px) / 3) !important;
-  min-width: 0 !important;
-  height: 50px !important;
-  min-height: 50px !important;
-  position: relative !important;
-  background: rgba(4, 13, 30, 0.82) !important; /* bg-[#040d1e]/80 */
-  backdrop-filter: blur(16px) !important;
-  -webkit-backdrop-filter: blur(16px) !important;
-  border-radius: 6px !important;
-  /* Anodized space-blue and dark steel metallic border */
-  border: 1px solid rgba(30, 58, 138, 0.45) !important; /* #1e3a8a/40 subtle inactive */
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08), inset 0 0 14px rgba(4, 13, 30, 0.6) !important;
-  /* Chamfered (angled cybernetic) corners */
-  clip-path: polygon(0 6px, 6px 0, calc(100% - 6px) 0, 100% 6px, 100% calc(100% - 6px), calc(100% - 6px) 100%, 6px 100%, 0 calc(100% - 6px)) !important;
-  padding: 6px 10px !important;
-  text-align: left !important;
-  color: #cbd5e1 !important;
-  cursor: pointer !important;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: center !important;
-}
-
-/* Inactive Hover: Energetic thin ice-blue outline */
-.hangar-slots button:hover:not([aria-pressed="true"]) {
-  border-color: rgba(56, 189, 248, 0.75) !important;
-  background: rgba(8, 47, 73, 0.55) !important;
-  box-shadow: 0 0 14px rgba(56, 189, 248, 0.35), inset 0 0 10px rgba(56, 189, 248, 0.15) !important;
-  transform: translateY(-1px) !important;
-}
-
-/* ACTIVE / SELECTED CARD: Double-layered electric cyan (#00e5ff) pulsing neon border */
-.hangar-slots button[aria-pressed="true"] {
-  border: 1.5px solid #00E5FF !important; /* border-[#00e5ff] */
-  background: radial-gradient(circle at 50% 0%, rgba(8, 47, 73, 0.9) 0%, rgba(4, 13, 30, 0.95) 85%) !important;
-  box-shadow: 0 0 18px rgba(0, 229, 255, 0.45), inset 0 0 12px rgba(0, 229, 255, 0.2) !important;
-  animation: cyberActivePulse 3s ease-in-out infinite alternate !important;
-}
-
-@keyframes cyberActivePulse {
-  0% {
-    box-shadow: 0 0 14px rgba(0, 229, 255, 0.4), inset 0 0 8px rgba(0, 229, 255, 0.15);
-    border-color: #00e5ff;
-  }
-  100% {
-    box-shadow: 0 0 22px rgba(0, 229, 255, 0.65), inset 0 0 14px rgba(0, 229, 255, 0.3);
-    border-color: #38bdf8;
-  }
-}
-
-.slot-header-row {
-  display: flex !important;
-  align-items: center !important;
-  gap: 6px !important;
-  min-width: 0 !important;
-}
-
-.slot-header-row .slot-pill {
-  flex: none !important;
-  margin-bottom: 0 !important;
-}
-
-/* Category Numbers: Glowing neon border capsule / pill box */
-.hangar-slots button > span,
-.hangar-slots button .slot-pill,
-.cyber-num-pill {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  background: rgba(8, 47, 73, 0.6) !important;
-  border: 1px solid rgba(0, 229, 255, 0.5) !important;
-  color: #00E5FF !important;
-  font-size: 8.5px !important;
-  font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace !important;
-  font-weight: 700 !important;
-  padding: 0 5px !important;
-  border-radius: 3px !important;
-  box-shadow: 0 0 6px rgba(0, 229, 255, 0.3) !important;
-  letter-spacing: 0.06em !important;
-  margin-bottom: 0 !important;
-  width: fit-content !important;
-}
-
-.hangar-slots button[aria-pressed="true"] > span,
-.hangar-slots button[aria-pressed="true"] .slot-pill {
-  background: rgba(0, 229, 255, 0.2) !important;
-  border-color: #00e5ff !important;
-  color: #ffffff !important;
-  box-shadow: 0 0 10px rgba(0, 229, 255, 0.6) !important;
-}
-
-/* Card Titles */
-.hangar-slots button b,
-.hangar-slots button .slot-title {
-  display: block !important;
-  font-family: 'Rajdhani', sans-serif !important;
-  font-style: normal !important;
-  font-size: 12.5px !important;
-  font-weight: 700 !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.05em !important;
-  margin: 0 !important;
-  line-height: 1.1 !important;
-  color: #ffffff !important;
-  background: none !important;
-  -webkit-text-fill-color: initial !important;
-  filter: drop-shadow(0 0 6px rgba(0, 229, 255, 0.35)) !important;
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-}
-
-.slot-sub-row {
-  display: flex !important;
-  align-items: center !important;
-  gap: 4px !important;
-  margin-top: 1px !important;
-}
-
-.slot-slash {
-  color: rgba(0, 229, 255, 0.5) !important;
-  font-family: 'JetBrains Mono', monospace !important;
-  font-size: 9px !important;
-  font-weight: 400 !important;
-}
-
-.hangar-slots button small,
-.hangar-slots button .slot-sub {
-  display: inline-block !important;
-  font-family: 'JetBrains Mono', monospace !important;
-  font-size: 8.5px !important;
-  color: #7dd3fc !important;
-  letter-spacing: 0.04em !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  white-space: nowrap !important;
-  line-height: 1.2 !important;
-}
-
-/* Upper-right Corner Indicator: Glowing cyan cyber-indicator dot or checklist tick */
-.hangar-slots button::after {
-  content: "•" !important;
-  position: absolute !important;
-  right: 8px !important;
-  top: 6px !important;
-  color: rgba(0, 229, 255, 0.5) !important;
-  font-size: 12px !important;
-  line-height: 1 !important;
-  transition: all 0.2s ease !important;
-}
-
-.hangar-slots button:hover::after {
-  color: #00e5ff !important;
-  text-shadow: 0 0 8px #00e5ff !important;
-}
-
-.hangar-slots button[aria-pressed="true"]::after {
-  color: #00e5ff !important;
-  text-shadow: 0 0 10px #00e5ff, 0 0 20px #00e5ff !important;
-}
-
-.hangar-slots .socket-installed::after {
-  content: "✓" !important;
-  color: #4ade80 !important;
-  font-size: 12px !important;
-  font-weight: 800 !important;
-  filter: drop-shadow(0 0 8px rgba(74, 222, 128, 0.9)) !important;
-}
-
-/* 2. HORIZONTAL SUB-HEADER */
-.hangar-catalog {
-  position: relative !important;
-  margin-top: 6px !important;
-  flex: none !important;
-}
-
-.catalog-heading {
-  display: flex !important;
-  justify-content: space-between !important;
-  align-items: center !important;
-  gap: 10px !important;
-  margin-bottom: 4px !important;
-  padding: 0 2px !important;
-}
-
-.catalog-heading h3#catalog-title {
-  margin: 0 !important;
-  font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace !important;
-  font-size: 11px !important;
-  font-weight: 700 !important;
-  color: #7dd3fc !important;
-  letter-spacing: 0.14em !important;
-  text-transform: uppercase !important;
-  text-shadow: 0 0 8px rgba(0, 229, 255, 0.3) !important;
-}
-
-.aurora-auto-btn {
-  background: rgba(0, 229, 255, 0.15) !important;
-  border: 1px solid #00e5ff !important;
-  color: #00e5ff !important;
-  font-family: 'JetBrains Mono', monospace !important;
-  font-size: 10px !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.12em !important;
-  padding: 5px 12px !important;
-  border-radius: 4px !important;
-  cursor: pointer !important;
-  transition: all 0.2s ease !important;
-  box-shadow: 0 0 12px rgba(0, 229, 255, 0.25) !important;
-}
-
-.aurora-auto-btn:hover {
-  background: #00e5ff !important;
-  color: #020611 !important;
-  box-shadow: 0 0 20px #00e5ff !important;
-}
-
-.catalog-heading button[data-hangar="remove"] {
-  background: rgba(4, 13, 30, 0.75) !important;
-  border: 1px solid rgba(0, 229, 255, 0.3) !important;
-  border-radius: 4px !important;
-  color: #cbd5e1 !important;
-  font-family: 'JetBrains Mono', monospace !important;
-  font-size: 9.5px !important;
-  font-weight: 600 !important;
-  letter-spacing: 0.1em !important;
-  padding: 5px 10px !important;
-  cursor: pointer !important;
-  transition: all 0.2s ease !important;
-}
-
-.catalog-heading button[data-hangar="remove"]:hover {
-  border-color: #ef4444 !important;
-  color: #ef4444 !important;
-}
-
-/* 3. BOTTOM EQUIPMENT CARDS (BALANCED / ENDURANCE / PERFORMANCE / MODULE SUB-STEPS) */
-.part-previews {
-  position: absolute !important;
-  top: 14px !important;
-  left: 0 !important;
-  right: 0 !important;
-  height: 50px !important;
-  pointer-events: none !important;
-  z-index: 5 !important;
-}
-
-.part-previews canvas {
-  display: block !important;
-  width: 100% !important;
-  height: 100% !important;
-}
-
-.hangar-options {
-  display: grid !important;
-  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-  gap: 10px !important;
-  margin-top: 2px !important;
-}
-
-/* High-fidelity 3D Glassmorphic HUD Equipment Card */
-.hangar-options button {
-  position: relative !important;
-  min-width: 0 !important;
-  min-height: 148px !important;
-  max-height: 156px !important;
-  display: flex !important;
-  flex-direction: column !important;
-  padding: 52px 10px 6px 10px !important;
-  background: rgba(4, 13, 30, 0.84) !important; /* bg-[#040d1e]/80 */
-  backdrop-filter: blur(16px) !important;
-  -webkit-backdrop-filter: blur(16px) !important;
-  border-radius: 6px !important;
-  /* Anodized space-blue and dark steel metallic border */
-  border: 1px solid rgba(30, 58, 138, 0.45) !important; /* #1e3a8a/40 subtle inactive */
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08), inset 0 0 16px rgba(4, 13, 30, 0.7) !important;
-  /* Chamfered (angled cybernetic) corners */
-  clip-path: polygon(0 8px, 8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px)) !important;
-  text-align: left !important;
-  color: #cbd5e1 !important;
-  cursor: pointer !important;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
-}
-
-/* Inactive Hover: Energetic thin ice-blue outline */
-.hangar-options button:hover:not([aria-pressed="true"]) {
-  border-color: rgba(56, 189, 248, 0.75) !important;
-  background: rgba(8, 47, 73, 0.55) !important;
-  box-shadow: 0 0 14px rgba(56, 189, 248, 0.35), inset 0 0 10px rgba(56, 189, 248, 0.15) !important;
-  transform: translateY(-1px) !important;
-}
-
-/* ACTIVE / SELECTED CARD: Double-layered electric cyan (#00e5ff) pulsing neon border */
-.hangar-options button[aria-pressed="true"] {
-  border: 1.5px solid #00E5FF !important; /* border-[#00e5ff] */
-  background: radial-gradient(circle at 50% 0%, rgba(8, 47, 73, 0.92) 0%, rgba(4, 13, 30, 0.96) 85%) !important;
-  box-shadow: 0 0 20px rgba(0, 229, 255, 0.5), inset 0 0 14px rgba(0, 229, 255, 0.22) !important;
-  animation: cyberActivePulse 3s ease-in-out infinite alternate !important;
-}
-
-/* Upper-Right Corner Indicator Tick on Option Card */
-.hangar-options button::after {
-  content: "◈" !important;
-  position: absolute !important;
-  top: 7px !important;
-  right: 10px !important;
-  color: rgba(0, 229, 255, 0.45) !important;
-  font-size: 10px !important;
-  line-height: 1 !important;
-  z-index: 6 !important;
-  transition: all 0.2s ease !important;
-}
-
-.hangar-options button:hover::after {
-  color: #00e5ff !important;
-  text-shadow: 0 0 8px #00e5ff !important;
-}
-
-.hangar-options button[aria-pressed="true"]::after {
-  content: "✓" !important;
-  color: #00e5ff !important;
-  font-size: 13px !important;
-  font-weight: 800 !important;
-  filter: drop-shadow(0 0 8px #00e5ff) !important;
-}
-
-/* Glowing Cyan Backdrop Pedestal & Halo */
-.part-preview-stage {
-  position: absolute !important;
-  top: 4px !important;
-  left: 50% !important;
-  transform: translateX(-50%) !important;
-  width: 110px !important;
-  height: 46px !important;
-  pointer-events: none !important;
-  z-index: 2 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-.pedestal-halo {
-  position: absolute !important;
-  inset: 0 !important;
-  border-radius: 50% !important;
-  background: radial-gradient(ellipse at 50% 55%, rgba(0, 229, 255, 0.24) 0%, rgba(0, 229, 255, 0.09) 45%, transparent 75%) !important;
-  filter: blur(6px) !important;
-  transition: all 0.3s ease !important;
-}
-
-.pedestal-disc {
-  position: absolute !important;
-  bottom: 4px !important;
-  left: 50% !important;
-  transform: translateX(-50%) !important;
-  width: 68px !important;
-  height: 14px !important;
-  border-radius: 50% !important;
-  background: radial-gradient(ellipse at 50% 50%, rgba(0, 229, 255, 0.35) 0%, rgba(8, 47, 73, 0.5) 60%, transparent 85%) !important;
-  border: 1px solid rgba(0, 229, 255, 0.45) !important;
-  box-shadow: 0 0 12px rgba(0, 229, 255, 0.3), inset 0 0 6px rgba(0, 229, 255, 0.2) !important;
-  transition: all 0.3s ease !important;
-}
-
-.pedestal-ring {
-  position: absolute !important;
-  bottom: 2px !important;
-  left: 50% !important;
-  transform: translateX(-50%) !important;
-  width: 86px !important;
-  height: 18px !important;
-  border-radius: 50% !important;
-  border: 0.8px dashed rgba(0, 229, 255, 0.28) !important;
-  transition: all 0.3s ease !important;
-}
-
-/* Active Card Pedestal Boost */
-.hangar-options button[aria-pressed="true"] .pedestal-halo {
-  background: radial-gradient(ellipse at 50% 55%, rgba(0, 229, 255, 0.42) 0%, rgba(0, 229, 255, 0.16) 48%, transparent 80%) !important;
-  filter: blur(8px) !important;
-}
-
-.hangar-options button[aria-pressed="true"] .pedestal-disc {
-  border-color: #00e5ff !important;
-  box-shadow: 0 0 18px rgba(0, 229, 255, 0.6), inset 0 0 10px rgba(0, 229, 255, 0.35) !important;
-}
-
-.hangar-options button[aria-pressed="true"] .pedestal-ring {
-  border-color: rgba(0, 229, 255, 0.6) !important;
-}
-
-/* Header Category / Number inside Option Card */
-.part-number {
-  position: absolute !important;
-  top: 7px !important;
-  left: 8px !important;
-  display: flex !important;
-  align-items: center !important;
-  gap: 4px !important;
-  z-index: 6 !important;
-}
-
-.part-tag-text,
-.part-tag-badge {
-  font-family: 'JetBrains Mono', monospace !important;
-  font-size: 8px !important;
-  font-weight: 700 !important;
-  color: #7dd3fc !important;
-  letter-spacing: 0.12em !important;
-  text-transform: uppercase !important;
-}
-
-/* Compact Card Titles */
-.hangar-options strong,
-.hangar-options strong.part-title {
-  display: block !important;
-  font-family: 'Rajdhani', sans-serif !important;
-  font-style: normal !important;
-  font-size: 12.5px !important;
-  font-weight: 600 !important;
-  line-height: 1.15 !important;
-  letter-spacing: 0.03em !important;
-  text-transform: none !important;
-  margin: 0 0 1px 0 !important;
-  color: #FFFFFF !important;
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  text-shadow: 0 0 8px rgba(0, 229, 255, 0.35) !important;
-}
-
-/* Metadata Details: "6 t structure • $55M" */
-.part-specs-row,
-.hangar-options small {
-  display: block !important;
-  font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace !important;
-  font-size: 8.5px !important;
-  font-weight: 500 !important;
-  color: #7dd3fc !important; /* Sharp, pale cyan */
-  letter-spacing: 0.04em !important;
-  margin: 0 0 2px 0 !important;
-}
-
-/* Micro-styled compact descriptions */
-.part-description {
-  font-family: 'Space Grotesk', 'Inter', sans-serif !important;
-  font-size: 9px !important;
-  line-height: 1.25 !important;
-  display: -webkit-box !important;
-  -webkit-line-clamp: 2 !important;
-  -webkit-box-orient: vertical !important;
-  overflow: hidden !important;
-  color: #cbd5e1 !important; /* slate-300 */
-  min-height: 22px !important;
-  max-height: 24px !important;
-  margin: 0 0 2px 0 !important;
-}
-
-/* Telemetry Specs Badge */
-.component-specs-label {
-  display: flex !important;
-  align-items: center !important;
-  font-family: 'JetBrains Mono', monospace !important;
-  font-size: 8px !important;
-  font-weight: 600 !important;
-  color: #38bdf8 !important;
-  letter-spacing: 0.04em !important;
-  padding: 2.5px 6px !important;
-  background: rgba(0, 229, 255, 0.06) !important;
-  border-left: 2px solid #00e5ff !important;
-  border-top: none !important;
-  border-right: none !important;
-  border-bottom: none !important;
-  border-radius: 0 3px 3px 0 !important;
-  margin: 2px 0 3px 0 !important;
-  white-space: nowrap !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-}
-
-/* Bottom Action Badges (mass, cost, power) pinned neatly */
-.part-bottom-icons {
-  display: flex !important;
-  align-items: center !important;
-  gap: 5px !important;
-  margin-top: auto !important;
-  padding-top: 3px !important;
-  border-top: 1px solid rgba(0, 229, 255, 0.14) !important;
-}
-
-.part-icon-item {
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 3px !important;
-  font-family: 'JetBrains Mono', monospace !important;
-  font-size: 8px !important;
-  font-weight: 700 !important;
-  color: #cbd5e1 !important;
-  background: rgba(8, 47, 73, 0.5) !important;
-  padding: 1.5px 5px !important;
-  border-radius: 3px !important;
-  border: 1px solid rgba(0, 229, 255, 0.22) !important;
-}
-
-.part-icon-item .meta-icon {
-  width: 9.5px !important;
-  height: 9.5px !important;
-  color: #38bdf8 !important;
-  flex: none !important;
-}
-
-.part-icon-item .spark-icon {
-  color: #00e5ff !important;
-  flex: none !important;
-}
-
-.part-icon-item .currency-tag {
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  width: 10px !important;
-  height: 10px !important;
-  border-radius: 1.5px !important;
-  background: rgba(0, 229, 255, 0.2) !important;
-  border: 0.8px solid rgba(0, 229, 255, 0.6) !important;
-  color: #00e5ff !important;
-  font-size: 7px !important;
-  font-weight: 800 !important;
-  flex: none !important;
-}
-
-.part-icon-item .icon-label {
-  color: #e0f2fe !important;
-  font-size: 8px !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.02em !important;
-  white-space: nowrap !important;
-}
-
-.hangar-options .component-specs,
-.hangar-options .part-comparison,
-.hangar-options .part-validity,
-.hangar-options button > b,
-.hangar-options .install-action-btn {
-  display: none !important;
-}
-
-.engineering-lesson {
-  font-family: 'Space Grotesk', sans-serif !important;
-  font-size: 10.5px !important;
-  line-height: 1.45 !important;
-  color: #cbd5e1 !important;
-  background: rgba(4, 13, 30, 0.65) !important;
-  backdrop-filter: blur(8px) !important;
-  border-left: 2.5px solid #00e5ff !important;
-  border-radius: 0 4px 4px 0 !important;
-  padding: 5px 10px !important;
-  margin: 6px 0 0 0 !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
-}
-
-/* ==========================================================================
    FLIGHT ENGINEERING COLUMN (RIGHT SIDEBAR)
    Single borderless glass pane
    ========================================================================== */
@@ -3788,13 +3201,14 @@ body:has(#modal-layer:not([hidden])) .menu-bottom {
 }
 
 .hangar-slots {
-  display: flex !important;
-  gap: 6px !important;
+  display: grid !important;
+  grid-template-columns: repeat(9, 1fr) !important;
+  gap: 5px !important;
   flex: 1 !important;
-  overflow-x: auto !important;
-  scrollbar-width: none !important;
-  padding: 2px 0 !important;
+  min-width: 0 !important;
+  padding: 0 !important;
   margin: 0 !important;
+  overflow: hidden !important;
 }
 
 .hangar-slots::-webkit-scrollbar {
@@ -3802,64 +3216,90 @@ body:has(#modal-layer:not([hidden])) .menu-bottom {
 }
 
 .slot-pill-btn {
-  flex: 1 0 auto;
-  min-width: 90px;
-  height: 34px;
-  padding: 0 8px;
-  background: rgba(5, 16, 26, 0.85) !important;
+  height: 40px !important;
+  min-height: 40px !important;
+  padding: 3px 5px !important;
+  background: rgba(4, 15, 26, 0.85) !important;
   border: 1px solid rgba(0, 229, 255, 0.22) !important;
-  border-radius: 4px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: #8bb0c0;
-  transition: all 0.2s ease;
-  white-space: nowrap;
+  border-radius: 4px !important;
+  cursor: pointer !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 2px !important;
+  position: relative !important;
+  text-align: center !important;
+  transition: all 0.2s ease !important;
+  box-sizing: border-box !important;
 }
 
 .slot-pill-btn:hover {
-  background: rgba(0, 229, 255, 0.08) !important;
+  background: rgba(8, 30, 48, 0.95) !important;
   border-color: rgba(0, 229, 255, 0.5) !important;
-  color: #ffffff;
+  transform: translateY(-1px) !important;
 }
 
 .slot-pill-btn[aria-pressed="true"] {
   background: rgba(0, 229, 255, 0.16) !important;
-  border-color: #00E5FF !important;
-  color: #ffffff !important;
-  box-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
+  border: 1.5px solid #00E5FF !important;
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.45), inset 0 0 8px rgba(0, 229, 255, 0.15) !important;
+}
+
+.slot-pill-btn .slot-header-line {
+  display: flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  line-height: 1 !important;
 }
 
 .slot-pill-btn .slot-icon {
-  font-size: 12px;
+  font-size: 11px !important;
+  line-height: 1 !important;
 }
 
 .slot-pill-btn .slot-num {
-  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
-  font-size: 9px;
-  color: #00E5FF;
-  font-weight: 700;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace) !important;
+  font-size: 9px !important;
+  color: #00E5FF !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
 }
 
 .slot-pill-btn .slot-title {
-  font-family: var(--font-title, 'Rajdhani', sans-serif);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-family: var(--font-title, 'Rajdhani', sans-serif) !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.05em !important;
+  color: #92b8cb !important;
+  text-transform: uppercase !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  line-height: 1.1 !important;
+  width: 100% !important;
+}
+
+.slot-pill-btn[aria-pressed="true"] .slot-title {
+  color: #ffffff !important;
+  text-shadow: 0 0 6px rgba(0, 229, 255, 0.6) !important;
 }
 
 .slot-pill-btn .slot-check {
-  margin-left: auto;
-  font-size: 10px;
-  color: #22c55e;
-  font-weight: 700;
+  position: absolute !important;
+  top: 3px !important;
+  right: 4px !important;
+  font-size: 9px !important;
+  color: #22c55e !important;
+  font-weight: 800 !important;
+  text-shadow: 0 0 6px rgba(34, 197, 94, 0.7) !important;
+  line-height: 1 !important;
 }
 
 .hangar-catalog {
   position: relative !important;
-  height: 145px !important;
+  height: 140px !important;
+  min-height: 140px !important;
   flex-shrink: 0 !important;
   margin: 0 !important;
 }
@@ -3870,6 +3310,7 @@ body:has(#modal-layer:not([hidden])) .menu-bottom {
   left: 0 !important;
   right: 0 !important;
   bottom: 0 !important;
+  width: 100% !important;
   height: 100% !important;
   pointer-events: none !important;
   z-index: 2 !important;
@@ -3884,155 +3325,173 @@ body:has(#modal-layer:not([hidden])) .menu-bottom {
 .hangar-options {
   display: grid !important;
   grid-template-columns: repeat(3, 1fr) !important;
-  gap: 10px !important;
+  gap: 12px !important;
   height: 100% !important;
   margin: 0 !important;
 }
 
 .compact-part-card {
-  position: relative;
-  height: 140px;
-  background: rgba(4, 15, 26, 0.8) !important;
+  position: relative !important;
+  height: 140px !important;
+  background: rgba(4, 15, 26, 0.85) !important;
   border: 1px solid rgba(0, 229, 255, 0.22) !important;
-  border-radius: 6px;
-  padding: 8px 10px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  text-align: left;
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  box-sizing: border-box;
-  overflow: hidden;
+  border-radius: 6px !important;
+  padding: 8px 10px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  cursor: pointer !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
 }
 
 .compact-part-card:hover {
-  background: rgba(6, 22, 38, 0.9) !important;
+  background: rgba(6, 22, 38, 0.95) !important;
   border-color: rgba(0, 229, 255, 0.6) !important;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(0, 229, 255, 0.18);
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 16px rgba(0, 229, 255, 0.2) !important;
 }
 
 .compact-part-card[aria-pressed="true"],
 .compact-part-card.selected {
   background: rgba(0, 229, 255, 0.12) !important;
-  border: 1px solid #00E5FF !important;
+  border: 1.5px solid #00E5FF !important;
   box-shadow: 0 0 16px rgba(0, 229, 255, 0.35), inset 0 0 10px rgba(0, 229, 255, 0.08) !important;
 }
 
 .compact-part-card.selected::after {
-  content: '✓';
-  position: absolute;
-  top: 7px;
-  right: 9px;
-  color: #22c55e;
-  font-weight: 800;
-  font-size: 13px;
-  text-shadow: 0 0 8px rgba(34, 197, 94, 0.7);
+  content: '✓' !important;
+  position: absolute !important;
+  top: 7px !important;
+  right: 9px !important;
+  color: #22c55e !important;
+  font-weight: 800 !important;
+  font-size: 13px !important;
+  text-shadow: 0 0 8px rgba(34, 197, 94, 0.7) !important;
+  z-index: 6 !important;
 }
 
 .part-header-line {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  z-index: 3;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  z-index: 5 !important;
 }
 
 .part-pill-num {
-  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
-  font-size: 9px;
-  color: #00E5FF;
-  font-weight: 700;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace) !important;
+  font-size: 9px !important;
+  color: #00E5FF !important;
+  font-weight: 700 !important;
 }
 
 .part-tag-badge {
-  font-family: var(--font-title, 'Rajdhani', sans-serif);
-  font-size: 9.5px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: #799fae;
-  text-transform: uppercase;
+  font-family: var(--font-title, 'Rajdhani', sans-serif) !important;
+  font-size: 9.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+  color: #799fae !important;
+  text-transform: uppercase !important;
 }
 
 .compact-part-card.selected .part-tag-badge {
-  color: #00E5FF;
+  color: #00E5FF !important;
 }
 
 .part-preview-stage {
-  flex: 1;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  flex: 1 !important;
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 50px !important;
+  pointer-events: none !important;
 }
 
 .pedestal-halo {
-  position: absolute;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(0, 229, 255, 0.15) 0%, transparent 70%);
-  pointer-events: none;
+  position: absolute !important;
+  width: 52px !important;
+  height: 52px !important;
+  border-radius: 50% !important;
+  background: radial-gradient(circle, rgba(0, 229, 255, 0.15) 0%, transparent 70%) !important;
+  pointer-events: none !important;
 }
 
 .pedestal-disc {
-  position: absolute;
-  bottom: 4px;
-  width: 42px;
-  height: 10px;
-  border-radius: 50%;
-  border: 1px solid rgba(0, 229, 255, 0.3);
-  pointer-events: none;
+  position: absolute !important;
+  bottom: 2px !important;
+  width: 46px !important;
+  height: 12px !important;
+  border-radius: 50% !important;
+  border: 1px solid rgba(0, 229, 255, 0.35) !important;
+  box-shadow: 0 0 8px rgba(0, 229, 255, 0.15) !important;
+  pointer-events: none !important;
 }
 
 .compact-part-card.selected .pedestal-disc {
-  border-color: #00E5FF;
-  box-shadow: 0 0 8px #00E5FF;
+  border-color: #00E5FF !important;
+  box-shadow: 0 0 10px #00E5FF !important;
 }
 
 .compact-part-card .part-title {
-  font-family: var(--font-title, 'Rajdhani', sans-serif);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: #ffffff;
-  margin: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  z-index: 3;
+  font-family: var(--font-title, 'Rajdhani', sans-serif) !important;
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+  color: #ffffff !important;
+  margin: 0 0 4px 0 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  z-index: 5 !important;
+  display: block !important;
 }
 
 .compact-part-card.selected .part-title {
-  color: #00E5FF;
-  text-shadow: 0 0 8px rgba(0, 229, 255, 0.5);
+  color: #00E5FF !important;
+  text-shadow: 0 0 8px rgba(0, 229, 255, 0.5) !important;
 }
 
 .part-stats-row {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  z-index: 3;
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 5px !important;
+  z-index: 5 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
 }
 
 .stat-badge {
-  flex: 1;
-  text-align: center;
-  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
-  font-size: 9px;
-  font-weight: 600;
-  padding: 3px 4px;
-  background: rgba(3, 10, 18, 0.7);
-  border: 1px solid rgba(0, 229, 255, 0.18);
-  border-radius: 3px;
-  color: #c0d8e4;
-  white-space: nowrap;
+  text-align: center !important;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace) !important;
+  font-size: 9px !important;
+  font-weight: 600 !important;
+  padding: 3px 2px !important;
+  background: rgba(3, 10, 18, 0.75) !important;
+  border: 1px solid rgba(0, 229, 255, 0.18) !important;
+  border-radius: 3px !important;
+  color: #c0d8e4 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  box-sizing: border-box !important;
+  display: block !important;
 }
 
 .stat-badge.spec {
-  color: #00E5FF;
-  font-weight: 700;
-  background: rgba(0, 229, 255, 0.08);
+  color: #00E5FF !important;
+  font-weight: 700 !important;
+  background: rgba(0, 229, 255, 0.08) !important;
+  border-color: rgba(0, 229, 255, 0.3) !important;
+}
+
+.stat-badge.mass {
+  color: #e2e8f0 !important;
+}
+
+.stat-badge.cost {
+  color: #f1f5f9 !important;
 }
 
 .hangar-readiness {

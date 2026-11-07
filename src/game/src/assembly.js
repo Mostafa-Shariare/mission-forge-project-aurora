@@ -116,15 +116,17 @@ export class AssemblyHangar {
           <span class="hangar-hint">DRAG TO ROTATE · SCROLL TO ZOOM</span>
         </div>
 
-        <!-- Sleek 9-Subsystem Stepper Navigation -->
+        <!-- Sleek 9-Subsystem Stepper Navigation (All 9 Modules Visible) -->
         <div class="hangar-section-nav">
           <button data-hangar="previous-section" aria-label="Previous subsystem" class="nav-chevron">‹</button>
           <div class="hangar-slots" role="group" aria-label="Assembly subsystems">
             ${SYSTEMS.map((s,i)=>{
               const tab = SUBSYSTEM_TABS[i] || { icon: '⚙️', name: s.label.replace(/^\d+\s*[\/•]\s*/,'') };
               return `<button data-slot="${i}" aria-pressed="${i===0}" class="slot-pill-btn" title="${tab.name}">
-                <span class="slot-icon">${tab.icon}</span>
-                <span class="slot-num">0${i+1}</span>
+                <div class="slot-header-line">
+                  <span class="slot-icon">${tab.icon}</span>
+                  <span class="slot-num">0${i+1}</span>
+                </div>
                 <span class="slot-title">${tab.name}</span>
                 <span class="slot-check" id="check-${i}"></span>
               </button>`;
@@ -369,7 +371,8 @@ export class AssemblyHangar {
     const pw = this.previewHost.clientWidth, ph = this.previewHost.clientHeight;
     if (pw && ph) {
       this.previewRenderer.setSize(pw, ph);
-      this.previewCamera.aspect = pw / 3 / ph;
+      const vpH = Math.max(40, Math.round(ph * 0.62));
+      this.previewCamera.aspect = (pw / 3) / vpH;
       this.previewCamera.updateProjectionMatrix();
     }
   }
@@ -689,6 +692,10 @@ export class AssemblyHangar {
     if (w && h) {
       const btns = this.root.querySelectorAll('.hangar-options button');
       this.previewRenderer.setScissorTest(true);
+      // In WebGL bottom-left is (0,0). Restrict rotating 3D preview strictly to the upper 62% of the card,
+      // leaving the bottom 38% exclusively for the part title and 3-stat telemetry chips.
+      const vpH = Math.max(40, Math.round(h * 0.62));
+      const vpY = Math.max(30, Math.round(h * 0.38));
       this.previewScenes.forEach((s, i) => {
         s.userData.pivot.rotation.set(0.18, this.time * 0.35 + i * 0.7, 0);
         let left = i * w / 3, width = w / 3;
@@ -696,8 +703,8 @@ export class AssemblyHangar {
           left = btns[i].offsetLeft;
           width = btns[i].offsetWidth;
         }
-        this.previewRenderer.setViewport(left, 0, width, h);
-        this.previewRenderer.setScissor(left, 0, width, h);
+        this.previewRenderer.setViewport(left, vpY, width, vpH);
+        this.previewRenderer.setScissor(left, vpY, width, vpH);
         this.previewRenderer.render(s, this.previewCamera);
       });
       this.previewRenderer.setScissorTest(false);
