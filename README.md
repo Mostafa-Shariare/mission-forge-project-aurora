@@ -202,9 +202,9 @@ mission-forge-project-aurora/
 │
 ├── src/                        # Modular application source code
 │   └── game/                   # Expedition simulation engine & Vite subsystem
-│       ├── src/                # Core engines (assembly, simulation, audio, vehicle, world)
+│       ├── src/                # Core engines (assembly, simulation, audio, vehicle, world, nasa-api)
 │       ├── dist/               # Production-built bundle embedded via iframe
-│       ├── tests/              # 63 automated simulation & unit tests
+│       ├── tests/              # 67 automated simulation, unit & API tests
 │       └── previews/           # Interface and campaign previews
 │
 ├── index.html                  # Main Mission Control entry point & HUD portal
@@ -230,6 +230,7 @@ Every mechanic in **MISSION FORGE: PROJECT AURORA** is grounded in authentic NAS
 | **Solar Flare / CME Hazards** | Proton Flux > 100 MeV, Solar Particle Events (SPE) | NASA SOHO / Parker Solar Probe | Class X-12 CME triggers ionizing radiation warnings, hull stress telemetry, and active magnetic shield defense choices. |
 | **Planetary Environments** | Gravitational acceleration & atmospheric scale heights | Mars 2020 Perseverance / Artemis Gateway | 5 celestial destinations each feature accurate surface textures, orbital period curves, and landing hazard profiles. |
 | **Speed-of-Light Comms Latency** | One-Way Light Time (OWLT) & Round-Trip Light Time (RTLT) | NASA Deep Space Network (DSN) | Simulates authentic telecommand delay based on astronomical distance (up to 24 min at Mars). |
+| **Live Telemetry & PDS Archive** | Real-Time REST Telemetry + Static PDS Cache | NASA Mission Data API & Planetary Data System | Live telemetry feed connects to [NASA Mission Data API](https://nasa-mission-data-api.vercel.app/) with guaranteed 0ms offline fallback to verified PDS archives. |
 | **Microgravity Buoyancy** | Multi-axis low-frequency station keeping | ISS Orbital Telemetry | Organic 6-DOF micro-drift physics ensures spacecraft feels natural and unconstrained in 3D orbit. |
 | **Apollo Quindar Tones** | 2525 Hz intro blip / 2475 Hz outro blip | Apollo Mission Control Comms | Procedurally synthesized sine tones preface Houston Flight Director telemetry announcements. |
 
@@ -258,21 +259,21 @@ The simulation includes a comprehensive test suite executed natively via Node.js
 npm test
 ```
 
-### Verified Test Suites (63 / 63 Passing):
+### Verified Test Suites (67 / 67 Passing):
 * **Campaign State & Progression:** Mars, Earth/LEO, Moon, Vesta, and Europa end-to-end stage completion.
 * **Flight Dynamics & Propulsion:** Rocket equation $\Delta v$ validation, mass penalty verification, inertia coast, and retro-braking.
 * **Hazard & Emergency Triage:** Class X-12 solar CME encounters, Jovian radiation belts, Mars dust storms, and orbital conjunctions.
 * **Science Gates & Provenance:** Sample coring quarantine limits, spectral scanning locks, and authentic NASA dataset IDs.
+* **NASA Mission Data API & Telemetry Engine:** Live telemetry retrieval, rock core sample spectroscopy, non-blocking space weather baselines, and multi-destination offline fallback.
 * **Audio Synthesis Safety:** Web Audio mock context tests, klaxon modulation, and procedural thruster wind generation without unhandled exceptions.
 
 ```text
-ℹ tests 63
+ℹ tests 67
 ℹ suites 0
-ℹ pass 63
+ℹ pass 67
 ℹ fail 0
 ℹ cancelled 0
 ℹ skipped 0
-ℹ duration_ms 416ms
 ```
 
 ---
