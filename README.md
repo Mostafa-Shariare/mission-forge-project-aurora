@@ -5,7 +5,9 @@
 [![Team: MathaiBlock](https://img.shields.io/badge/Team-MathaiBlock-00E5FF?style=for-the-badge&logo=spacex&logoColor=black)](#-nasa-space-apps-challenge-2026-team-mathaiblock)
 [![WebGL Three.js](https://img.shields.io/badge/3D_Engine-Three.js_r128-000000?style=for-the-badge&logo=three.js&logoColor=white)](https://threejs.org/)
 [![Web Audio API](https://img.shields.io/badge/Audio-Procedural_Web_Audio_API-cyan?style=for-the-badge)](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API)
-[![Vercel Deployment](https://img.shields.io/badge/Vercel-Production_Live-00E5FF?style=for-the-badge&logo=vercel&logoColor=black)](https://mission-forge-project-aurora.vercel.app)
+[![Vercel Deployment](https://img.shields.io/badge/Vercel-Edge_CDN_Live-00E5FF?style=for-the-badge&logo=vercel&logoColor=black)](https://mission-forge-project-aurora.vercel.app)
+[![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-Active-22c55e?style=for-the-badge&logo=github&logoColor=white)](https://mostafa-shariare.github.io/mission-forge-project-aurora/)
+[![Test Suite](https://img.shields.io/badge/Tests-63%20Passed%20%2F%200%20Failed-success?style=for-the-badge&logo=node.js&logoColor=white)](#-automated-testing--quality-assurance)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 
 ---
@@ -16,9 +18,9 @@
 
 The simulation models real-world aerospace tradeoffs—balancing budget constraints, structural mass budgets, and single-stage ideal $\Delta v$ (Tsiolkovsky rocket equation)—with high-stakes in-flight emergencies, Martian rover surface traversals, and scientific sample return. Designed with an authentic **NASA Jet Propulsion Laboratory (JPL) Mission Control & Cockpit HUD** aesthetic, the application combines hardware-accelerated WebGL graphics, post-processing bloom shaders, dynamic camera choreography, and a zero-dependency procedural **Web Audio API** soundscape.
 
-* **Live Demo (Vercel):** [https://mission-forge-project-aurora.vercel.app](https://mission-forge-project-aurora.vercel.app)
-* **Live Demo (GitHub Pages):** [https://Mostafa-Shariare.github.io/mission-forge-project-aurora/](https://Mostafa-Shariare.github.io/mission-forge-project-aurora/)
-* **Repository:** [https://github.com/Mostafa-Shariare/mission-forge-project-aurora](https://github.com/Mostafa-Shariare/mission-forge-project-aurora)
+* 🌐 **Live Demo (Vercel):** [https://mission-forge-project-aurora.vercel.app](https://mission-forge-project-aurora.vercel.app)
+* 🚀 **Live Demo (GitHub Pages):** [https://mostafa-shariare.github.io/mission-forge-project-aurora/](https://mostafa-shariare.github.io/mission-forge-project-aurora/)
+* 📦 **Source Repository:** [https://github.com/Mostafa-Shariare/mission-forge-project-aurora](https://github.com/Mostafa-Shariare/mission-forge-project-aurora)
 
 ---
 
@@ -38,13 +40,27 @@ The simulation models real-world aerospace tradeoffs—balancing budget constrai
 
 ---
 
+## 🧭 Mission Destinations & Scientific Campaigns
+
+The simulation features five authentic planetary destinations, each with unique environmental hazards, landing requirements, and scientific objectives:
+
+| Destination | Mission Class | Primary Hazards | Scientific Objective | Key NASA Precedent |
+| :--- | :--- | :--- | :--- | :--- |
+| **Earth / LEO** | Sentinel Recovery | Orbital debris conjunctions, ground station line-of-sight dropouts | Rendezvous with decommissioned Earth observation satellite & recover telemetry | ISS, Sentinel Fleet |
+| **Moon** | Artemis Outpost | Permanently Shadowed Regions (PSR), thermal extremes, zero-atmosphere descent | Precision crater touchdown and volatile water-ice prospecting | Artemis Program, LCROSS |
+| **Mars** | Aurora Prime | Séítah dune sand traps, global dust storms, battery drain, 24-min OWLT delay | Surface rover traverse, rock coring, dual sample tube collection & biosignature analysis | Mars 2020 Perseverance |
+| **Vesta** | Dawn Protocol | Irregular gravity anomalies, boulder ejecta, orbital regime shifts | Multi-angle spectral scanning across High (HAMO) and Low (LAMO) Altitude Orbits | Dawn Mission |
+| **Europa / Jupiter** | Jovian Deep-Field | Intense Jovian radiation belts, comms blackout windows, extreme thermal dissipation | Subsurface ocean plume flyby and biosignature spectroscopy | Europa Clipper, Galileo |
+
+---
+
 ## 🏛️ System & Architecture Diagrams
 
 ### 1. End-to-End Simulation Lifecycle
 ```mermaid
 flowchart TD
     subgraph S1["PHASE 1: BRIEFING & DESTINATION"]
-        A["AAA Boot Sequence<br/>(Starfield Dolly & Audio Hum)"] --> B["Celestial Target Selector<br/>(Earth, Moon, Mars, Europa, Psyche)"]
+        A["AAA Boot Sequence<br/>(Starfield Dolly & Audio Hum)"] --> B["Celestial Target Selector<br/>(Earth, Moon, Mars, Vesta, Europa)"]
         B --> C["Mission Dossier & Trajectory Window<br/>(Hohmann Transfer Arc & Delta-V)"]
     end
 
@@ -59,15 +75,15 @@ flowchart TD
 
     subgraph S3["PHASE 3: TRANSIT & CRISIS"]
         F --> G["Departure Burn & Hyper-Speed Transit"]
-        G --> H{"Solar CME Hazard Intercept<br/>(Class X-12 Flare Event)"}
-        H -->|Tactical Option A| H1["Deploy Magnetic Deflector<br/>(+15 Score / High Power Draw)"]
-        H -->|Tactical Option B| H2["Passive Storm Shelter Retreat<br/>(+10 Score / Blackout)"]
+        G --> H{"Deep Space Hazard Intercept<br/>(Solar CME / Radiation Surge / Conjunction)"}
+        H -->|Tactical Option A| H1["Deploy Active Shield Deflector<br/>(+15 Score / High Power Draw)"]
+        H -->|Tactical Option B| H2["Passive Storm Shelter Retreat<br/>(+10 Score / Blackout Buffer)"]
     end
 
     subgraph S4["PHASE 4: EXPLORATION & DEBRIEF"]
-        H1 & H2 --> I["Orbital Capture & Rover Surface Traverse"]
+        H1 & H2 --> I["Orbital Capture & Surface Rover Traverse"]
         I --> J["Mineral Sample Retrieval & Telemetry Archive"]
-        J --> K["3D Carousel Debrief & NASA Certificate"]
+        J --> K["3D Carousel Debrief & NASA Certificate Review"]
     end
 ```
 
@@ -77,23 +93,27 @@ flowchart TD
 ```mermaid
 flowchart LR
     subgraph Budget["RESOURCE BOUNDARIES"]
-        B1["Max Budget: $320M"]
-        B2["Max Wet Mass: 85,000 kg"]
+        B1["NASA Mission Class Budget Cap<br/>(Discovery: $500M | New Frontiers: $1.0B | Flagship: $3.25B)"]
+        B2["Launch Vehicle Fairing Mass Limit<br/>(85,000 kg Payload Wet Mass)"]
     end
 
     subgraph Subsystems["9 MODULAR HARDWARE SUBSYSTEMS"]
         direction TB
-        P["Propulsion Engine<br/>• Dual Hall-Effect Ion<br/>• Bipropellant Chemical"]
-        E["Power Bus<br/>• Deployable UltraFlex Solar<br/>• Next-Gen RTG"]
-        C["High-Gain Comms<br/>• Ka-Band Parabolic Dish<br/>• Deep Space Optical DSOC"]
-        S["Thermal & Radiation Shielding<br/>• Superconducting Magnetosphere<br/>• Multi-Layer Polyethylene Aerogel"]
-        I["Science Package<br/>• Subsurface Radar Sounder<br/>• Raman Spectroscopy Suite"]
+        P["1. Propulsion Engine<br/>• Dual Hall-Effect Ion (Isp: 3,100s)<br/>• Bipropellant Chemical (Isp: 320s)"]
+        E["2. Power Bus<br/>• Deployable UltraFlex Solar Arrays<br/>• Next-Gen Fission RTG"]
+        C["3. Communications<br/>• Deep Space Optical Comms (DSOC)<br/>• High-Gain Ka-Band Parabolic Dish"]
+        S["4. Thermal & Shielding<br/>• Superconducting Magnetic Toroid<br/>• Polyethylene Water Wall Storm Shelter"]
+        I["5. Science Suite<br/>• Raman Spectroscopy & Coring Drill<br/>• Subsurface Sounding Radar"]
+        G["6. Guidance & Nav<br/>• Optical Star Trackers & Autonomous Navigation"]
+        R["7. Attitude Control<br/>• 3-Axis Cold-Gas Reaction Control Thrusters"]
+        H["8. Structural Hull<br/>• Carbon-Composite Monocoque vs. Titanium Matrix"]
+        L["9. Life Support / Payload<br/>• Dual Sample Tube Hermetic Quarantine Bay"]
     end
 
     subgraph Output["FLIGHT DYNAMICS OUTPUT"]
-        R1["Ideal Delta-V (Rocket Equation)"]
-        R2["Payload Mass Fraction"]
-        R3["Emergency Margin Rating"]
+        R1["Ideal Delta-V (Tsiolkovsky Equation)"]
+        R2["Payload Mass Fraction & C3 Boost"]
+        R3["Emergency Survival Margin"]
     end
 
     Budget --> Subsystems
@@ -112,7 +132,7 @@ flowchart TD
             OSC1["Dual Sub-Bass Sine Oscillators<br/>(45 Hz - 60 Hz Cosmic Drone)"]
             W_NOISE["White Noise Propulsion Generator<br/>(BufferSource)"]
             Q_TONE["Apollo Quindar Beep Generator<br/>(2525 Hz Pulse Sine)"]
-            ALERT["Red Alert Alarm Generator<br/>(Sawtooth 320 Hz LFO-Modulated)"]
+            ALERT["Red Alert Klaxon Generator<br/>(Sawtooth 320 Hz LFO-Modulated)"]
         end
 
         subgraph Filtering["Dynamic Filtering & Modulation"]
@@ -138,33 +158,78 @@ flowchart TD
 
 ---
 
-### 4. Cloud Deployment & Edge Microservice Architecture
-```mermaid
-flowchart LR
-    Client["User Browser / Client"] --> Edge["Vercel Edge Network (Global CDN)"]
-    
-    subgraph VercelProject["Vercel Deployment Architecture"]
-        Edge -->|Path: /| AppService["App Service (Repository Root)<br/>• index.html (347 KB Full NASA 3D Suite)<br/>• Shaders, Models & Textures CDN"]
-        Edge -->|Path: /game/*| GameService["Game Service (src/game)<br/>• Vite Framework Build<br/>• Modular Sub-Expedition Modules"]
-        
-        AppService -.->|Internal Service Binding| GameService
-    end
-
-    Local["Local Machine (node server.js)"] --> LocalServer["Native Node.js HTTP Server (:8080)<br/>Auto-fallback & Static File Streaming"]
+### 4. Professional Codebase Architecture
+```
+mission-forge-project-aurora/
+│
+├── assets/                     # Media & soundscapes
+│   ├── bgm/                    # Background music tracks (.mp3)
+│   └── team-logo.png           # NASA Challenge badge & team branding
+│
+├── lib/                        # Third-party 3D engine & vendor libraries
+│   ├── draco/                  # Draco WebAssembly geometry decompression workers
+│   │   ├── draco_decoder.js
+│   │   ├── draco_decoder.wasm
+│   │   └── draco_wasm_wrapper.js
+│   ├── three.min.js            # Three.js (r128)
+│   ├── OrbitControls.js        # 3D orbital inspection camera controls
+│   ├── tween.umd.js            # Smooth camera & UI interpolation
+│   ├── GLTFLoader.js           # 3D GLTF / GLB model parser
+│   ├── DRACOLoader.js          # Compressed geometry loader
+│   ├── EffectComposer.js       # Post-processing render chain
+│   ├── UnrealBloomPass.js      # Glow & aerospace thruster bloom
+│   ├── RenderPass.js           # Primary scene render pass
+│   ├── ShaderPass.js           # Shader pipeline pass wrapper
+│   ├── CopyShader.js           # Screen buffer copy pass
+│   ├── LuminosityHighPassShader.js
+│   ├── Pass.js                 # Base pass pipeline
+│   └── postprocessing.min.js
+│
+├── models/                     # 3D Spacecraft & instrument models (.glb)
+│   ├── Dawn.glb                # NASA Dawn spacecraft model
+│   ├── DeepSpace1.glb          # Deep Space 1 explorer
+│   ├── PrimaryIonDrive.glb     # Xenon ion thruster assembly
+│   └── DamagedHelmet/          # PBR test asset
+│
+├── textures/                   # High-resolution planetary surface maps (.jpg)
+│   ├── earth.jpg               # Earth 2K photorealistic surface
+│   ├── moon_1024.jpg / moon.jpg# Lunar regolith & craters
+│   ├── mars_1k_color.jpg       # Martian surface albedo map
+│   ├── mars_1k_bump.jpg        # Martian topographic bump map
+│   ├── europa.jpg              # Europan cracked ice sheet map
+│   ├── jupiter.jpg             # Jovian atmospheric band map
+│   └── asteroid.jpg            # Vesta regolith texture
+│
+├── src/                        # Modular application source code
+│   └── game/                   # Expedition simulation engine & Vite subsystem
+│       ├── src/                # Core engines (assembly, simulation, audio, vehicle, world)
+│       ├── dist/               # Production-built bundle embedded via iframe
+│       ├── tests/              # 63 automated simulation & unit tests
+│       └── previews/           # Interface and campaign previews
+│
+├── index.html                  # Main Mission Control entry point & HUD portal
+├── server.js                   # Local development HTTP server with audio range streaming
+├── START_GAME.bat              # Windows 1-click launcher
+├── package.json                # Project dependencies, build pipeline & test runner
+├── README.md                   # Full NASA Space Apps documentation & user guide
+├── .gitignore                  # Git exclusion rules (node_modules, caches, logs)
+├── .vercelignore               # Cloud deployment filter (omits local dev scripts)
+└── vercel.json                 # Static Edge CDN routing, byte-range & cache headers
 ```
 
 ---
 
 ## 🔬 Scientific Realism & NASA Mission Data Alignment
 
-Every mechanic in **MISSION FORGE: PROJECT AURORA** is grounded in real NASA mission parameters, aerospace engineering literature, and planetary science data:
+Every mechanic in **MISSION FORGE: PROJECT AURORA** is grounded in authentic NASA mission parameters, aerospace engineering literature, and planetary science data:
 
 | Mission System | Scientific Foundation | NASA Mission Reference | In-Game Simulation Behavior |
 | :--- | :--- | :--- | :--- |
-| **Ideal Rocket Equation** | $`\Delta v = I_{sp} \cdot g_0 \cdot \ln\left(\frac{m_0}{m_f}\right)`$ | Dawn & Deep Space 1 | Dynamic $\Delta v$ gauge calculates available orbital maneuver budget based on selected fuel mass and engine $I_{sp}$. |
+| **Ideal Rocket Equation** | $$\Delta v = I_{sp} \cdot g_0 \cdot \ln\left(\frac{m_0}{m_f}\right)$$ | Dawn & Deep Space 1 | Dynamic $\Delta v$ gauge calculates available orbital maneuver budget based on selected fuel mass and engine $I_{sp}$. |
 | **Deep Space Optical Comms** | 1550 nm Near-Infrared Laser Pulse Transceiver | NASA DSOC (Psyche Mission) | 10x-100x science data downlink rates; susceptible to line-of-sight pointing errors during high-g maneuvers. |
 | **Solar Flare / CME Hazards** | Proton Flux > 100 MeV, Solar Particle Events (SPE) | NASA SOHO / Parker Solar Probe | Class X-12 CME triggers ionizing radiation warnings, hull stress telemetry, and active magnetic shield defense choices. |
 | **Planetary Environments** | Gravitational acceleration & atmospheric scale heights | Mars 2020 Perseverance / Artemis Gateway | 5 celestial destinations each feature accurate surface textures, orbital period curves, and landing hazard profiles. |
+| **Speed-of-Light Comms Latency** | One-Way Light Time (OWLT) & Round-Trip Light Time (RTLT) | NASA Deep Space Network (DSN) | Simulates authentic telecommand delay based on astronomical distance (up to 24 min at Mars). |
 | **Microgravity Buoyancy** | Multi-axis low-frequency station keeping | ISS Orbital Telemetry | Organic 6-DOF micro-drift physics ensures spacecraft feels natural and unconstrained in 3D orbit. |
 | **Apollo Quindar Tones** | 2525 Hz intro blip / 2475 Hz outro blip | Apollo Mission Control Comms | Procedurally synthesized sine tones preface Houston Flight Director telemetry announcements. |
 
@@ -185,13 +250,30 @@ Every mechanic in **MISSION FORGE: PROJECT AURORA** is grounded in real NASA mis
 
 ---
 
-## 🛠️ Technology Stack & Engineering Highlights
+## 🧪 Automated Testing & Quality Assurance
 
-* **3D Graphics Engine:** [Three.js](https://threejs.org/) (r128 / ^0.186), custom PBR `MeshPhysicalMaterial` pipelines, gold aerogel foil shaders, and procedural particle engines.
-* **Post-Processing Pipeline:** `EffectComposer`, `RenderPass`, `ShaderPass`, and `UnrealBloomPass` for HDR thruster bloom and planetary atmosphere glow.
-* **Audio Synthesis:** Zero-dependency procedural **Web Audio API** (`AudioContext`, `BiquadFilterNode`, `OscillatorNode`, `GainNode`) for dynamic engine hum, RCS bursts, and Apollo Quindar tones.
-* **Typography & HUD Design:** Google Fonts (`Rajdhani`, `Orbitron`, `Space Grotesk`, `JetBrains Mono`), SVG vector instrumentation, and CSS glassmorphic backdrops.
-* **Deployment & Cloud:** Configured for Vercel multi-service hosting (`vercel.json`) with edge caching and static CDN asset routing.
+The simulation includes a comprehensive test suite executed natively via Node.js built-in test runner (`node --test`), covering propulsion calculations, orbital mechanics, planetary campaigns, hazard states, and audio synthesis:
+
+```bash
+npm test
+```
+
+### Verified Test Suites (63 / 63 Passing):
+* **Campaign State & Progression:** Mars, Earth/LEO, Moon, Vesta, and Europa end-to-end stage completion.
+* **Flight Dynamics & Propulsion:** Rocket equation $\Delta v$ validation, mass penalty verification, inertia coast, and retro-braking.
+* **Hazard & Emergency Triage:** Class X-12 solar CME encounters, Jovian radiation belts, Mars dust storms, and orbital conjunctions.
+* **Science Gates & Provenance:** Sample coring quarantine limits, spectral scanning locks, and authentic NASA dataset IDs.
+* **Audio Synthesis Safety:** Web Audio mock context tests, klaxon modulation, and procedural thruster wind generation without unhandled exceptions.
+
+```text
+ℹ tests 63
+ℹ suites 0
+ℹ pass 63
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ duration_ms 416ms
+```
 
 ---
 
@@ -210,11 +292,17 @@ Open **[http://localhost:8080](http://localhost:8080)** in any modern web browse
 git clone https://github.com/Mostafa-Shariare/mission-forge-project-aurora.git
 cd mission-forge-project-aurora
 
-# Start local server
+# Install and build the simulation subsystem
+npm run build
+
+# Run automated tests
+npm test
+
+# Start local dev server
 npm start
 ```
 
-### 3. Vite Game Subsystem Development (Optional)
+### 3. Subsystem Development (Vite Live Reload)
 ```bash
 cd src/game
 npm install
@@ -223,13 +311,20 @@ npm run dev
 
 ---
 
-## 🌐 Live Deployment Configuration
+## 🌐 Cloud Deployment Options
 
-This repository is optimized for one-click deployment across major cloud providers:
+### Option A: Vercel (Production Edge CDN)
+This repository is configured with [`vercel.json`](vercel.json) for **zero-cold-start Edge CDN delivery**:
+1. Connect your repository at [vercel.com/new](https://vercel.com/new).
+2. Set Framework Preset to **Other** (handled automatically via `vercel.json`).
+3. Click **Deploy**. Vercel will run `npm run build` and distribute assets globally.
 
-* **Vercel:** Deploys instantly via `vercel.json` with multi-service routing (`app` for the primary 3D NASA experience, `game` for the Vite sub-campaign).
-* **GitHub Pages:** Fully static compatible—enable under **Settings > Pages > Deploy from branch (`main`)**.
-* **Docker / Node Container:** Supported via `server.js` with dynamic `process.env.PORT` binding.
+### Option B: GitHub Pages (100% Free & Globally Accessible)
+GitHub Pages is supported natively with relative asset resolution:
+1. Go to your repository **Settings > Pages**.
+2. Under **Build and deployment > Source**, select **Deploy from a branch**.
+3. Set **Branch: `main`** and folder **`/ (root)`**, then click **Save**.
+4. Your site will be live at `https://mostafa-shariare.github.io/mission-forge-project-aurora/`.
 
 ---
 
@@ -247,7 +342,7 @@ This repository is optimized for one-click deployment across major cloud provide
 
 * **Team Name:** **MathaiBlock**
 * **Project Title:** **MISSION FORGE: PROJECT AURORA**
-* **Challenge Track:** Space Mission Game Design
+* **Challenge Category:** Space Mission Game Design
 * **Team Motto:** *“Building Solutions Beyond Earth”*
 * **Mission Vision:** *“Leave the blue behind. Bring the science home.”*
 
@@ -255,5 +350,5 @@ This repository is optimized for one-click deployment across major cloud provide
 
 <p align="center">
   <b>Developed with passion for the NASA Space Apps Challenge 2026.</b><br/>
-  <i>Exploring the frontier of deep space systems engineering and interactive science education.</i>
+  <i>Advancing deep space systems engineering, orbital simulation, and interactive aerospace science education.</i>
 </p>
