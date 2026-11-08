@@ -27,7 +27,62 @@ export function plannerMarkup(stats, destination='mars', missionClassId='discove
         <b>${launchVehicle.deltaVBonus > 0 ? `+${launchVehicle.deltaVBonus.toFixed(2)} km/s Δv` : 'STANDARD DIRECT'}</b>
       </div>
     </div>
-    <div class="transfer-map"><svg viewBox="0 0 760 270" role="img" aria-label="Schematic Earth to destination transfer, not to scale"><defs><radialGradient id="sun-glow"><stop stop-color="#ffdd99"/><stop offset="1" stop-color="#473c2c" stop-opacity="0"/></radialGradient></defs><circle cx="320" cy="135" r="105" fill="url(#sun-glow)"/><ellipse cx="320" cy="135" rx="180" ry="72"/><ellipse cx="320" cy="135" rx="310" ry="119"/><circle cx="320" cy="135" r="13" class="map-sun"/><path class="transfer-arc" d="M140 135 C180 10 530 0 630 135"/><circle cx="140" cy="135" r="11" class="map-earth"/><circle cx="630" cy="135" r="15" class="map-mars"/><text x="108" y="171">EARTH / DEPARTURE</text><text x="540" y="177">${destination.toUpperCase()} / ARRIVAL</text><text x="220" y="247">SCHEMATIC TRANSFER • NOT AN EPHEMERIS</text></svg><div class="planner-story"><span class="eyebrow">${destData.agency.toUpperCase()}</span><h3>Mission choices carry real consequences.</h3><p>Configure flight reserves and approach parameters. Balance propellant margin against transit duration before leaving Earth.</p></div></div><div class="route-cards">${FLIGHT_PLANS.map((p,i)=>{const r=projectedReserves(stats,p);return `<button data-plan="${p.id}" aria-pressed="${i===1}"><small>PROFILE 0${i+1}</small><h3>${p.name}</h3><b>${p.days}<span> DAYS / TRAJECTORY PROFILE</span></b><p>${p.description}</p><div>Macro-burn fuel remaining <strong>${Math.round(r.fuel)}%</strong></div><div>Housekeeping power remaining <strong>${Math.round(r.power)}%</strong></div></button>`;}).join('')}</div><p class="model-caption">Planning estimates exclude manual maneuvers, instruments, emergencies and sample recovery. Route schedules and hazard densities are authored game scenarios. They are not computed launch windows or trajectory solutions.</p><div class="dialog-footer"><span id="plan-status" aria-live="polite">BALANCED TRANSFER SELECTED · SIX CHAPTERS + FIELD OPERATIONS</span><button id="commit-plan" class="primary-button"><span>COMMIT PLAN &amp; LAUNCH ROCKET</span><b>↗</b></button></div></div>`;
+    <div class="transfer-map">
+      <svg viewBox="0 0 760 190" role="img" aria-label="Schematic Earth to destination transfer, not to scale">
+        <defs>
+          <radialGradient id="sun-glow">
+            <stop stop-color="#ffdd99" stop-opacity="0.9"/>
+            <stop offset="0.4" stop-color="#ffaa44" stop-opacity="0.4"/>
+            <stop offset="1" stop-color="#473c2c" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <circle cx="320" cy="95" r="75" fill="url(#sun-glow)"/>
+        <ellipse cx="320" cy="95" rx="180" ry="50"/>
+        <ellipse cx="320" cy="95" rx="310" ry="84"/>
+        <circle cx="320" cy="95" r="11" class="map-sun"/>
+        <path class="transfer-arc" d="M140 95 C180 5 530 0 630 95"/>
+        <circle cx="140" cy="95" r="10" class="map-earth"/>
+        <circle cx="630" cy="95" r="13" class="map-mars"/>
+        <text x="108" y="128">EARTH / DEPARTURE</text>
+        <text x="540" y="132">${destination.toUpperCase()} / ARRIVAL</text>
+        <text x="235" y="178">SCHEMATIC TRANSFER • NOT AN EPHEMERIS</text>
+      </svg>
+      <div class="planner-story">
+        <span class="eyebrow">${destData.agency.toUpperCase()}</span>
+        <h3>Mission choices carry real consequences.</h3>
+        <p>Configure flight reserves and approach parameters. Balance propellant margin against transit duration before leaving Earth.</p>
+      </div>
+    </div>
+    <div class="route-cards">
+      ${FLIGHT_PLANS.map((p,i)=>{
+        const r=projectedReserves(stats,p);
+        return `<button data-plan="${p.id}" aria-pressed="${i===1}">
+          <small>PROFILE 0${i+1}</small>
+          <h3>${p.name}</h3>
+          <b>${p.days}<span> DAYS / TRAJECTORY PROFILE</span></b>
+          <p>${p.description}</p>
+          <div class="route-stat-row">
+            <span>Macro-burn fuel remaining</span>
+            <div class="route-mini-track"><i style="width:${Math.round(r.fuel)}%"></i></div>
+            <strong>${Math.round(r.fuel)}%</strong>
+          </div>
+          <div class="route-stat-row">
+            <span>Housekeeping power remaining</span>
+            <div class="route-mini-track"><i style="width:${Math.round(r.power)}%"></i></div>
+            <strong>${Math.round(r.power)}%</strong>
+          </div>
+        </button>`;
+      }).join('')}
+    </div>
+    <p class="model-caption">Planning estimates exclude manual maneuvers, instruments, emergencies and sample recovery. Route schedules and hazard densities are authored game scenarios. They are not computed launch windows or trajectory solutions.</p>
+    <div class="dialog-footer">
+      <span id="plan-status" aria-live="polite">BALANCED TRANSFER SELECTED · SIX CHAPTERS + FIELD OPERATIONS</span>
+      <button id="commit-plan" class="primary-button">
+        <span>COMMIT PLAN &amp; LAUNCH ROCKET</span>
+        <b>↗</b>
+      </button>
+    </div>
+  </div>`;
 }
 export function bindPlanner(root,onCommit){let plan='balanced';root.querySelectorAll('[data-plan]').forEach(b=>b.onclick=()=>{plan=b.dataset.plan;root.querySelectorAll('[data-plan]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));root.querySelector('#plan-status').textContent=FLIGHT_PLANS.find(p=>p.id===plan).name+' SELECTED';});root.querySelector('#commit-plan').onclick=()=>onCommit(plan);}
 

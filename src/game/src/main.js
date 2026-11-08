@@ -336,7 +336,74 @@ function campaignBriefing(stage){
   return stage;
 }
 function showBriefing(){
-  const s=campaignBriefing(stageInfo());showDialog('briefing',`${header('CHAPTER '+s.chapter+' / '+sim.destination.name,s.title)}<div class="stage-preview">${STAGES.map((_,i)=>`<span class="${i<=sim.stage?'active':''}"></span>`).join('')}</div><p class="dialog-lead">${s.message}</p><div class="briefing-fact"><span>⌬</span><p><b>THE SCIENCE BEHIND THE FLIGHT</b><br>${s.fact}</p></div><p class="briefing-tip">${s.tip}</p><div class="dialog-footer"><span>CHECKPOINT SAVED · H CONTROLS · ESC PAUSE</span><button class="primary-button" id="begin-stage"><span>${sim.stage===0?'TAKE THE CONTROLS':sim.isSurface?'DEPLOY THE ROVER':'CONTINUE EXPEDITION'}</span><b>↗</b></button></div>`);
+  const s = campaignBriefing(stageInfo());
+  const destName = sim.destination?.name || 'DEEP SPACE';
+  const stageNum = (sim.stage ?? 0) + 1;
+  const stageTitle = s.title || 'FLIGHT OPERATION';
+  const actionLabel = sim.stage === 0 ? 'TAKE THE CONTROLS' : sim.isSurface ? 'DEPLOY THE ROVER' : 'CONTINUE EXPEDITION';
+
+  const html = `
+    <div class="briefing-container">
+      <div class="briefing-header-block">
+        <div class="briefing-top-meta">
+          <span class="briefing-tag-agency"><i class="briefing-pulse-dot"></i> NASA FLIGHT DIRECTIVE</span>
+          <span class="briefing-tag-chapter">CHAPTER 0${stageNum} / 06</span>
+          <span class="briefing-tag-dest">${destName.toUpperCase()} EXPEDITION</span>
+        </div>
+        <div class="briefing-title-row">
+          <h2 id="dialog-title" class="briefing-heading">${stageTitle}</h2>
+          <span class="briefing-phase-badge">STAGE 0${stageNum} READY</span>
+        </div>
+        <div class="stage-preview" role="progressbar" aria-valuenow="${stageNum}" aria-valuemin="1" aria-valuemax="6">
+          ${STAGES.map((stg, i) => {
+            const isDone = i < sim.stage;
+            const isCur = i === sim.stage;
+            const cls = isDone ? 'active done' : isCur ? 'active current' : '';
+            return `<span class="${cls}" title="Stage ${i+1}: ${stg.short || stg.title}"></span>`;
+          }).join('')}
+        </div>
+      </div>
+
+      <div class="briefing-comms-card">
+        <div class="comms-header-row">
+          <div class="comms-avatar-tag">
+            <span class="comms-icon">📡</span>
+            <strong>MISSION CONTROL // FLIGHT DYNAMICS</strong>
+          </div>
+          <div class="comms-freq-tag">UPLINK ESTABLISHED</div>
+        </div>
+        <p class="dialog-lead briefing-message">${s.message}</p>
+      </div>
+
+      <div class="briefing-fact">
+        <div class="briefing-fact-header">
+          <span class="briefing-fact-icon">⌬</span>
+          <b>THE SCIENCE BEHIND THE FLIGHT</b>
+          <small class="briefing-fact-source">NASA OBSERVATIONAL SCIENCE</small>
+        </div>
+        <p class="briefing-fact-body">${s.fact}</p>
+        <div class="briefing-tip">
+          <span class="tip-icon">💡</span>
+          <span>${s.tip}</span>
+        </div>
+      </div>
+
+      <div class="dialog-footer briefing-footer">
+        <div class="briefing-footer-status">
+          <span class="briefing-checkpoint-pill"><i class="checkpoint-dot"></i> CHECKPOINT SAVED</span>
+          <div class="briefing-key-hints">
+            <kbd>W</kbd> THRUST <kbd>S</kbd> BRAKE <kbd>A</kbd><kbd>D</kbd> STEER <kbd>H</kbd> HUD <kbd>ESC</kbd> PAUSE
+          </div>
+        </div>
+        <button class="primary-button briefing-action-btn" id="begin-stage">
+          <span>${actionLabel}</span>
+          <b>↗</b>
+        </button>
+      </div>
+    </div>
+  `;
+
+  showDialog('briefing', html);
 }
 function buildFlightHud(){
   hazardTipActive=false;reentryCommsSent=false;
