@@ -8,78 +8,89 @@ export function plannerMarkup(stats, destination='mars', missionClassId='discove
   const launchVehicle = stats.launchVehicle || LAUNCH_VEHICLES.find(lv=>lv.id===launchVehicleId) || LAUNCH_VEHICLES[0];
   const totalCost = stats.totalMissionCost || (stats.cost + launchVehicle.cost);
 
+  const planBadges = {
+    reserve: { icon: '🛡️', title: 'SAFE CRUISE', tag: 'FUEL SAVER', color: 'green' },
+    balanced: { icon: '⭐', title: 'BALANCED FLIGHT', tag: 'RECOMMENDED', color: 'cyan' },
+    rapid: { icon: '🔥', title: 'FAST EXPRESS', tag: 'MAX SPEED', color: 'amber' }
+  };
+
   return `<div class="mission-planner">
     <div class="planner-arch-banner">
       <div class="arch-badge-item">
-        <span class="arch-badge-label">NASA PROGRAM</span>
-        <b>${missionClass.badge}</b>
-      </div>
-      <div class="arch-badge-item">
         <span class="arch-badge-label">LAUNCH VEHICLE</span>
-        <b>${launchVehicle.shortName} (${launchVehicle.fairingDiameter} FAIRING)</b>
+        <b>🚀 ${launchVehicle.shortName} (${launchVehicle.fairingDiameter} FAIRING)</b>
       </div>
       <div class="arch-badge-item">
-        <span class="arch-badge-label">TOTAL MISSION COST</span>
-        <b class="${totalCost <= missionClass.costLimit ? 'cost-ok' : 'cost-warn'}">$${totalCost}M / $${missionClass.costLimit}M</b>
+        <span class="arch-badge-label">TOTAL MISSION BUDGET</span>
+        <b class="${totalCost <= missionClass.costLimit ? 'cost-ok' : 'cost-warn'}">💰 $${totalCost}M / $${missionClass.costLimit}M</b>
       </div>
       <div class="arch-badge-item">
         <span class="arch-badge-label">C₃ INJECTION BOOST</span>
-        <b>${launchVehicle.deltaVBonus > 0 ? `+${launchVehicle.deltaVBonus.toFixed(2)} km/s Δv` : 'STANDARD DIRECT'}</b>
+        <b>⚡ ${launchVehicle.deltaVBonus > 0 ? `+${launchVehicle.deltaVBonus.toFixed(1)} km/s Δv` : 'STANDARD DIRECT'}</b>
       </div>
     </div>
+
     <div class="transfer-map">
-      <svg viewBox="0 0 760 190" role="img" aria-label="Schematic Earth to destination transfer, not to scale">
+      <svg viewBox="0 0 760 270" role="img" aria-label="Earth to destination transfer trajectory">
         <defs>
           <radialGradient id="sun-glow">
-            <stop stop-color="#ffdd99" stop-opacity="0.9"/>
-            <stop offset="0.4" stop-color="#ffaa44" stop-opacity="0.4"/>
+            <stop stop-color="#ffe299"/>
+            <stop offset="0.6" stop-color="#ff9922" stop-opacity="0.35"/>
             <stop offset="1" stop-color="#473c2c" stop-opacity="0"/>
           </radialGradient>
         </defs>
-        <circle cx="320" cy="95" r="75" fill="url(#sun-glow)"/>
-        <ellipse cx="320" cy="95" rx="180" ry="50"/>
-        <ellipse cx="320" cy="95" rx="310" ry="84"/>
-        <circle cx="320" cy="95" r="11" class="map-sun"/>
-        <path class="transfer-arc" d="M140 95 C180 5 530 0 630 95"/>
-        <circle cx="140" cy="95" r="10" class="map-earth"/>
-        <circle cx="630" cy="95" r="13" class="map-mars"/>
-        <text x="108" y="128">EARTH / DEPARTURE</text>
-        <text x="540" y="132">${destination.toUpperCase()} / ARRIVAL</text>
-        <text x="235" y="178">SCHEMATIC TRANSFER • NOT AN EPHEMERIS</text>
+        <circle cx="320" cy="135" r="105" fill="url(#sun-glow)"/>
+        <ellipse cx="320" cy="135" rx="180" ry="72"/>
+        <ellipse cx="320" cy="135" rx="310" ry="119"/>
+        <circle cx="320" cy="135" r="14" class="map-sun"/>
+        <path class="transfer-arc" d="M140 135 C180 10 530 0 630 135"/>
+        <circle cx="140" cy="135" r="12" class="map-earth"/>
+        <circle cx="630" cy="135" r="15" class="map-mars"/>
+        <text x="96" y="172">EARTH</text>
+        <text x="560" y="177">${destination.toUpperCase()}</text>
       </svg>
       <div class="planner-story">
-        <span class="eyebrow">${destData.agency.toUpperCase()}</span>
-        <h3>Mission choices carry real consequences.</h3>
-        <p>Configure flight reserves and approach parameters. Balance propellant margin against transit duration before leaving Earth.</p>
+        <span class="eyebrow">🚀 FLIGHT TRAJECTORY // ${destination.toUpperCase()}</span>
+        <h3>Choose your flight speed to ${destination.toUpperCase()}!</h3>
+        <p>Faster speeds reach ${destination.toUpperCase()} in fewer days, but burn more of your ship's fuel reserve.</p>
       </div>
     </div>
+
     <div class="route-cards">
       ${FLIGHT_PLANS.map((p,i)=>{
-        const r=projectedReserves(stats,p);
-        return `<button data-plan="${p.id}" aria-pressed="${i===1}">
-          <small>PROFILE 0${i+1}</small>
-          <h3>${p.name}</h3>
-          <b>${p.days}<span> DAYS / TRAJECTORY PROFILE</span></b>
-          <p>${p.description}</p>
-          <div class="route-stat-row">
-            <span>Macro-burn fuel remaining</span>
-            <div class="route-mini-track"><i style="width:${Math.round(r.fuel)}%"></i></div>
-            <strong>${Math.round(r.fuel)}%</strong>
+        const r = projectedReserves(stats,p);
+        const meta = planBadges[p.id] || { icon: '🚀', title: p.name, tag: 'FLIGHT ROUTE', color: 'cyan' };
+        return `
+        <button class="route-choice-card" data-plan="${p.id}" aria-pressed="${i===1}">
+          <div class="route-card-top">
+            <span class="route-plan-tag tag-${meta.color}">${meta.icon} ${meta.tag}</span>
+            <span class="route-num">0${i+1}</span>
           </div>
-          <div class="route-stat-row">
-            <span>Housekeeping power remaining</span>
-            <div class="route-mini-track"><i style="width:${Math.round(r.power)}%"></i></div>
-            <strong>${Math.round(r.power)}%</strong>
+          <h3 class="route-title">${meta.title}</h3>
+          <div class="route-days-badge">
+            <b>${p.days}</b>
+            <span>DAYS IN TRANSIT</span>
+          </div>
+          <p class="route-desc">${p.description}</p>
+          <div class="route-meters-box">
+            <div class="meter-line">
+              <span>FUEL MARGIN</span>
+              <strong class="${r.fuel >= 80 ? 'good' : r.fuel >= 60 ? 'mid' : 'warn'}">${Math.round(r.fuel)}%</strong>
+            </div>
+            <div class="meter-line">
+              <span>POWER MARGIN</span>
+              <strong class="${r.power >= 90 ? 'good' : 'mid'}">${Math.round(r.power)}%</strong>
+            </div>
           </div>
         </button>`;
       }).join('')}
     </div>
-    <p class="model-caption">Planning estimates exclude manual maneuvers, instruments, emergencies and sample recovery. Route schedules and hazard densities are authored game scenarios. They are not computed launch windows or trajectory solutions.</p>
-    <div class="dialog-footer">
-      <span id="plan-status" aria-live="polite">BALANCED TRANSFER SELECTED · SIX CHAPTERS + FIELD OPERATIONS</span>
-      <button id="commit-plan" class="primary-button">
+
+    <div class="dialog-footer planner-footer">
+      <span id="plan-status" aria-live="polite">BALANCED FLIGHT SELECTED · SIX CHAPTERS</span>
+      <button id="commit-plan" class="primary-button hero-start-btn">
         <span>COMMIT PLAN &amp; LAUNCH ROCKET</span>
-        <b>↗</b>
+        <b>🚀</b>
       </button>
     </div>
   </div>`;

@@ -337,73 +337,146 @@ function campaignBriefing(stage){
 }
 function showBriefing(){
   const s = campaignBriefing(stageInfo());
-  const destName = sim.destination?.name || 'DEEP SPACE';
-  const stageNum = (sim.stage ?? 0) + 1;
-  const stageTitle = s.title || 'FLIGHT OPERATION';
-  const actionLabel = sim.stage === 0 ? 'TAKE THE CONTROLS' : sim.isSurface ? 'DEPLOY THE ROVER' : 'CONTINUE EXPEDITION';
+  const destData = getCampaignData(sim?.destination?.id || 'mars');
+  const site = (destData.sites || SITES).find(st => st.id === sim?.campaign?.site)?.name || 'the landing area';
+  const stageIdx = sim?.stage ?? 0;
+  const isRover = stageIdx === 4 && sim?.destination?.surface;
+  const isDrone = stageIdx === 4 && !sim?.destination?.surface;
 
-  const html = `
-    <div class="briefing-container">
-      <div class="briefing-header-block">
-        <div class="briefing-top-meta">
-          <span class="briefing-tag-agency"><i class="briefing-pulse-dot"></i> NASA FLIGHT DIRECTIVE</span>
-          <span class="briefing-tag-chapter">CHAPTER 0${stageNum} / 06</span>
-          <span class="briefing-tag-dest">${destName.toUpperCase()} EXPEDITION</span>
-        </div>
-        <div class="briefing-title-row">
-          <h2 id="dialog-title" class="briefing-heading">${stageTitle}</h2>
-          <span class="briefing-phase-badge">STAGE 0${stageNum} READY</span>
-        </div>
-        <div class="stage-preview" role="progressbar" aria-valuenow="${stageNum}" aria-valuemin="1" aria-valuemax="6">
-          ${STAGES.map((stg, i) => {
-            const isDone = i < sim.stage;
-            const isCur = i === sim.stage;
-            const cls = isDone ? 'active done' : isCur ? 'active current' : '';
-            return `<span class="${cls}" title="Stage ${i+1}: ${stg.short || stg.title}"></span>`;
-          }).join('')}
-        </div>
-      </div>
+  // Clear, punchy kid-friendly objective
+  let goal = '';
+  if (stageIdx === 0) goal = `Fly through the glowing navigation rings towards ${sim?.destination?.name || 'your target'}!`;
+  else if (stageIdx === 1) goal = `Fire short thruster burns to maintain your interplanetary trajectory!`;
+  else if (stageIdx === 2) goal = `Fly close to the 3 sensor beacons, slow below 12 m/s, and hold [E] to scan!`;
+  else if (stageIdx === 3) goal = `Approach ${site}, slow down below 10 m/s, and press [E] on green to touch down!`;
+  else if (stageIdx === 4) goal = isRover
+    ? `Drive your rover to target markers, stop, and hold [E] to drill rock samples!`
+    : `Fly your recovery drone to science canisters and hold [E] to collect them!`;
+  else if (stageIdx === 5) goal = `Fire orbital departure thrusters to begin the voyage back to Earth!`;
+  else goal = s.verb || 'Follow flight waypoints and complete mission milestones!';
 
-      <div class="briefing-comms-card">
-        <div class="comms-header-row">
-          <div class="comms-avatar-tag">
-            <span class="comms-icon">📡</span>
-            <strong>MISSION CONTROL // FLIGHT DYNAMICS</strong>
-          </div>
-          <div class="comms-freq-tag">UPLINK ESTABLISHED</div>
-        </div>
-        <p class="dialog-lead briefing-message">${s.message}</p>
+  // Visual Chapter Progress Stepper
+  const stageStepsHtml = STAGES.map((st, i) => {
+    const isPast = i < stageIdx;
+    const isCur = i === stageIdx;
+    return `
+      <div class="stepper-step ${isCur ? 'active' : ''} ${isPast ? 'done' : ''}">
+        <span class="stepper-num">${isPast ? '✓' : '0' + (i + 1)}</span>
+        <span class="stepper-label">${st.short || ('CH 0' + (i + 1))}</span>
       </div>
+    `;
+  }).join('');
 
-      <div class="briefing-fact">
-        <div class="briefing-fact-header">
-          <span class="briefing-fact-icon">⌬</span>
-          <b>THE SCIENCE BEHIND THE FLIGHT</b>
-          <small class="briefing-fact-source">NASA OBSERVATIONAL SCIENCE</small>
-        </div>
-        <p class="briefing-fact-body">${s.fact}</p>
-        <div class="briefing-tip">
-          <span class="tip-icon">💡</span>
-          <span>${s.tip}</span>
-        </div>
-      </div>
-
-      <div class="dialog-footer briefing-footer">
-        <div class="briefing-footer-status">
-          <span class="briefing-checkpoint-pill"><i class="checkpoint-dot"></i> CHECKPOINT SAVED</span>
-          <div class="briefing-key-hints">
-            <kbd>W</kbd> THRUST <kbd>S</kbd> BRAKE <kbd>A</kbd><kbd>D</kbd> STEER <kbd>H</kbd> HUD <kbd>ESC</kbd> PAUSE
-          </div>
-        </div>
-        <button class="primary-button briefing-action-btn" id="begin-stage">
-          <span>${actionLabel}</span>
-          <b>↗</b>
-        </button>
-      </div>
+  // Visual Keyboard Controls Keycaps
+  const keysHtml = isRover ? `
+    <div class="briefing-key-group">
+      <div class="keycap-combo"><kbd>W</kbd><kbd>S</kbd></div>
+      <span>DRIVE FORWARD / BACK</span>
     </div>
+    <div class="briefing-key-group">
+      <div class="keycap-combo"><kbd>A</kbd><kbd>D</kbd></div>
+      <span>STEER WHEELS</span>
+    </div>
+    <div class="briefing-key-group action">
+      <kbd class="key-action">E</kbd>
+      <span>DRILL ROCK SAMPLE</span>
+    </div>
+    <div class="briefing-key-group finish">
+      <kbd class="key-subtle">X</kbd>
+      <span>FINISH STAGE</span>
+    </div>
+  ` : isDrone ? `
+    <div class="briefing-key-group">
+      <div class="keycap-combo"><kbd>W</kbd><kbd>S</kbd></div>
+      <span>FLY FORWARD / BACK</span>
+    </div>
+    <div class="briefing-key-group">
+      <div class="keycap-combo"><kbd>A</kbd><kbd>D</kbd></div>
+      <span>STEER FLIGHT</span>
+    </div>
+    <div class="briefing-key-group action">
+      <kbd class="key-action">E</kbd>
+      <span>COLLECT CANISTER</span>
+    </div>
+    <div class="briefing-key-group finish">
+      <kbd class="key-subtle">X</kbd>
+      <span>FINISH STAGE</span>
+    </div>
+  ` : `
+    <div class="briefing-key-group">
+      <kbd>W</kbd>
+      <span>FORWARD THRUST</span>
+    </div>
+    <div class="briefing-key-group">
+      <div class="keycap-combo"><kbd>A</kbd><kbd>D</kbd></div>
+      <span>STEER SHIP</span>
+    </div>
+    <div class="briefing-key-group">
+      <kbd>S</kbd>
+      <span>BRAKE / REVERSE</span>
+    </div>
+    ${stageIdx === 2 || stageIdx === 3 ? `
+    <div class="briefing-key-group action">
+      <kbd class="key-action">E</kbd>
+      <span>${stageIdx === 2 ? 'HOLD TO SCAN' : 'TOUCHDOWN ON GREEN'}</span>
+    </div>` : ''}
   `;
 
-  showDialog('briefing', html);
+  // Dynamic button label
+  const btnText = stageIdx === 0
+    ? 'TAKE THE CONTROLS'
+    : isRover
+      ? 'DEPLOY THE ROVER'
+      : isDrone
+        ? 'LAUNCH RECOVERY DRONE'
+        : stageIdx === 3
+          ? 'BEGIN DESCENT'
+          : 'START CHAPTER';
+
+  showDialog('briefing', `
+    <div class="briefing-modal-header">
+      <div class="briefing-meta-pill">
+        <span class="briefing-ch-tag">CHAPTER 0${stageIdx + 1} OF 06</span>
+        <span class="briefing-dest-tag">🪐 ${(sim?.destination?.name || 'MISSION').toUpperCase()}</span>
+      </div>
+      <h2 id="dialog-title" class="briefing-title">${s.title}</h2>
+      <div class="briefing-stepper-wrap">
+        ${stageStepsHtml}
+      </div>
+    </div>
+
+    <div class="briefing-objective-card">
+      <div class="objective-header-strip">
+        <span class="objective-target-icon">🎯</span>
+        <span class="objective-header-label">MISSION DIRECTIVE</span>
+      </div>
+      <div class="objective-main-goal">${goal}</div>
+    </div>
+
+    <div class="briefing-controls-section">
+      <span class="controls-section-title">FLIGHT CONTROLS</span>
+      <div class="briefing-keys-row">
+        ${keysHtml}
+      </div>
+    </div>
+
+    ${s.fact ? `
+    <div class="briefing-discovery-card">
+      <span class="discovery-icon">💡</span>
+      <div class="discovery-body">
+        <strong>NASA SCIENCE FACT</strong>
+        <p>${s.fact}</p>
+      </div>
+    </div>` : ''}
+
+    <div class="dialog-footer briefing-footer">
+      <span class="checkpoint-saved-pill">✓ CHECKPOINT SAVED</span>
+      <button class="primary-button hero-start-btn" id="begin-stage">
+        <span>${btnText}</span>
+        <b>🚀</b>
+      </button>
+    </div>
+  `);
 }
 function buildFlightHud(){
   hazardTipActive=false;reentryCommsSent=false;
@@ -714,37 +787,74 @@ function handleEvent(event){
   if(event.type==='route'){audio.cue('click');notify('POWER ROUTED TO '+event.route.toUpperCase());updateHud();}
   if(event.type==='assist'){audio.cue('click');notify(event.active?'AUTOPILOT ON · Computer steers to the target.':'MANUAL FLIGHT · You are steering.');updateHud();}
   if(event.type==='log'){lastJournal=sim.journal;save('odyssey-journal',lastJournal);}
+
+  function formatEventDetail(detail) {
+    const parts = (detail || '').split('·').map(s => s.trim());
+    let badges = [];
+    let description = '';
+
+    for (const part of parts) {
+      const lower = part.toLowerCase();
+      if (lower.includes('science')) {
+        badges.push(`<span class="choice-badge badge-cyan">🔬 ${part.toUpperCase()}</span>`);
+      } else if (lower.includes('power')) {
+        badges.push(`<span class="choice-badge badge-amber">⚡ ${part.toUpperCase()}</span>`);
+      } else if (lower.includes('fuel')) {
+        badges.push(`<span class="choice-badge badge-blue">⛽ ${part.toUpperCase()}</span>`);
+      } else if (lower.includes('hull safe') || lower.includes('protected') || lower.includes('safe recovery') || lower.includes('zero damage') || lower.includes('stays safe')) {
+        badges.push(`<span class="choice-badge badge-green">🛡️ HULL SAFE</span>`);
+      } else if (lower.includes('damage')) {
+        badges.push(`<span class="choice-badge badge-red">⚠ HULL DAMAGE</span>`);
+      } else if (lower.includes('restored') || lower.includes('repaired')) {
+        badges.push(`<span class="choice-badge badge-green">🔧 REPAIRED</span>`);
+      } else {
+        description = part;
+      }
+    }
+
+    return {
+      description: description || parts[0] || 'Take emergency action',
+      badgesHtml: badges.join('')
+    };
+  }
+
   if(event.type==='event'){
     keys={};audio.cue('alert');
     const e=EVENTS[event.id]||EVENTS.flare;
     const dsn=event.dsn||(sim?sim.getDsnTelemetry():null);
     audio.speak(e.body);
-    const dsnBanner=dsn?`
-      <div class="dsn-delay-banner">
-        <div class="dsn-delay-pill"><i class="dsn-pulse-dot"></i> SPEED-OF-LIGHT DELAY: ${dsn.rtltDisplay} RTLT (${dsn.owltDisplay} OWLT)</div>
-        <p><strong>GROUND COMMAND IMPOSSIBLE:</strong> Radio telemetry requires <strong>${dsn.owltDisplay}</strong> to reach Odyssey. Earth operators cannot intervene in real time. Choose an on-board autonomous triage directive!</p>
-      </div>`:'';
+    
     showDialog('event',`
-      ${header(e.label,e.title)}
-      <div class="anomaly-meta-bar">
-        <span class="anomaly-type-badge">⚠ ${e.anomalyType||'DEEP SPACE ANOMALY'}</span>
-        <span class="anomaly-station-badge">DSN ${dsn?.activeStation||'GROUND STATION'}</span>
+      <div class="anomaly-header">
+        <div class="anomaly-top-strip">
+          <span class="anomaly-alert-tag"><i class="pulse-dot"></i> 🚨 DEEP SPACE EMERGENCY</span>
+          <span class="anomaly-station-tag">📡 DSN ${dsn?.activeStation || 'GROUND STATION'}</span>
+        </div>
+        <h2 id="dialog-title" class="anomaly-title">${e.title}</h2>
       </div>
-      ${dsnBanner}
-      <p class="eyebrow event-warning">${e.speaker}</p>
-      <p class="dialog-lead">${e.body}</p>
+
+      <div class="anomaly-dilemma-card">
+        <div class="dilemma-badge">COMMUNICATION DELAY: ${dsn?.owltDisplay || '12m 30s'}</div>
+        <p class="dilemma-text">Earth is millions of miles away—Houston cannot send commands in time. <strong>Commander, choose your spacecraft's emergency defense!</strong></p>
+      </div>
+
       <div class="event-choices">
-        ${e.choices.map((c,i)=>`
-          <button class="event-choice" data-effect="${c.effect}">
-            <kbd>${i+1}</kbd>
-            <span>
-              <strong>${c.label}</strong>
-              ${c.system?`<em class="choice-subsystem">${c.system}</em>`:''}
-              <small>${c.detail}</small>
-            </span>
-            <span>→</span>
-          </button>
-        `).join('')}
+        ${e.choices.map((c,i)=>{
+          const f = formatEventDetail(c.detail);
+          return `
+          <button class="event-choice modern-choice-card" data-effect="${c.effect}">
+            <div class="choice-card-left">
+              <span class="choice-key-num">${i+1}</span>
+              <div class="choice-text-block">
+                <strong class="choice-title">${c.label}</strong>
+                ${c.system ? `<span class="choice-system-tag">${c.system}</span>` : ''}
+                <p class="choice-desc">${f.description}</p>
+                <div class="choice-badges-row">${f.badgesHtml}</div>
+              </div>
+            </div>
+            <span class="choice-arrow-icon">→</span>
+          </button>`;
+        }).join('')}
       </div>
     `);
   }
