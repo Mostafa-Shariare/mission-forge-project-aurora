@@ -3,7 +3,7 @@ import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 import {SYSTEMS,designStats,normalizeLoadout,NASA_MISSION_CLASSES,LAUNCH_VEHICLES} from './data.js';
 import {vehicleBus,vehicleModule,disposeModel} from './vehicle.js';
 import {componentPreview,suggestedBuild} from './experience.js';
-import {crew, renderCrewConsoleStrip, renderRoleAuthorityTag} from './crew.js';
+import {crew, CREW_ROLES, renderCrewConsoleStrip, renderRoleAuthorityTag} from './crew.js';
 
 export function getSubsystemRole(slot) {
   if (slot === 3 || slot === 7) return 'science';
@@ -45,11 +45,14 @@ function componentCard(hangar, slot, choice) {
   Object.assign(preview.after, hangar.buildCheck(preview.after));
   const cardTitle = p.name;
   const primarySpec = getPrimarySpec(slot, choice, p);
+  const slotRole = getSubsystemRole(slot);
+  const isSpectator = crew.isCrewMode() && !crew.canControlRole(slotRole);
 
-  return `<button class="compact-part-card ${installed ? 'selected' : ''}" data-part="${choice}" data-demand="${p.demand}" data-margin="${preview.after.powerMargin}" aria-label="Install ${cardTitle}" aria-pressed="${installed}" title="${p.description}">
+  return `<button class="compact-part-card ${installed ? 'selected' : ''} ${isSpectator ? 'spectator-locked' : ''}" data-part="${choice}" data-demand="${p.demand}" data-margin="${preview.after.powerMargin}" aria-label="Install ${cardTitle}" aria-pressed="${installed}" title="${p.description}" ${isSpectator ? 'disabled' : ''}>
     <div class="part-header-line">
       <span class="part-pill-num">0${choice + 1}</span>
       <span class="part-tag-badge">${p.tag}</span>
+      ${isSpectator ? '<span class="spectator-lock-tag">OBSERVER</span>' : ''}
     </div>
     <div class="part-preview-stage" aria-hidden="true">
       <div class="pedestal-halo"></div>
@@ -351,6 +354,18 @@ export class AssemblyHangar {
         if (authSlot) authSlot.innerHTML = renderRoleAuthorityTag(getSubsystemRole(this.slot));
       });
     }
+
+    crew.subscribe((event, data) => {
+      if (event === 'moduleEquipped' && data) {
+        if (data.slot !== undefined && data.choice !== undefined) {
+          const curSlot = this.slot;
+          this.slot = data.slot;
+          this.install(data.choice, false);
+          this.slot = curSlot;
+          this.selectSlot(curSlot);
+        }
+      }
+    });
   }
 
   autoEquipAll() {
@@ -433,6 +448,12 @@ export class AssemblyHangar {
       authSlot.innerHTML = renderRoleAuthorityTag(getSubsystemRole(slot));
     }
 
+    if (crew.isCrewMode() && !crew.canControlRole(getSubsystemRole(slot)) && msgEl) {
+      const member = crew.getMember(getSubsystemRole(slot));
+      const role = CREW_ROLES.find(r => r.id === getSubsystemRole(slot)) || CREW_ROLES[0];
+      msgEl.innerHTML = `<span class="spectator-msg-pill">👁️ SPECTATOR MODE</span> ONLY <b>${member.name} (${role.callsign})</b> CAN CONFIGURE THIS SUBSYSTEM`;
+    }
+
     this.root.querySelector('.hangar-options').innerHTML = SYSTEMS[slot].choices.map((p, i) => componentCard(this, slot, i)).join('');
     this.previewScenes.forEach(s => disposeModel(s));
     this.previewScenes = [];
@@ -462,8 +483,16 @@ export class AssemblyHangar {
     this.refresh();
   }
 
-  install(choice) {
+  install(choice, broadcast = true) {
     const slot = this.slot;
+    const slotRole = getSubsystemRole(slot);
+    if (crew.isCrewMode() && !crew.canControlRole(slotRole) && broadcast) {
+      const member = crew.getMember(slotRole);
+      const role = CREW_ROLES.find(r => r.id === slotRole) || CREW_ROLES[0];
+      const msg = this.root.querySelector('#assembly-message');
+      if (msg) msg.textContent = `OBSERVER MODE · ONLY ${member.name.toUpperCase()} (${role.callsign}) CAN MODIFY THIS MODULE`;
+      return;
+    }
     this.loadout[slot] = choice;
     this.installed[slot] = true;
     if (this.modules[slot]) {
@@ -482,6 +511,9 @@ export class AssemblyHangar {
     this.selectSlot(slot);
     this.root.querySelector('#assembly-message').textContent = `${SYSTEMS[slot].choices[choice].name.toUpperCase()} SECURED`;
     this.root.querySelector(`[data-part="${choice}"]`)?.focus({ preventScroll: true });
+    if (broadcast && crew.isCrewMode()) {
+      crew.broadcast('MODULE_EQUIP', { slot, choice });
+    }
   }
 
   action(action) {

@@ -5130,3 +5130,747 @@ body:has(#modal-layer:not([hidden])) .menu-bottom {
   border-bottom-color: #00e5ff;
   background: rgba(0, 229, 255, 0.1);
 }
+
+/* ==========================================================================
+   GATEWAY START SCREEN: SOLO vs 4-PLAYER MULTI-CREW (CREATE / JOIN TEAM)
+   ========================================================================== */
+
+.mode-select-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: radial-gradient(ellipse at 50% 20%, rgba(4, 20, 48, 0.95), rgba(1, 4, 12, 0.98) 75%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 20px;
+  overflow-y: auto;
+  opacity: 1;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s ease;
+}
+
+.mode-select-screen:not(.active) {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.98);
+}
+
+.mode-select-container {
+  max-width: 960px;
+  width: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: mode-fade-in 0.4s ease-out;
+}
+
+@keyframes mode-fade-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.mode-select-hero {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.mode-nasa-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: #00e5ff;
+  background: rgba(0, 229, 255, 0.08);
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  border-radius: 20px;
+  padding: 4px 14px;
+  margin-bottom: 12px;
+}
+
+.mode-main-title {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: clamp(34px, 5.5vw, 54px);
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  color: #ffffff;
+  margin: 0;
+  text-shadow: 0 0 30px rgba(0, 229, 255, 0.4);
+  line-height: 1.1;
+}
+
+.mode-subtitle {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: clamp(10px, 1.8vw, 12px);
+  color: #8da4be;
+  letter-spacing: 0.16em;
+  margin: 8px 0 16px 0;
+}
+
+.mode-prompt-pill {
+  display: inline-block;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.24em;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.12);
+  border-bottom: 2px solid #00e5ff;
+  padding: 5px 18px;
+  border-radius: 4px;
+}
+
+/* Two-column option cards */
+.mode-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 768px) {
+  .mode-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mode-option-card {
+  background: rgba(6, 18, 38, 0.85);
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  border-radius: 12px;
+  padding: 24px 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+}
+
+.mode-option-card:hover {
+  transform: translateY(-4px);
+  border-color: #00e5ff;
+  background: rgba(8, 24, 52, 0.95);
+  box-shadow: 0 0 35px rgba(0, 229, 255, 0.25), 0 12px 40px rgba(0, 0, 0, 0.6);
+}
+
+.mode-card-badge {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: #00e5ff;
+  background: rgba(0, 229, 255, 0.12);
+  border: 1px solid rgba(0, 229, 255, 0.35);
+  border-radius: 4px;
+  padding: 3px 8px;
+}
+
+.mode-card-badge.team-badge {
+  color: #bb88ff;
+  background: rgba(187, 136, 255, 0.12);
+  border-color: rgba(187, 136, 255, 0.4);
+}
+
+.mode-card-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.mode-card-icon {
+  font-size: 32px;
+  line-height: 1;
+}
+
+.mode-card-header h2 {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+  margin: 0;
+}
+
+.mode-card-kicker {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 9px;
+  color: #79dfff;
+  letter-spacing: 0.14em;
+}
+
+.mode-card-copy {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 12px;
+  line-height: 1.5;
+  color: #94a3b8;
+  margin: 0 0 16px 0;
+  min-height: 48px;
+}
+
+.mode-features-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mode-features-list li {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 11.5px;
+  color: #cbd5e1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mode-features-list li span {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-weight: 800;
+  color: #00e5ff;
+}
+
+.mode-cta-btn {
+  width: 100%;
+  justify-content: center;
+  padding: 12px 18px !important;
+  font-size: 12px !important;
+  letter-spacing: 0.14em !important;
+}
+
+.mode-select-footer {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 10px;
+  color: #64748b;
+  letter-spacing: 0.1em;
+  text-align: center;
+}
+
+/* Team Hub (Create vs Join) */
+.team-hub-header {
+  text-align: center;
+  margin-bottom: 24px;
+  position: relative;
+  width: 100%;
+}
+
+.ghost-back-btn {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: transparent;
+  border: 1px solid rgba(100, 160, 200, 0.3);
+  border-radius: 6px;
+  color: #94a3b8;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ghost-back-btn:hover {
+  border-color: #00e5ff;
+  color: #ffffff;
+  background: rgba(0, 229, 255, 0.1);
+}
+
+.team-hub-header h2 {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: #ffffff;
+  margin: 6px 0 4px 0;
+}
+
+.team-hub-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .team-hub-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.team-hub-card {
+  background: rgba(6, 18, 38, 0.9);
+  border: 1px solid rgba(0, 229, 255, 0.35);
+  border-radius: 12px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+}
+
+.team-hub-card.join-card {
+  border-color: rgba(187, 136, 255, 0.35);
+}
+
+.team-hub-badge {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: #00e5ff;
+  background: rgba(0, 229, 255, 0.1);
+  padding: 2px 8px;
+  border-radius: 4px;
+  width: fit-content;
+}
+
+.team-hub-badge.join-badge {
+  color: #bb88ff;
+  background: rgba(187, 136, 255, 0.1);
+}
+
+.team-hub-card h3 {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0;
+}
+
+.team-hub-card p {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 11.5px;
+  line-height: 1.4;
+  color: #8da4be;
+  margin: 0;
+}
+
+.code-generator-box {
+  background: rgba(2, 8, 20, 0.85);
+  border: 1px dashed rgba(0, 229, 255, 0.4);
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+
+.code-label {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 8.5px;
+  font-weight: 700;
+  color: #79dfff;
+  letter-spacing: 0.14em;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.code-display-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.code-val {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  color: #00e5ff;
+  text-shadow: 0 0 12px rgba(0, 229, 255, 0.5);
+}
+
+.copy-code-btn, .copy-small-btn {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  background: rgba(0, 229, 255, 0.15);
+  border: 1px solid #00e5ff;
+  color: #ffffff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.copy-code-btn:hover, .copy-small-btn:hover {
+  background: #00e5ff;
+  color: #020c18;
+}
+
+.team-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.team-input-group label {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #79dfff;
+}
+
+.code-input {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace) !important;
+  font-size: 15px !important;
+  letter-spacing: 0.18em !important;
+  text-transform: uppercase !important;
+}
+
+.role-selector-pills {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+}
+
+.role-select-pill {
+  background: rgba(4, 12, 26, 0.7);
+  border: 1px solid rgba(100, 160, 200, 0.3);
+  border-radius: 6px;
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: #94a3b8;
+  transition: all 0.2s ease;
+}
+
+.role-select-pill:hover {
+  background: rgba(8, 24, 48, 0.9);
+  border-color: rgba(0, 229, 255, 0.5);
+}
+
+.role-select-pill.active {
+  background: rgba(0, 229, 255, 0.15);
+  border-color: #00e5ff;
+  color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.25);
+}
+
+.team-hub-action-btn {
+  margin-top: 6px;
+  width: 100%;
+  justify-content: center;
+}
+
+/* Team Lobby View */
+.team-lobby-container {
+  max-width: 960px;
+}
+
+.team-lobby-header {
+  text-align: center;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.lobby-code-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(0, 229, 255, 0.1);
+  border: 1px solid #00e5ff;
+  border-radius: 8px;
+  padding: 6px 16px;
+  margin-bottom: 12px;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 11px;
+  color: #e2e8f0;
+}
+
+.lobby-code-badge strong {
+  font-size: 16px;
+  color: #00e5ff;
+  letter-spacing: 0.16em;
+}
+
+.team-lobby-header h2 {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 30px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: #ffffff;
+  margin: 0;
+}
+
+.lobby-roster-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 820px) {
+  .lobby-roster-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.lobby-station-card {
+  background: rgba(4, 14, 28, 0.85);
+  border: 1px solid rgba(100, 160, 200, 0.25);
+  border-radius: 8px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lobby-station-card.my-station {
+  border-color: #00e5ff;
+  background: rgba(0, 229, 255, 0.08);
+  box-shadow: 0 0 16px rgba(0, 229, 255, 0.15);
+}
+
+.lobby-station-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lobby-station-header h4 {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.lobby-officer-row {
+  display: flex;
+  flex-direction: column;
+}
+
+.officer-label {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 7.5px;
+  color: #79dfff;
+  letter-spacing: 0.1em;
+}
+
+.officer-name {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.status-pill {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  padding: 2px 6px;
+  border-radius: 3px;
+  display: inline-block;
+}
+
+.status-pill.my-pill {
+  background: #00e5ff;
+  color: #020c18;
+}
+
+.status-pill.connected-pill {
+  background: rgba(0, 255, 170, 0.15);
+  border: 1px solid #00ffaa;
+  color: #00ffaa;
+}
+
+.station-duty-desc {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 10px;
+  line-height: 1.4;
+  color: #8da4be;
+  margin: 0;
+  min-height: 38px;
+}
+
+.lobby-instructions-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(0, 229, 255, 0.08);
+  border: 1px solid rgba(0, 229, 255, 0.25);
+  border-radius: 8px;
+  padding: 10px 16px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.lobby-instructions-box p {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 11px;
+  color: #c0d8ea;
+  margin: 2px 0 0 0;
+}
+
+.lobby-actions-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 14px;
+  width: 100%;
+}
+
+/* ==========================================================================
+   SPECTATOR / CONTROLLER FLIGHT HUD BANNER
+   ========================================================================== */
+
+.crew-flight-hud {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  pointer-events: auto;
+  max-width: 650px;
+  width: 90%;
+}
+
+.crew-flight-banner {
+  border-radius: 8px;
+  padding: 8px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  animation: hud-banner-slide 0.3s ease-out;
+}
+
+@keyframes hud-banner-slide {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.crew-flight-banner.controller-banner {
+  background: rgba(2, 24, 18, 0.88);
+  border: 1px solid #00ffaa;
+  box-shadow: 0 0 25px rgba(0, 255, 170, 0.25);
+}
+
+.crew-flight-banner.spectator-banner {
+  background: rgba(24, 4, 14, 0.88);
+  border: 1px solid #ff4466;
+  box-shadow: 0 0 25px rgba(255, 68, 102, 0.25);
+}
+
+.banner-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.green-dot {
+  background: #00ffaa !important;
+  box-shadow: 0 0 8px #00ffaa !important;
+}
+
+.live-rec-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ff4466;
+  box-shadow: 0 0 10px #ff4466;
+  animation: rec-pulse 1.2s infinite ease-in-out;
+}
+
+@keyframes rec-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(0.85); }
+}
+
+.banner-status-tag {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: #ffffff;
+}
+
+.banner-station-tag {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  border: 1px solid;
+  border-radius: 3px;
+  padding: 1px 6px;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.banner-instruction {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 11px;
+  color: #cbd5e1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.takeover-btn {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  background: rgba(255, 68, 102, 0.2);
+  border: 1px solid #ff4466;
+  color: #ff99aa;
+  padding: 3px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.takeover-btn:hover {
+  background: #ff4466;
+  color: #02040a;
+}
+
+/* Spectator locked cards in Assembly Bay */
+.compact-part-card.spectator-locked {
+  cursor: not-allowed !important;
+  opacity: 0.65 !important;
+}
+
+.spectator-lock-tag {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 7px;
+  font-weight: 800;
+  color: #ff4466;
+  border: 1px solid #ff4466;
+  border-radius: 2px;
+  padding: 1px 4px;
+  letter-spacing: 0.08em;
+  margin-left: auto;
+}
+
+.spectator-msg-pill {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 8.5px;
+  font-weight: 800;
+  color: #ff4466;
+  background: rgba(255, 68, 102, 0.15);
+  border: 1px solid #ff4466;
+  border-radius: 3px;
+  padding: 2px 6px;
+  margin-right: 6px;
+}
+

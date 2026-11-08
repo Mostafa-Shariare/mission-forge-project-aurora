@@ -1,6 +1,7 @@
 import {makeCampaign,flightPlan,SITES,getCampaignData,getTargetProvenance,DESTINATION_CAMPAIGNS} from './campaign.js';
 import {plannerMarkup,bindPlanner,operationMarkup,bindOperation,campaignDebrief} from './mission-ui.js';
-import {crew, CREW_ROLES, renderCrewConsoleStrip, renderRoleAuthorityTag, showCrewSetupModal, showGoNoGoPollModal} from './crew.js';
+import {crew, CREW_ROLES, renderCrewConsoleStrip, renderRoleAuthorityTag, showCrewSetupModal, showGoNoGoPollModal, showModeSelectScreen, renderSpectatorHud, getStageRole, getStageTitle} from './crew.js';
+let lastTelemetrySend=0;
 let committedPlan=null;
 let lastGamepadInteract=false;
 let selectedMissionClass='discovery';
@@ -305,6 +306,12 @@ function initializeFlight(checkpoint=null){
   view='flight';$('#menu-view').hidden=true;$('#flight-view').hidden=false;document.body.classList.add('in-flight');
   coach=new FlightCoach(getSaved('odyssey-coach-complete',false));
   $('#touch-controls').hidden=!matchMedia('(pointer: coarse)').matches;world.setupStage(sim);saveCheckpoint();buildFlightHud();showBriefing();
+  if (crew.isCrewMode()) {
+    const stageRole = getStageRole(sim.stage);
+    crew.setSegment(stageRole, getStageTitle(sim.stage));
+    const flightHud = $('#crew-flight-hud');
+    if (flightHud) renderSpectatorHud(flightHud);
+  }
 }
 function saveCheckpoint(){savedCheckpoint=sim.checkpoint;save('odyssey-checkpoint',savedCheckpoint);if($('#resume-button'))$('#resume-button').hidden=false;}
 function returnMenu(){
@@ -839,26 +846,14 @@ function handleEvent(event){
         <p class="dilemma-text">Earth is millions of miles away—Houston cannot send commands in time. <strong>Commander, choose your spacecraft's emergency defense!</strong></p>
       </div>
 
-      ${crew.isCrewMode() ? `
-      <div class="crew-anomaly-triage-strip">
-        <span class="crew-triage-badge">👥 4-OFFICER COLLABORATIVE TRIAGE</span>
-        <span class="crew-triage-desc">Each console has evaluated telemetry. Review station recommendations below:</span>
-      </div>` : ''}
-
       <div class="event-choices">
         ${e.choices.map((c,i)=>{
           const f = formatEventDetail(c.detail);
-          const advisory = crew.isCrewMode() ? (
-            i === 0 ? '<span class="choice-advisory tag-comms">📡 COMMS &amp; FIDO DIRECTIVE</span>' :
-            i === 1 ? '<span class="choice-advisory tag-science">🔬 SCIENCE SPECIALIST DIRECTIVE</span>' :
-            '<span class="choice-advisory tag-systems">🛠️ SYSTEMS OFFICER DIRECTIVE</span>'
-          ) : '';
           return `
           <button class="event-choice modern-choice-card" data-effect="${c.effect}">
             <div class="choice-card-left">
               <span class="choice-key-num">${i+1}</span>
               <div class="choice-text-block">
-                ${advisory}
                 <strong class="choice-title">${c.label}</strong>
                 ${c.system ? `<span class="choice-system-tag">${c.system}</span>` : ''}
                 <p class="choice-desc">${f.description}</p>
@@ -890,6 +885,12 @@ function handleEvent(event){
       try {
         if (sim?.mode === 'transition') {
           sim.advance();
+          if (crew.isCrewMode()) {
+            const stageRole = getStageRole(sim.stage);
+            crew.setSegment(stageRole, getStageTitle(sim.stage));
+            const flightHud = $('#crew-flight-hud');
+            if (flightHud) renderSpectatorHud(flightHud);
+          }
         }
       } catch (err) {
         console.error('Error during stage advance:', err);
@@ -1315,26 +1316,7 @@ function showCertificateModal(sim, resultData){
           </div>
         </div>
         <p class="cert-intro">THIS OFFICIAL CITATION CERTIFIES THAT</p>
-        ${crew.isCrewMode() ? `
-        <div class="cert-crew-manifest">
-          <div class="cert-crew-title">PROJECT AURORA FLIGHT OPERATIONS CREW</div>
-          <div class="cert-crew-grid">
-            ${crew.roster.map(m => {
-              const r = CREW_ROLES.find(x => x.id === m.id) || CREW_ROLES[0];
-              return `
-              <div class="cert-crew-card">
-                <span class="cert-crew-badge" style="border-color:${r.color}; color:${r.color}">${r.icon} ${r.code}</span>
-                <div class="cert-crew-meta">
-                  <span class="cert-crew-role">${r.title}</span>
-                  <div class="cert-crew-name" contenteditable="true" spellcheck="false" title="Click to edit name">${escape(m.name)}</div>
-                </div>
-              </div>`;
-            }).join('')}
-          </div>
-        </div>
-        ` : `
         <div class="cert-pilot-name" contenteditable="true" spellcheck="false" title="Click to edit pilot name">COMMANDER EXPLORER</div>
-        `}
         <p class="cert-mission-statement">
           Has successfully navigated the <strong>${escape(destName)} Expedition</strong>, executing optimal orbital insertion, operating remote scientific payloads, and securing critical planetary observations for humanity's shared archive.
         </p>
@@ -1758,11 +1740,7 @@ document.addEventListener('click',e=>{
     const arch = assembly?.getArchitecture ? assembly.getArchitecture() : { missionClass: selectedMissionClass, launchVehicle: selectedLaunchVehicle };
     selectedMissionClass = arch.missionClass;
     selectedLaunchVehicle = arch.launchVehicle;
-    if (crew.isCrewMode()) {
-      showGoNoGoPollModal(() => flightPlanDialog(arch));
-    } else {
-      flightPlanDialog(arch);
-    }
+    flightPlanDialog(arch);
   }
   if(b.id==='begin-stage'){closeDialog();audio.fadeInBgm(1.8);sim.begin();}
   if(b.id==='resume-flight'){closeDialog();audio.fadeInBgm(1.8);sim.resume();}
@@ -1806,8 +1784,13 @@ function updateCrewModeUI() {
   if (btn && label) {
     const isCrew = crew.isCrewMode();
     btn.classList.toggle('active', isCrew);
-    label.textContent = isCrew ? '4-CREW TEAM' : 'SOLO';
-    btn.title = isCrew ? '4-Player NASA Mission Control Active (Click to manage roster or switch mode)' : 'Solo Explorer Mode (Click to enable 4-Player Team Mode)';
+    if (isCrew) {
+      label.textContent = `TEAM: ${crew.roomCode || 'LOBBY'} (${crew.getMyRoleMeta().callsign})`;
+      btn.title = `4-Player Multi-Crew Active (${crew.roomCode}) · Click to open Team Hub`;
+    } else {
+      label.textContent = 'SOLO';
+      btn.title = 'Solo Explorer Mode · Click to open Team Hub';
+    }
   }
   const globalBar = $('#global-crew-bar');
   if (globalBar) {
@@ -1819,28 +1802,44 @@ function updateCrewModeUI() {
       globalBar.innerHTML = '';
     }
   }
-  const assemStrip = $('#assembly-crew-strip');
-  if (assemStrip) {
-    if (crew.isCrewMode()) {
-      assemStrip.style.display = 'flex';
-      renderCrewConsoleStrip(assemStrip);
-    } else {
-      assemStrip.style.display = 'none';
-      assemStrip.innerHTML = '';
-    }
+  const flightHud = $('#crew-flight-hud');
+  if (flightHud && view === 'flight') {
+    renderSpectatorHud(flightHud);
   }
 }
+
 if ($('#crew-mode-btn')) {
   $('#crew-mode-btn').onclick = () => {
-    showCrewSetupModal(() => {
-      updateCrewModeUI();
-      notify(crew.isCrewMode() ? '4-CREW NASA MISSION CONTROL INITIALIZED' : 'SOLO EXPLORER MODE ACTIVE', 'info');
-      audio.cue('click');
+    showModeSelectScreen($('#mode-select-screen'), {
+      onSolo: () => updateCrewModeUI(),
+      onTeamLaunch: () => {
+        updateCrewModeUI();
+        designDialog();
+      }
     });
   };
 }
-crew.subscribe(() => updateCrewModeUI());
-updateCrewModeUI();
+
+crew.subscribe((event, data) => {
+  if (event === 'modeChanged' || event === 'rosterChanged' || event === 'roomSynced' || event === 'roomCreated' || event === 'roomJoined') {
+    updateCrewModeUI();
+  } else if (event === 'segmentChanged' || event === 'authorityChanged') {
+    updateCrewModeUI();
+    const flightHud = $('#crew-flight-hud');
+    if (flightHud && view === 'flight') renderSpectatorHud(flightHud);
+    const meta = crew.getActiveSegmentRoleMeta();
+    const officer = crew.getMember(crew.activeSegmentRole);
+    notify(`FLIGHT STAGE HANDOFF: ${meta.callsign} (${officer.name}) HAS THE CONTROLS`, 'info');
+  } else if (event === 'flightTelemetry' && data && sim && !crew.isMyTurn()) {
+    if (data.pos) sim.ship.position.set(data.pos[0], data.pos[1], data.pos[2]);
+    if (data.vel) sim.ship.velocity.set(data.vel[0], data.vel[1], data.vel[2]);
+    if (data.rot) sim.ship.rotation.set(data.rot[0], data.rot[1], data.rot[2]);
+    if (data.hull !== undefined) sim.hull = data.hull;
+    if (data.propellant !== undefined) sim.propellant = data.propellant;
+    if (data.power !== undefined) sim.power = data.power;
+    if (data.score !== undefined) sim.score = data.score;
+  }
+});
 
 const keymap={KeyW:'forward',KeyS:'brake',KeyA:'left',KeyD:'right',ArrowLeft:'left',ArrowRight:'right',ArrowUp:'up',ArrowDown:'down',Space:'boost',KeyE:'interact'};
 document.addEventListener('keydown',e=>{
@@ -1946,7 +1945,25 @@ function pollGamepad(keys){
 function tick(now){
   const dt=Math.min((now-lastFrame)/1000,.1);lastFrame=now;accumulator+=dt;
   if(view==='flight')pollGamepad(keys);
+  if(crew.isCrewMode() && !crew.isMyTurn()){
+    keys.forward=false;keys.brake=false;keys.left=false;keys.right=false;keys.boost=false;keys.interact=false;keys.up=false;keys.down=false;
+  }
   while(accumulator>=1/60){sim?.step(1/60,keys);if(sim&&coach){const wasComplete=coach.basicComplete&&coach.scanComplete;coach.update(sim,keys,1/60);if(!wasComplete&&coach.basicComplete&&coach.scanComplete){save('odyssey-coach-complete',true);audio.cue('success');notify('PILOT PRACTICE COMPLETE · You control the mission.');}}accumulator-=1/60;}
+  if(crew.isCrewMode() && crew.isMyTurn() && sim && sim.mode === 'flight'){
+    if(now - lastTelemetrySend > 70){
+      lastTelemetrySend = now;
+      crew.broadcast('FLIGHT_TELEMETRY', {
+        pos: [sim.ship.position.x, sim.ship.position.y, sim.ship.position.z],
+        vel: [sim.ship.velocity.x, sim.ship.velocity.y, sim.ship.velocity.z],
+        rot: [sim.ship.rotation.x, sim.ship.rotation.y, sim.ship.rotation.z],
+        hull: sim.hull,
+        propellant: sim.propellant,
+        power: sim.power,
+        score: sim.score,
+        stage: sim.stage
+      });
+    }
+  }
   assembly?.update(dt);if(!assembly)world.update(dt,view==='flight'?sim:null);audio.update(dt,sim,keys);
   if(view==='menu')$('#planet-rotation').textContent=(world.planet.rotation.y*180/Math.PI%360).toFixed(1).padStart(5,'0')+'°';
   else if(sim){
@@ -2025,8 +2042,21 @@ try{
 
   updateAudioButton();
   updateBgmButton();
+  updateCrewModeUI();
   if($('#resume-button')) $('#resume-button').hidden=!savedCheckpoint;
   if(matchMedia('(prefers-reduced-motion: reduce)').matches)world.mouse={x:0,y:0};
-  world.ready.then(()=>{setTimeout(()=>{$('#loading').classList.add('done');setTimeout(()=>{$('#loading').hidden=true;},850);},400);});
+  world.ready.then(()=>{
+    setTimeout(()=>{$('#loading').classList.add('done');setTimeout(()=>{$('#loading').hidden=true;},850);},400);
+    // Show Gateway Mode Selection screen (Solo vs Team -> Create / Join) on clean boot
+    if (!launchParam) {
+      showModeSelectScreen($('#mode-select-screen'), {
+        onSolo: () => updateCrewModeUI(),
+        onTeamLaunch: () => {
+          updateCrewModeUI();
+          designDialog();
+        }
+      });
+    }
+  });
   requestAnimationFrame(tick);
 }catch(error){$('#loading-text').textContent='3D INITIALIZATION FAILED';const details=document.createElement('pre');details.className='error-detail';details.textContent='This game needs WebGL 2 and a current Chrome, Edge, or Firefox browser. Enable hardware acceleration and reload.\n\n'+error.message;$('#loading').append(details);console.error(error);}
