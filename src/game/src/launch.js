@@ -546,27 +546,38 @@ export class RocketLaunchSimulation {
     this.renderer.shadowMap.enabled = true;
     this.renderer.shadowMap.type = T.PCFSoftShadowMap;
 
+    // Celestial Astronomical Sun Vector (East-Southeast, elevated ~20° over Atlantic orbital corridor)
+    this.sunDir = new T.Vector3(0.52, 0.34, -0.78).normalize();
+
     // Lighting (Calibrated for bright atmosphere and high-contrast space)
     this.ambientLight = new T.AmbientLight(0xd9ebff, 1.15);
     this.scene.add(this.ambientLight);
 
-    this.sunLight = new T.DirectionalLight(0xfffaee, 3.6);
-    this.sunLight.position.set(650, 950, 500);
+    // Primary Direct Solar Sunlight (High-contrast space beam)
+    this.sunLight = new T.DirectionalLight(0xfffaee, 3.8);
     this.sunLight.castShadow = true;
     this.sunLight.shadow.mapSize.width = 1024;
     this.sunLight.shadow.mapSize.height = 1024;
+    this.sunLight.shadow.bias = -0.0001;
     this.scene.add(this.sunLight);
+    this.scene.add(this.sunLight.target);
+
+    // Secondary Earthshine (Albedo) Fill Light (Simulates cyan sunlight reflected from Earth's oceans & cloud deck)
+    this.earthshineLight = new T.DirectionalLight(0x28a6f0, 0.0);
+    this.scene.add(this.earthshineLight);
+    this.scene.add(this.earthshineLight.target);
 
     this.hemiLight = new T.HemisphereLight(0x86b8ea, 0x1d2c38, 0.85);
     this.scene.add(this.hemiLight);
 
     // Build World Elements
+    this.buildDeepSpaceEnvironment();
     this.buildCapeCanaveralEnvironment();
     this.buildLaunchPad39B();
     this.buildRocketModel();
     this.buildSoftCloudCanopy();
     this.buildOrbitalEarth();
-    this.buildSunCorona();
+    this.buildSunCelestialSystem();
     this.buildRocketVfx();
     this.buildSlipstreamStreaks();
   }
@@ -631,14 +642,89 @@ export class RocketLaunchSimulation {
 
     this.groundGroup.add(vabGroup);
 
-    // Deep Space Starfield
-    const starCount = 3800;
+    this.scene.add(this.groundGroup);
+  }
+
+  /* =========================================================================
+     0. DEEP SPACE ENVIRONMENT (CELESTIAL SPHERE, MILKY WAY & MULTI-TIER STARFIELD)
+     ========================================================================= */
+  buildDeepSpaceEnvironment() {
+    this.celestialGroup = new T.Group();
+
+    // 1. Procedural Milky Way Galactic Dust Nebula Band
+    const mwCanvas = document.createElement('canvas');
+    mwCanvas.width = 2048; mwCanvas.height = 1024;
+    const mCtx = mwCanvas.getContext('2d');
+
+    // Galactic Core & Cosmic Stardust Glow
+    const coreGrad = mCtx.createRadialGradient(1024, 512, 0, 1024, 512, 600);
+    coreGrad.addColorStop(0.0, 'rgba(215, 230, 255, 0.48)');
+    coreGrad.addColorStop(0.18, 'rgba(150, 180, 240, 0.34)');
+    coreGrad.addColorStop(0.42, 'rgba(68, 55, 115, 0.22)');
+    coreGrad.addColorStop(0.70, 'rgba(18, 48, 75, 0.12)');
+    coreGrad.addColorStop(1.0, 'rgba(0, 0, 0, 0.0)');
+    mCtx.fillStyle = coreGrad;
+    mCtx.fillRect(0, 0, 2048, 1024);
+
+    // Sweeping Galactic Plane Stardust Ribbon
+    mCtx.save();
+    mCtx.strokeStyle = 'rgba(70, 95, 150, 0.18)';
+    mCtx.lineWidth = 140;
+    mCtx.beginPath();
+    mCtx.moveTo(0, 380);
+    mCtx.bezierCurveTo(512, 620, 1536, 400, 2048, 640);
+    mCtx.stroke();
+
+    mCtx.strokeStyle = 'rgba(25, 70, 95, 0.15)';
+    mCtx.lineWidth = 80;
+    mCtx.beginPath();
+    mCtx.moveTo(0, 390);
+    mCtx.bezierCurveTo(512, 610, 1536, 410, 2048, 630);
+    mCtx.stroke();
+
+    // Dark Absorption Dust Lanes cutting through the core (Great Rift effect)
+    mCtx.strokeStyle = 'rgba(2, 4, 10, 0.35)';
+    mCtx.lineWidth = 22;
+    mCtx.beginPath();
+    mCtx.moveTo(750, 495);
+    mCtx.bezierCurveTo(950, 520, 1150, 485, 1350, 530);
+    mCtx.stroke();
+
+    // 1,400 Micro Stardust Cluster points along the galactic equator
+    for (let i = 0; i < 1400; i++) {
+      const sx = Math.random() * 2048;
+      const waveY = 512 + Math.sin(sx * 0.003) * 90 + (Math.random() - 0.5) * 110;
+      const sr = 0.5 + Math.random() * 1.5;
+      const sa = 0.2 + Math.random() * 0.6;
+      mCtx.fillStyle = `rgba(220, 240, 255, ${sa})`;
+      mCtx.beginPath();
+      mCtx.arc(sx, waveY, sr, 0, Math.PI * 2);
+      mCtx.fill();
+    }
+    mCtx.restore();
+
+    const mwTex = new T.CanvasTexture(mwCanvas);
+    mwTex.colorSpace = T.SRGBColorSpace;
+    const mwGeo = new T.SphereGeometry(46000, 40, 24);
+    const mwMat = new T.MeshBasicMaterial({
+      map: mwTex,
+      side: T.BackSide,
+      transparent: true,
+      opacity: 0.0,
+      depthWrite: false
+    });
+    this.milkyWayMesh = new T.Mesh(mwGeo, mwMat);
+    this.celestialGroup.add(this.milkyWayMesh);
+
+    // 2. High-Density Multi-Tier Starfield (6,200 celestial stars)
+    const starCount = 6200;
     const starGeo = new T.BufferGeometry();
     const starPos = new Float32Array(starCount * 3);
     const starCols = new Float32Array(starCount * 3);
+
     for (let i = 0; i < starCount; i++) {
       const idx = i * 3;
-      const r = 32000 + Math.random() * 24000;
+      const r = 41000 + Math.random() * 6000;
       const theta = Math.random() * Math.PI * 2;
       const phi = Math.acos(Math.random() * 2 - 1);
       starPos[idx] = r * Math.sin(phi) * Math.cos(theta);
@@ -646,29 +732,63 @@ export class RocketLaunchSimulation {
       starPos[idx + 2] = r * Math.cos(phi);
 
       const cRand = Math.random();
-      if (cRand < 0.22) {
-        starCols[idx] = 0.82; starCols[idx + 1] = 0.90; starCols[idx + 2] = 1.0;
-      } else if (cRand < 0.38) {
-        starCols[idx] = 1.0; starCols[idx + 1] = 0.94; starCols[idx + 2] = 0.80;
-      } else if (cRand < 0.44) {
-        starCols[idx] = 1.0; starCols[idx + 1] = 0.78; starCols[idx + 2] = 0.68;
-      } else {
+      if (cRand < 0.32) {
+        // Hot O/B-type blue-white stars
+        starCols[idx] = 0.78; starCols[idx + 1] = 0.88; starCols[idx + 2] = 1.0;
+      } else if (cRand < 0.72) {
+        // Brilliant pure white A/F stars
         starCols[idx] = 1.0; starCols[idx + 1] = 1.0; starCols[idx + 2] = 1.0;
+      } else if (cRand < 0.88) {
+        // Warm G-type solar stars
+        starCols[idx] = 1.0; starCols[idx + 1] = 0.94; starCols[idx + 2] = 0.76;
+      } else {
+        // K/M-type orange/red giants
+        starCols[idx] = 1.0; starCols[idx + 1] = 0.65; starCols[idx + 2] = 0.45;
       }
     }
     starGeo.setAttribute('position', new T.BufferAttribute(starPos, 3));
     starGeo.setAttribute('color', new T.BufferAttribute(starCols, 3));
+
     const starMat = new T.PointsMaterial({
       vertexColors: true,
-      size: 1.85,
+      size: 2.1,
       sizeAttenuation: false,
       transparent: true,
-      opacity: 0.0
+      opacity: 0.0,
+      depthWrite: false
     });
     this.stars = new T.Points(starGeo, starMat);
-    this.scene.add(this.stars);
+    this.celestialGroup.add(this.stars);
 
-    this.scene.add(this.groundGroup);
+    // 3. 90 Prominent Navigational Alpha Stars
+    const alphaCount = 90;
+    const alphaGeo = new T.BufferGeometry();
+    const alphaPos = new Float32Array(alphaCount * 3);
+    const alphaCols = new Float32Array(alphaCount * 3);
+    for (let i = 0; i < alphaCount; i++) {
+      const idx = i * 3;
+      const r = 43000 + Math.random() * 2000;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(Math.random() * 2 - 1);
+      alphaPos[idx] = r * Math.sin(phi) * Math.cos(theta);
+      alphaPos[idx + 1] = r * Math.sin(phi) * Math.sin(theta);
+      alphaPos[idx + 2] = r * Math.cos(phi);
+      alphaCols[idx] = 0.92; alphaCols[idx + 1] = 0.96; alphaCols[idx + 2] = 1.0;
+    }
+    alphaGeo.setAttribute('position', new T.BufferAttribute(alphaPos, 3));
+    alphaGeo.setAttribute('color', new T.BufferAttribute(alphaCols, 3));
+    const alphaMat = new T.PointsMaterial({
+      vertexColors: true,
+      size: 4.2,
+      sizeAttenuation: false,
+      transparent: true,
+      opacity: 0.0,
+      depthWrite: false
+    });
+    this.alphaStars = new T.Points(alphaGeo, alphaMat);
+    this.celestialGroup.add(this.alphaStars);
+
+    this.scene.add(this.celestialGroup);
   }
 
   /* =========================================================================
@@ -1237,8 +1357,8 @@ export class RocketLaunchSimulation {
       tex.colorSpace = T.SRGBColorSpace;
       tex.anisotropy = 8;
       earthMat.map = tex;
-      earthMat.roughness = 0.68;
-      earthMat.metalness = 0.05;
+      earthMat.roughness = 0.55;
+      earthMat.metalness = 0.14;
       earthMat.needsUpdate = true;
     };
 
@@ -1254,33 +1374,40 @@ export class RocketLaunchSimulation {
     this.earthSphere.rotation.y = -1.72;
     this.earthGroup.add(this.earthSphere);
 
-    // 3. Authentic Rayleigh Atmospheric Rim (Delicate electric-blue line around Earth's curved limb)
-    const atmoGeo = new T.SphereGeometry(this.earthRadius * 1.014, 64, 48);
+    // 3. Authentic Rayleigh Atmospheric Rim (Two-tone Rayleigh limb with sunset amber terminator)
+    const atmoGeo = new T.SphereGeometry(this.earthRadius * 1.018, 96, 64);
     const atmoMat = new T.ShaderMaterial({
       uniforms: {
         glowColor: { value: new T.Color(0x00c8ff) },
-        sunDir: { value: new T.Vector3(0.39, 0.78, 0.52).normalize() }
+        sunDir: { value: this.sunDir.clone() },
+        eyePos: { value: this.camera.position.clone() }
       },
       vertexShader: `
-        varying vec3 vNormal;
-        varying vec3 vViewDir;
+        varying vec3 vWorldNormal;
+        varying vec3 vWorldPosition;
         void main() {
-          vNormal = normalize(normalMatrix * normal);
-          vec4 mvPos = modelViewMatrix * vec4(position, 1.0);
-          vViewDir = normalize(-mvPos.xyz);
-          gl_Position = projectionMatrix * mvPos;
+          vWorldNormal = normalize((modelMatrix * vec4(normal, 0.0)).xyz);
+          vec4 worldPos = modelMatrix * vec4(position, 1.0);
+          vWorldPosition = worldPos.xyz;
+          gl_Position = projectionMatrix * viewMatrix * worldPos;
         }
       `,
       fragmentShader: `
         uniform vec3 glowColor;
         uniform vec3 sunDir;
-        varying vec3 vNormal;
-        varying vec3 vViewDir;
+        uniform vec3 eyePos;
+        varying vec3 vWorldNormal;
+        varying vec3 vWorldPosition;
         void main() {
-          float rim = 1.0 - max(0.0, dot(vNormal, vViewDir));
-          float intensity = pow(rim, 4.2);
-          float sunLight = clamp(dot(vNormal, sunDir) * 0.6 + 0.4, 0.0, 1.0);
-          gl_FragColor = vec4(glowColor, intensity * sunLight * 0.78);
+          vec3 viewDir = normalize(eyePos - vWorldPosition);
+          float rim = 1.0 - max(0.0, dot(vWorldNormal, viewDir));
+          float rimIntensity = pow(rim, 3.4);
+          float sunDot = dot(vWorldNormal, sunDir);
+          float sunFactor = clamp(sunDot * 0.75 + 0.38, 0.0, 1.0);
+          vec3 dayColor = vec3(0.0, 0.82, 1.0);
+          vec3 sunsetColor = vec3(1.0, 0.46, 0.14);
+          vec3 atmosphericColor = mix(sunsetColor, dayColor, smoothstep(-0.12, 0.28, sunDot));
+          gl_FragColor = vec4(atmosphericColor, rimIntensity * sunFactor * 0.96);
         }
       `,
       transparent: true,
@@ -1295,31 +1422,121 @@ export class RocketLaunchSimulation {
   }
 
   /* =========================================================================
-     6. SUN CORONA & SOLAR FLARE
+     6. CELESTIAL SUN SYSTEM (PHOTOSPHERE, CORONA & ANAMORPHIC DIFFRACTION FLARE)
      ========================================================================= */
-  buildSunCorona() {
-    const sunCanvas = document.createElement('canvas');
-    sunCanvas.width = 128; sunCanvas.height = 128;
-    const sCtx = sunCanvas.getContext('2d');
-    const grad = sCtx.createRadialGradient(64, 64, 0, 64, 64, 64);
-    grad.addColorStop(0, 'rgba(255, 255, 240, 1.0)');
-    grad.addColorStop(0.25, 'rgba(255, 235, 170, 0.85)');
-    grad.addColorStop(0.6, 'rgba(255, 190, 80, 0.25)');
-    grad.addColorStop(1, 'rgba(255, 160, 40, 0.0)');
-    sCtx.fillStyle = grad;
-    sCtx.fillRect(0, 0, 128, 128);
-    const sunTex = new T.CanvasTexture(sunCanvas);
+  buildSunCelestialSystem() {
+    this.sunGroup = new T.Group();
 
-    const sunMat = new T.SpriteMaterial({
-      map: sunTex,
+    // 1. Incandescent Solar Photosphere (Blinding White Core Disk)
+    const coreGeo = new T.SphereGeometry(480, 32, 32);
+    const coreMat = new T.MeshBasicMaterial({ color: 0xffffff, depthWrite: false });
+    this.sunCoreMesh = new T.Mesh(coreGeo, coreMat);
+    this.sunGroup.add(this.sunCoreMesh);
+
+    // 2. Solar Chromosphere Glow Shell
+    const chromoGeo = new T.SphereGeometry(680, 32, 32);
+    const chromoMat = new T.MeshBasicMaterial({
+      color: 0xffea85,
       transparent: true,
-      opacity: 0.95,
-      blending: T.AdditiveBlending
+      opacity: 0.86,
+      blending: T.AdditiveBlending,
+      depthWrite: false
     });
-    this.sunSprite = new T.Sprite(sunMat);
-    this.sunSprite.position.set(650, 950, 500);
-    this.sunSprite.scale.set(420, 420, 1);
-    this.scene.add(this.sunSprite);
+    this.sunChromoMesh = new T.Mesh(chromoGeo, chromoMat);
+    this.sunGroup.add(this.sunChromoMesh);
+
+    // 3. Radiant Multi-Stop Solar Corona Sprite
+    const coronaCanvas = document.createElement('canvas');
+    coronaCanvas.width = 512; coronaCanvas.height = 512;
+    const cCtx = coronaCanvas.getContext('2d');
+    const cGrad = cCtx.createRadialGradient(256, 256, 0, 256, 256, 256);
+    cGrad.addColorStop(0.0, 'rgba(255, 255, 255, 1.0)');
+    cGrad.addColorStop(0.12, 'rgba(255, 248, 205, 0.98)');
+    cGrad.addColorStop(0.28, 'rgba(255, 205, 75, 0.82)');
+    cGrad.addColorStop(0.50, 'rgba(255, 135, 25, 0.36)');
+    cGrad.addColorStop(0.74, 'rgba(240, 70, 10, 0.12)');
+    cGrad.addColorStop(1.0, 'rgba(180, 15, 0, 0.0)');
+    cCtx.fillStyle = cGrad;
+    cCtx.fillRect(0, 0, 512, 512);
+
+    const coronaTex = new T.CanvasTexture(coronaCanvas);
+    coronaTex.colorSpace = T.SRGBColorSpace;
+    const coronaMat = new T.SpriteMaterial({
+      map: coronaTex,
+      transparent: true,
+      blending: T.AdditiveBlending,
+      depthWrite: false
+    });
+    this.sunCorona = new T.Sprite(coronaMat);
+    this.sunCorona.scale.set(6800, 6800, 1);
+    this.sunGroup.add(this.sunCorona);
+
+    // 4. Cinematic Anamorphic Lens Flare & 6-Point Starburst Diffraction Optics
+    const flareCanvas = document.createElement('canvas');
+    flareCanvas.width = 1024; flareCanvas.height = 1024;
+    const fCtx = flareCanvas.getContext('2d');
+
+    // (a) Horizontal Anamorphic Glare Streak (Apollo/Falcon 9 flight cam lens flare)
+    const hGrad = fCtx.createLinearGradient(0, 512, 1024, 512);
+    hGrad.addColorStop(0.0, 'rgba(80, 200, 255, 0.0)');
+    hGrad.addColorStop(0.32, 'rgba(110, 215, 255, 0.28)');
+    hGrad.addColorStop(0.46, 'rgba(245, 250, 255, 0.88)');
+    hGrad.addColorStop(0.50, 'rgba(255, 255, 255, 1.0)');
+    hGrad.addColorStop(0.54, 'rgba(245, 250, 255, 0.88)');
+    hGrad.addColorStop(0.68, 'rgba(110, 215, 255, 0.28)');
+    hGrad.addColorStop(1.0, 'rgba(80, 200, 255, 0.0)');
+    fCtx.fillStyle = hGrad;
+    fCtx.fillRect(0, 503, 1024, 18);
+
+    // (b) 6 Diffraction Spikes (at 0, 60, 120, 180, 240, 300 degrees)
+    fCtx.save();
+    fCtx.translate(512, 512);
+    for (let angle of [0, Math.PI / 3, (2 * Math.PI) / 3]) {
+      fCtx.save();
+      fCtx.rotate(angle);
+      const sGrad = fCtx.createLinearGradient(-512, 0, 512, 0);
+      sGrad.addColorStop(0.0, 'rgba(255, 210, 120, 0)');
+      sGrad.addColorStop(0.38, 'rgba(255, 225, 140, 0.30)');
+      sGrad.addColorStop(0.50, 'rgba(255, 255, 255, 0.98)');
+      sGrad.addColorStop(0.62, 'rgba(255, 225, 140, 0.30)');
+      sGrad.addColorStop(1.0, 'rgba(255, 210, 120, 0)');
+      fCtx.fillStyle = sGrad;
+      fCtx.fillRect(-512, -3.5, 1024, 7);
+      fCtx.restore();
+    }
+
+    // (c) Iridescent Chromatic Halo Ring
+    fCtx.strokeStyle = 'rgba(120, 220, 255, 0.16)';
+    fCtx.lineWidth = 4;
+    fCtx.beginPath();
+    fCtx.arc(0, 0, 240, 0, Math.PI * 2);
+    fCtx.stroke();
+    fCtx.strokeStyle = 'rgba(255, 190, 80, 0.12)';
+    fCtx.lineWidth = 2.5;
+    fCtx.beginPath();
+    fCtx.arc(0, 0, 246, 0, Math.PI * 2);
+    fCtx.stroke();
+    fCtx.restore();
+
+    const flareTex = new T.CanvasTexture(flareCanvas);
+    flareTex.colorSpace = T.SRGBColorSpace;
+    const flareMat = new T.SpriteMaterial({
+      map: flareTex,
+      transparent: true,
+      blending: T.AdditiveBlending,
+      depthWrite: false
+    });
+    this.sunFlare = new T.Sprite(flareMat);
+    this.sunFlare.scale.set(15000, 15000, 1);
+    this.sunGroup.add(this.sunFlare);
+
+    // Initial Placement at Astronomical Optical Infinity along sunDir
+    this.sunGroup.position.copy(this.camera.position).addScaledVector(this.sunDir, 26000);
+    this.scene.add(this.sunGroup);
+  }
+
+  buildSunCorona() {
+    this.buildSunCelestialSystem();
   }
 
   /* =========================================================================
@@ -2670,9 +2887,71 @@ export class RocketLaunchSimulation {
       this.scene.fog = null; // Crystal clear vacuum in space!
     }
 
-    // Stars fade in as the atmosphere thins above 12 km, reaching 100% brilliance in space
+    // 1. Celestial Sphere Tracking (Infinity Depth Centered on Observer)
+    if (this.celestialGroup) {
+      this.celestialGroup.position.copy(this.camera.position);
+    }
     if (this.stars) {
-      this.stars.material.opacity = clamp((this.altitude - 12000) / 35000, 0, 0.98);
+      this.stars.material.opacity = clamp((this.altitude - 10000) / 32000, 0, 0.98);
+    }
+    if (this.alphaStars) {
+      this.alphaStars.material.opacity = clamp((this.altitude - 8000) / 28000, 0, 0.95);
+    }
+    if (this.milkyWayMesh) {
+      this.milkyWayMesh.material.opacity = clamp((this.altitude - 20000) / 42000, 0, 0.72);
+      this.milkyWayMesh.rotation.y += dt * 0.0005;
+    }
+
+    // 2. Celestial Sun System Tracking (Positioned at Optical Infinity along sunDir)
+    if (this.sunGroup) {
+      this.sunGroup.position.copy(this.camera.position).addScaledVector(this.sunDir, 26000);
+      if (this.sunCorona) {
+        const pulse = 1.0 + Math.sin(this.time * 2.2) * 0.035;
+        this.sunCorona.scale.set(6800 * pulse, 6800 * pulse, 1);
+      }
+      if (this.sunFlare) {
+        this.sunFlare.material.rotation += dt * 0.004;
+        this.sunFlare.material.opacity = clamp((this.altitude - 4000) / 22000, 0.35, 1.0);
+      }
+    }
+
+    // 3. Directional Solar Beam Lighting
+    if (this.sunLight) {
+      this.sunLight.position.copy(this.camera.position).addScaledVector(this.sunDir, 1800);
+      this.sunLight.target.position.copy(this.camera.position);
+      this.sunLight.target.updateMatrixWorld();
+
+      if (this.altitude < 25000) {
+        this.sunLight.intensity = 3.4 + (this.altitude / 25000) * 0.8;
+        this.sunLight.color.setHex(0xfff4e4);
+      } else {
+        this.sunLight.intensity = 4.8;
+        this.sunLight.color.setHex(0xfffaf4);
+      }
+    }
+
+    // 4. Earthshine (Albedo) Fill Light
+    if (this.earthshineLight) {
+      this.earthshineLight.position.copy(this.camera.position).add(new T.Vector3(0, -1200, 0));
+      this.earthshineLight.target.position.copy(this.camera.position);
+      this.earthshineLight.target.updateMatrixWorld();
+
+      const earthshineRatio = clamp((this.altitude - 16000) / 48000, 0, 1);
+      this.earthshineLight.intensity = earthshineRatio * 1.55;
+      this.earthshineLight.color.setHex(0x32a8f8);
+    }
+
+    // 5. Ambient & Atmosphere Light Modulation
+    if (this.ambientLight) {
+      this.ambientLight.intensity = 1.15 - atmoRatio * 0.72; // drops to 0.43 in orbit
+      if (this.altitude > 45000) {
+        this.ambientLight.color.setHex(0x102236);
+      } else {
+        this.ambientLight.color.setHex(0xd9ebff);
+      }
+    }
+    if (this.hemiLight) {
+      this.hemiLight.intensity = 0.85 - atmoRatio * 0.62; // drops to 0.23 in orbit
     }
 
     // Visibility management: hide low ground & clouds once well above them so only 3D curved Earth is visible
@@ -2683,15 +2962,7 @@ export class RocketLaunchSimulation {
       this.groundGroup.visible = this.altitude < 26000;
     }
 
-    // Lighting modulation (space has harsh direct sunlight and stark contrast)
-    if (this.ambientLight) {
-      this.ambientLight.intensity = 1.15 - atmoRatio * 0.78; // drops to 0.37 in orbit
-    }
-    if (this.hemiLight) {
-      this.hemiLight.intensity = 0.85 - atmoRatio * 0.65; // drops to 0.20 in orbit
-    }
-
-    // Photorealistic Curved Earth Globe placement & scale
+    // 6. Photorealistic Curved Earth Globe & Rayleigh Atmospheric Limb
     if (this.earthGroup) {
       if (this.altitude > 8000) {
         this.earthGroup.visible = true;
@@ -2702,6 +2973,10 @@ export class RocketLaunchSimulation {
         this.earthGroup.position.set(0, earthY, earthZ);
         if (this.earthSphere) {
           this.earthSphere.rotation.y += dt * 0.008; // Subtle real-time Earth rotation
+        }
+        if (this.atmoLimb && this.atmoLimb.material.uniforms) {
+          this.atmoLimb.material.uniforms.sunDir.value.copy(this.sunDir);
+          this.atmoLimb.material.uniforms.eyePos.value.copy(this.camera.position);
         }
       } else {
         this.earthGroup.visible = false;
