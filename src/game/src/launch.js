@@ -379,7 +379,9 @@ export class RocketLaunchSimulation {
     // Staging State & Auto-Stage Fallback Timers
     this.phase = 'countdown';
     this.srbSeparated = false;
+    this.srbSeparationTime = 0;
     this.fairingSeparated = false;
+    this.fairingSeparationTime = 0;
     this.spacecraftSeparated = false;
     this.stagePromptTime = 0;
 
@@ -2151,9 +2153,10 @@ export class RocketLaunchSimulation {
   separateSRBs() {
     if (this.srbSeparated) return;
     this.srbSeparated = true;
+    this.srbSeparationTime = this.time;
     this.phase = 'fairing_flight';
     this.playStagingSound();
-    this.shakeIntensity = 2.4;
+    this.shakeIntensity = 3.2;
     this.spawnStagingSparks(this.rocketGroup.position);
     this.spawnBsmPlumes();
 
@@ -2175,9 +2178,10 @@ export class RocketLaunchSimulation {
   separateFairings() {
     if (this.fairingSeparated) return;
     this.fairingSeparated = true;
+    this.fairingSeparationTime = this.time;
     this.phase = 'orbital_burn';
     this.playStagingSound();
-    this.shakeIntensity = 1.5;
+    this.shakeIntensity = 1.8;
     this.spawnStagingSparks(this.rocketGroup.position.clone().add(new T.Vector3(0, 52, 0)));
 
     this.fairingLeft.userData.vx = -9.2;
@@ -2459,28 +2463,43 @@ export class RocketLaunchSimulation {
     let targetShot = 'pad_liftoff';
     let shotTitle = 'PAD 39B UMBILICAL TRACKING';
 
+    // 1. Spacecraft separation & free orbital release
     if (this.spacecraftSeparated || this.phase === 'in_orbit' || this.phase === 'spacecraft_sep') {
       targetShot = 'spacecraft_deploy';
       shotTitle = 'ODYSSEY 07 PAYLOAD DEPLOYMENT';
-    } else if (this.altitude > 120000 || this.phase === 'orbital_burn' || this.phase === 'meco') {
-      targetShot = 'orbital_burn';
-      shotTitle = 'ORBITAL INSERTION CHASE';
-    } else if (this.altitude > 92000 || this.phase === 'fairing_sep') {
+    }
+    // 2. Fairing jettison: maintain camera for 6.0s so player watches the payload shroud split & reveal Odyssey
+    else if (this.phase === 'fairing_sep' || (this.fairingSeparated && (this.time - this.fairingSeparationTime < 6.0))) {
       targetShot = 'fairing_sep';
       shotTitle = 'KÁRMÁN LINE FAIRING JETTISON';
-    } else if (this.altitude > 52000 || this.phase === 'fairing_flight') {
-      targetShot = 'mesosphere';
-      shotTitle = 'MESOSPHERE ASCENT PROFILE';
-    } else if (this.altitude > 32000 || this.phase === 'srb_sep') {
+    }
+    // 3. Orbital insertion burn
+    else if (this.altitude > 115000 || this.phase === 'orbital_burn' || this.phase === 'meco') {
+      targetShot = 'orbital_burn';
+      shotTitle = 'ORBITAL INSERTION CHASE';
+    }
+    // 4. SRB booster staging: maintain Korolev Cross camera for 7.5s so player sees the boosters separate & tumble!
+    else if (this.phase === 'srb_sep' || (this.srbSeparated && (this.time - this.srbSeparationTime < 7.5))) {
       targetShot = 'srb_sep';
       shotTitle = 'SRB SEPARATION KOROLEV CROSS';
-    } else if (this.altitude > 11000 || this.phase === 'max_q') {
+    }
+    // 5. Mesosphere high-altitude exterior chase (after boosters have cleared)
+    else if (this.altitude > 50000 || this.phase === 'fairing_flight') {
+      targetShot = 'mesosphere';
+      shotTitle = 'MESOSPHERE ASCENT PROFILE';
+    }
+    // 6. Max-Q transonic regime and booster flight
+    else if (this.altitude > 11000 || this.phase === 'max_q' || this.phase === 'srb_flight') {
       targetShot = 'max_q';
       shotTitle = 'MAX-Q BOOSTER HULL CAM';
-    } else if (this.altitude > 450 || this.missionTime >= 9) {
+    }
+    // 7. Supersonic gravity turn
+    else if (this.altitude > 450 || this.missionTime >= 9) {
       targetShot = 'gravity_turn';
       shotTitle = 'SUPERSONIC GRAVITY TURN CHASE';
-    } else {
+    }
+    // 8. Ground pad tracking
+    else {
       targetShot = 'pad_liftoff';
       shotTitle = 'PAD 39B UMBILICAL TRACKING';
     }
@@ -3064,45 +3083,59 @@ export class RocketLaunchSimulation {
         this.camera.updateProjectionMatrix();
       }
 
-      const sepCamOffset = new T.Vector3(34 * userZoom, -18 * userZoom, 130 * userZoom);
+      // Smooth cinematic zoom & pull-back while boosters separate symmetrically in 3D
+      const sepAge = this.srbSeparated && this.srbSeparationTime ? (this.time - this.srbSeparationTime) : 0;
+      const progress = Math.min(1.0, sepAge / 6.0);
+      const camX = (22 + progress * 10) * userZoom;
+      const camY = (-10 - progress * 8) * userZoom;
+      const camZ = (82 + progress * 24) * userZoom;
+
+      const sepCamOffset = new T.Vector3(camX, camY, camZ);
       sepCamOffset.applyQuaternion(this.rocketGroup.quaternion);
       const camPos = rocketPos.clone().add(sepCamOffset).add(shakeVec);
 
-      const lookTarget = rocketPos.clone().add(new T.Vector3(0, 24, 0));
-      this.camera.position.lerp(camPos, dt * 4.8);
+      const targetOffset = new T.Vector3(0, 16 - progress * 4, 0);
+      targetOffset.applyQuaternion(this.rocketGroup.quaternion);
+      const lookTarget = rocketPos.clone().add(targetOffset);
+
+      this.camera.position.lerp(camPos, dt * 5.0);
       this.camera.lookAt(lookTarget);
 
     } else if (shot === 'mesosphere') {
-      // [5] Mesosphere Ascent Cockpit / Nose Cam Facing Space
-      if (Math.abs(this.camera.fov - 56) > 0.5) {
-        this.camera.fov += (56 - this.camera.fov) * dt * 3.0;
+      // [5] Mesosphere High-Altitude Exterior Chase Cam
+      if (Math.abs(this.camera.fov - 52) > 0.5) {
+        this.camera.fov += (52 - this.camera.fov) * dt * 3.0;
         this.camera.updateProjectionMatrix();
       }
 
-      const noseCamOffset = new T.Vector3(0, 56, 3.8);
-      noseCamOffset.applyQuaternion(this.rocketGroup.quaternion);
-      const camPos = rocketPos.clone().add(noseCamOffset).add(shakeVec);
+      // Panoramic high-altitude chase framing the core stage, radiant engine plume, and curved Earth below
+      const mesoCamOffset = new T.Vector3(-36 * userZoom, -14 * userZoom, 88 * userZoom);
+      mesoCamOffset.applyQuaternion(this.rocketGroup.quaternion);
+      const camPos = rocketPos.clone().add(mesoCamOffset).add(shakeVec);
 
-      const lookForwardOffset = new T.Vector3(0, 130, 0);
-      lookForwardOffset.applyQuaternion(this.rocketGroup.quaternion);
-      const lookForwardTarget = rocketPos.clone().add(lookForwardOffset);
+      const lookAhead = new T.Vector3(0, 28, 0);
+      lookAhead.applyQuaternion(this.rocketGroup.quaternion);
+      const lookTarget = rocketPos.clone().add(lookAhead);
 
-      this.camera.position.lerp(camPos, dt * 5.5);
-      this.camera.lookAt(lookForwardTarget);
+      this.camera.position.lerp(camPos, dt * 4.8);
+      this.camera.lookAt(lookTarget);
 
     } else if (shot === 'fairing_sep') {
-      // [6] Kármán Line Payload Shroud Jettison Frontal Profile
+      // [6] Kármán Line Payload Shroud Jettison Profile
       if (Math.abs(this.camera.fov - 48) > 0.5) {
         this.camera.fov += (48 - this.camera.fov) * dt * 3.0;
         this.camera.updateProjectionMatrix();
       }
 
-      const fairingCamOffset = new T.Vector3(-48 * userZoom, 50 * userZoom, 88 * userZoom);
+      const fairingCamOffset = new T.Vector3(-44 * userZoom, 42 * userZoom, 82 * userZoom);
       fairingCamOffset.applyQuaternion(this.rocketGroup.quaternion);
       const camPos = rocketPos.clone().add(fairingCamOffset).add(shakeVec);
 
-      const lookTarget = rocketPos.clone().add(new T.Vector3(0, 42, 0));
-      this.camera.position.lerp(camPos, dt * 4.5);
+      const targetOffset = new T.Vector3(0, 48, 0);
+      targetOffset.applyQuaternion(this.rocketGroup.quaternion);
+      const lookTarget = rocketPos.clone().add(targetOffset);
+
+      this.camera.position.lerp(camPos, dt * 4.8);
       this.camera.lookAt(lookTarget);
 
     } else if (shot === 'spacecraft_deploy') {
