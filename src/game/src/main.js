@@ -1,5 +1,6 @@
 import {makeCampaign,flightPlan,SITES,getCampaignData,getTargetProvenance,DESTINATION_CAMPAIGNS} from './campaign.js';
 import {plannerMarkup,bindPlanner,operationMarkup,bindOperation,campaignDebrief} from './mission-ui.js';
+import {crew, CREW_ROLES, renderCrewConsoleStrip, renderRoleAuthorityTag, showCrewSetupModal, showGoNoGoPollModal} from './crew.js';
 let committedPlan=null;
 let lastGamepadInteract=false;
 let selectedMissionClass='discovery';
@@ -838,14 +839,26 @@ function handleEvent(event){
         <p class="dilemma-text">Earth is millions of miles away—Houston cannot send commands in time. <strong>Commander, choose your spacecraft's emergency defense!</strong></p>
       </div>
 
+      ${crew.isCrewMode() ? `
+      <div class="crew-anomaly-triage-strip">
+        <span class="crew-triage-badge">👥 4-OFFICER COLLABORATIVE TRIAGE</span>
+        <span class="crew-triage-desc">Each console has evaluated telemetry. Review station recommendations below:</span>
+      </div>` : ''}
+
       <div class="event-choices">
         ${e.choices.map((c,i)=>{
           const f = formatEventDetail(c.detail);
+          const advisory = crew.isCrewMode() ? (
+            i === 0 ? '<span class="choice-advisory tag-comms">📡 COMMS &amp; FIDO DIRECTIVE</span>' :
+            i === 1 ? '<span class="choice-advisory tag-science">🔬 SCIENCE SPECIALIST DIRECTIVE</span>' :
+            '<span class="choice-advisory tag-systems">🛠️ SYSTEMS OFFICER DIRECTIVE</span>'
+          ) : '';
           return `
           <button class="event-choice modern-choice-card" data-effect="${c.effect}">
             <div class="choice-card-left">
               <span class="choice-key-num">${i+1}</span>
               <div class="choice-text-block">
+                ${advisory}
                 <strong class="choice-title">${c.label}</strong>
                 ${c.system ? `<span class="choice-system-tag">${c.system}</span>` : ''}
                 <p class="choice-desc">${f.description}</p>
@@ -1302,7 +1315,26 @@ function showCertificateModal(sim, resultData){
           </div>
         </div>
         <p class="cert-intro">THIS OFFICIAL CITATION CERTIFIES THAT</p>
+        ${crew.isCrewMode() ? `
+        <div class="cert-crew-manifest">
+          <div class="cert-crew-title">PROJECT AURORA FLIGHT OPERATIONS CREW</div>
+          <div class="cert-crew-grid">
+            ${crew.roster.map(m => {
+              const r = CREW_ROLES.find(x => x.id === m.id) || CREW_ROLES[0];
+              return `
+              <div class="cert-crew-card">
+                <span class="cert-crew-badge" style="border-color:${r.color}; color:${r.color}">${r.icon} ${r.code}</span>
+                <div class="cert-crew-meta">
+                  <span class="cert-crew-role">${r.title}</span>
+                  <div class="cert-crew-name" contenteditable="true" spellcheck="false" title="Click to edit name">${escape(m.name)}</div>
+                </div>
+              </div>`;
+            }).join('')}
+          </div>
+        </div>
+        ` : `
         <div class="cert-pilot-name" contenteditable="true" spellcheck="false" title="Click to edit pilot name">COMMANDER EXPLORER</div>
+        `}
         <p class="cert-mission-statement">
           Has successfully navigated the <strong>${escape(destName)} Expedition</strong>, executing optimal orbital insertion, operating remote scientific payloads, and securing critical planetary observations for humanity's shared archive.
         </p>
@@ -1726,7 +1758,11 @@ document.addEventListener('click',e=>{
     const arch = assembly?.getArchitecture ? assembly.getArchitecture() : { missionClass: selectedMissionClass, launchVehicle: selectedLaunchVehicle };
     selectedMissionClass = arch.missionClass;
     selectedLaunchVehicle = arch.launchVehicle;
-    flightPlanDialog(arch);
+    if (crew.isCrewMode()) {
+      showGoNoGoPollModal(() => flightPlanDialog(arch));
+    } else {
+      flightPlanDialog(arch);
+    }
   }
   if(b.id==='begin-stage'){closeDialog();audio.fadeInBgm(1.8);sim.begin();}
   if(b.id==='resume-flight'){closeDialog();audio.fadeInBgm(1.8);sim.resume();}
@@ -1763,6 +1799,48 @@ if($('#nasa-card-close')) $('#nasa-card-close').onclick=()=>{const card=$('#nasa
 if($('#nasa-card-toggle')) $('#nasa-card-toggle').onclick=()=>{const card=$('#nasa-scan-provenance-card'),btn=$('#nasa-card-toggle');if(!card)return;const isCompact=card.classList.toggle('compact');if(btn)btn.textContent=isCompact?'DETAILS ▾':'LESS ▴';clearTimeout(scanCardTimeout);if(!isCompact){scanCardTimeout=setTimeout(()=>{card.classList.remove('visible');setTimeout(()=>{card.hidden=true;},300);},8000);}};
 if($('#nasa-card-mute')) $('#nasa-card-mute').onclick=()=>{try{localStorage.setItem('aurora-mute-pds-card','true');}catch(_){}const card=$('#nasa-scan-provenance-card');if(card){card.classList.remove('visible');clearTimeout(scanCardTimeout);setTimeout(()=>{card.hidden=true;},250);}notify('NASA PDS flight popups muted · Open anytime from topbar','info');};
 if($('#nasa-card-open-drawer')) $('#nasa-card-open-drawer').onclick=openNasaDataDrawer;
+
+function updateCrewModeUI() {
+  const btn = $('#crew-mode-btn');
+  const label = $('#crew-mode-label');
+  if (btn && label) {
+    const isCrew = crew.isCrewMode();
+    btn.classList.toggle('active', isCrew);
+    label.textContent = isCrew ? '4-CREW TEAM' : 'SOLO';
+    btn.title = isCrew ? '4-Player NASA Mission Control Active (Click to manage roster or switch mode)' : 'Solo Explorer Mode (Click to enable 4-Player Team Mode)';
+  }
+  const globalBar = $('#global-crew-bar');
+  if (globalBar) {
+    if (crew.isCrewMode()) {
+      globalBar.style.display = 'block';
+      renderCrewConsoleStrip(globalBar);
+    } else {
+      globalBar.style.display = 'none';
+      globalBar.innerHTML = '';
+    }
+  }
+  const assemStrip = $('#assembly-crew-strip');
+  if (assemStrip) {
+    if (crew.isCrewMode()) {
+      assemStrip.style.display = 'flex';
+      renderCrewConsoleStrip(assemStrip);
+    } else {
+      assemStrip.style.display = 'none';
+      assemStrip.innerHTML = '';
+    }
+  }
+}
+if ($('#crew-mode-btn')) {
+  $('#crew-mode-btn').onclick = () => {
+    showCrewSetupModal(() => {
+      updateCrewModeUI();
+      notify(crew.isCrewMode() ? '4-CREW NASA MISSION CONTROL INITIALIZED' : 'SOLO EXPLORER MODE ACTIVE', 'info');
+      audio.cue('click');
+    });
+  };
+}
+crew.subscribe(() => updateCrewModeUI());
+updateCrewModeUI();
 
 const keymap={KeyW:'forward',KeyS:'brake',KeyA:'left',KeyD:'right',ArrowLeft:'left',ArrowRight:'right',ArrowUp:'up',ArrowDown:'down',Space:'boost',KeyE:'interact'};
 document.addEventListener('keydown',e=>{

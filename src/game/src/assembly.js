@@ -3,6 +3,13 @@ import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 import {SYSTEMS,designStats,normalizeLoadout,NASA_MISSION_CLASSES,LAUNCH_VEHICLES} from './data.js';
 import {vehicleBus,vehicleModule,disposeModel} from './vehicle.js';
 import {componentPreview,suggestedBuild} from './experience.js';
+import {crew, renderCrewConsoleStrip, renderRoleAuthorityTag} from './crew.js';
+
+export function getSubsystemRole(slot) {
+  if (slot === 3 || slot === 7) return 'science';
+  if (slot === 4) return 'comms';
+  return 'systems';
+}
 
 const SUBSYSTEM_TABS = [
   { icon: '🚀', name: 'PROPULSION' },
@@ -96,6 +103,9 @@ export class AssemblyHangar {
           </div>
         </div>
 
+        <!-- 4-Player Multi-Crew Console Strip (when in Team Mode) -->
+        <div id="assembly-crew-strip" class="assembly-crew-strip-container"></div>
+
         <!-- Centerpiece 3D Viewport (Expanded!) -->
         <div class="hangar-stage">
           <div class="hangar-canvas"></div>
@@ -135,6 +145,9 @@ export class AssemblyHangar {
           <button data-hangar="next-section" aria-label="Next subsystem" class="nav-chevron">›</button>
         </div>
 
+        <!-- Role Authority Banner (when in 4-Player Team Mode) -->
+        <div id="assembly-role-authority-slot" class="assembly-auth-container"></div>
+
         <!-- Component Selection Dock -->
         <div class="hangar-catalog">
           <div class="part-previews" aria-hidden="true"></div>
@@ -159,6 +172,7 @@ export class AssemblyHangar {
         <details class="readiness-accordion" id="arch-accordion">
           <summary><span class="acc-icon">⚙️</span> MISSION ARCHITECTURE <span class="acc-caret">▾</span></summary>
           <div class="accordion-body">
+            <div class="arch-authority-badge">${renderRoleAuthorityTag('flight', 'AUTHORITY: BUDGET &amp; LAUNCH VEHICLE')}</div>
             <div class="arch-control-group">
               <label for="mission-class-select">MISSION CLASS &amp; BUDGET</label>
               <select id="mission-class-select" aria-label="Select NASA Mission Class">
@@ -327,6 +341,16 @@ export class AssemblyHangar {
     this.selectSlot(0);
     this.size();
     this.autoEquipAll();
+
+    // Render 4-Player Multi-Crew Console Strip (when in Team Mode)
+    const crewStrip = this.root.querySelector('#assembly-crew-strip');
+    if (crewStrip) {
+      renderCrewConsoleStrip(crewStrip, () => {
+        this.refresh();
+        const authSlot = this.root.querySelector('#assembly-role-authority-slot');
+        if (authSlot) authSlot.innerHTML = renderRoleAuthorityTag(getSubsystemRole(this.slot));
+      });
+    }
   }
 
   autoEquipAll() {
@@ -402,6 +426,11 @@ export class AssemblyHangar {
       msgEl.textContent = this.installed[slot]
         ? `${tab.name} // ${SYSTEMS[slot].choices[this.loadout[slot]].name.toUpperCase()} INSTALLED`
         : `STAGE ${slotNum} / 09 • SELECT ${tab.name} MODULE`;
+    }
+
+    const authSlot = this.root.querySelector('#assembly-role-authority-slot');
+    if (authSlot) {
+      authSlot.innerHTML = renderRoleAuthorityTag(getSubsystemRole(slot));
     }
 
     this.root.querySelector('.hangar-options').innerHTML = SYSTEMS[slot].choices.map((p, i) => componentCard(this, slot, i)).join('');

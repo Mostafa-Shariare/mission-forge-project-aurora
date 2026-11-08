@@ -70,12 +70,17 @@
   </button>
   <nav aria-label="Main navigation"><button class="nav-button active" id="mission-nav"><span class="nav-icon">🚀</span><span>MISSIONS</span></button><button class="nav-button" id="journal-button"><span class="nav-icon">📋</span><span>FLIGHT LOG</span></button><button class="nav-button" id="controls-button"><span class="nav-icon">🎮</span><span>CONTROLS</span></button><button class="nav-button" id="settings-button"><span class="nav-icon">⚙️</span><span>SETTINGS</span></button></nav>
   <div class="header-right">
+    <button class="crew-mode-toggle-btn" id="crew-mode-btn" title="Toggle 4-Player Multi-Crew Collaboration Mode (NASA Mission Control)">
+      <span class="crew-mode-icon">👥</span>
+      <span id="crew-mode-label">4-CREW TEAM</span>
+    </button>
     <button class="aurora-return-btn" id="auroraReturnBtn" type="button" aria-label="Return to destination selector">‹ DESTINATIONS</button>
-    <button class="nasa-provenance-btn" id="nasa-provenance-toggle" title="Explore Authentic NASA Open Data & PDS Datasets (P)"><span class="meatball-dot"></span> NASA DATA</button>
+    <button class="nasa-provenance-btn" id="nasa-provenance-toggle" title="Explore Authentic NASA Open Data &amp; PDS Datasets (P)"><span class="meatball-dot"></span> NASA DATA</button>
     <button class="icon-button" id="sound-button" aria-label="Toggle sound" aria-pressed="true">♫</button>
     <button class="icon-button" id="fullscreen-button" aria-label="Toggle fullscreen">⛶</button>
   </div>
 </header>
+<div id="global-crew-bar" class="global-crew-bar" style="display:none;"></div>
 <main id="menu-view" class="menu-view">
 <div class="menu-topline"><span><i class="status-dot"></i> MISSION PLANNING • DEEP SPACE NETWORK</span><span>SECTOR SOL-03 <b>•</b> FLIGHT AUTHORITY 07</span></div>
 <aside class="brief-panel hud-panel"><div class="panel-caption"><span>MISSION BRIEFING</span><span id="mission-code">03 • 05</span></div><p class="eyebrow" id="mission-subtitle">THE LAST TRANSMISSION</p><h1>MISSION: <span id="planet-name">MARS</span></h1><div class="mission-tags"><span id="mission-type">SEARCH • DISCOVERY</span><span id="risk-label">CLASS III • HABITABLE VOID</span></div><p id="mission-description" class="brief-copy">Ares Station went dark 19 days ago. Last night, a repeating signal emerged from the canyon below it. You command the only vessel within range. Find the station. Recover its science. Bring the story home.</p><div class="brief-stats"><div><span>DESTINATION RANGE</span><b id="destination-range">225M KM • MEAN</b></div><div><span>PLANNED TRANSFER</span><b id="transfer-time">214 DAYS</b></div><div><span>MEAN RADIUS</span><b id="planet-radius">3,390 KM • 0.53× EARTH</b></div><div><span>SURFACE GRAVITY</span><b id="planet-gravity">3.71 M/S² (0.38 G)</b></div></div><div class="mission-goal"><span class="target-icon">⌖</span><div class="goal-text-wrap"><small>TARGET OBJECTIVE</small><strong id="primary-goal">LOCATE ARES STATION</strong></div></div><div class="brief-footer"><span id="record-label">THE NEXT FRONTIER IS YOURS TO EXPLORE.</span><span>↗</span></div></aside>

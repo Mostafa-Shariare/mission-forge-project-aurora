@@ -4437,3 +4437,696 @@ body:has(#modal-layer:not([hidden])) .menu-bottom {
   padding-top: 14px;
   border-top: 1px solid rgba(100, 160, 190, 0.25);
 }
+
+/* ==========================================================================
+   4-PLAYER MULTI-CREW COLLABORATION SYSTEM (NASA MISSION CONTROL)
+   ========================================================================== */
+
+/* Header crew toggle button */
+.crew-mode-toggle-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  background: rgba(10, 24, 48, 0.7) !important;
+  border: 1px solid rgba(0, 229, 255, 0.4) !important;
+  border-radius: 6px !important;
+  color: #79dfff !important;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace) !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.1em !important;
+  padding: 5px 11px !important;
+  cursor: pointer !important;
+  transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1) !important;
+  text-transform: uppercase !important;
+}
+
+.crew-mode-toggle-btn:hover {
+  background: rgba(0, 229, 255, 0.15) !important;
+  border-color: #00e5ff !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.3) !important;
+  transform: translateY(-1px) !important;
+}
+
+.crew-mode-toggle-btn.active {
+  background: linear-gradient(135deg, rgba(0, 229, 255, 0.25), rgba(187, 136, 255, 0.25)) !important;
+  border-color: #00e5ff !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 16px rgba(0, 229, 255, 0.35) !important;
+}
+
+.crew-mode-toggle-btn .crew-mode-icon {
+  font-size: 13px !important;
+}
+
+/* Global crew bar under topbar */
+.global-crew-bar {
+  background: rgba(4, 12, 24, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0, 229, 255, 0.2);
+  padding: 4px 16px;
+  position: relative;
+  z-index: 40;
+}
+
+/* Console strip container */
+.crew-console-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 100%;
+}
+
+.crew-strip-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 10px;
+  color: #79dfff;
+  letter-spacing: 0.12em;
+}
+
+.crew-pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #00e5ff;
+  box-shadow: 0 0 8px #00e5ff;
+  animation: crew-dot-pulse 1.8s infinite ease-in-out;
+}
+
+@keyframes crew-dot-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.crew-agency-tag {
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.crew-active-indicator {
+  color: #8da4be;
+  font-size: 9.5px;
+}
+
+.crew-active-indicator b {
+  color: #00e5ff;
+  font-weight: 700;
+}
+
+/* Console station tab buttons */
+.crew-station-pills {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.crew-station-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(8, 20, 38, 0.65);
+  border: 1px solid rgba(100, 160, 200, 0.25);
+  border-radius: 6px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  position: relative;
+  color: #c0d8ea;
+}
+
+.crew-station-tab:hover {
+  background: rgba(14, 32, 60, 0.85);
+  border-color: rgba(0, 229, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+.crew-station-tab.active {
+  background: rgba(0, 229, 255, 0.16);
+  border-color: #00e5ff;
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.25);
+  color: #ffffff;
+}
+
+.station-icon {
+  font-size: 13px;
+  line-height: 1;
+}
+
+.station-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.station-callsign {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 9.5px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: #00e5ff;
+}
+
+.crew-station-tab.role-systems .station-callsign { color: #ffaa00; }
+.crew-station-tab.role-science .station-callsign { color: #00ffaa; }
+.crew-station-tab.role-comms .station-callsign { color: #bb88ff; }
+
+.station-officer {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 10px;
+  font-weight: 600;
+  color: #e2e8f0;
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.station-active-badge {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 7.5px;
+  font-weight: 800;
+  background: #00e5ff;
+  color: #020c18;
+  padding: 1px 4px;
+  border-radius: 3px;
+  letter-spacing: 0.08em;
+}
+
+/* Authority tags across Assembly Bay and Trajectory Planner */
+.role-authority-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(5, 16, 32, 0.7);
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  border-radius: 6px;
+  padding: 6px 12px;
+  margin: 6px 0 10px 0;
+  width: fit-content;
+}
+
+.role-authority-tag.role-flight { border-color: rgba(0, 229, 255, 0.45); background: rgba(0, 229, 255, 0.08); }
+.role-authority-tag.role-systems { border-color: rgba(255, 170, 0, 0.45); background: rgba(255, 170, 0, 0.08); }
+.role-authority-tag.role-science { border-color: rgba(0, 255, 170, 0.45); background: rgba(0, 255, 170, 0.08); }
+.role-authority-tag.role-comms { border-color: rgba(187, 136, 255, 0.45); background: rgba(187, 136, 255, 0.08); }
+
+.role-authority-tag .auth-icon {
+  font-size: 14px;
+}
+
+.role-authority-tag .auth-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.role-authority-tag .auth-role {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: #79dfff;
+}
+
+.role-authority-tag.role-systems .auth-role { color: #ffaa00; }
+.role-authority-tag.role-science .auth-role { color: #00ffaa; }
+.role-authority-tag.role-comms .auth-role { color: #bb88ff; }
+
+.role-authority-tag .auth-name {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 11px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.role-authority-tag .auth-note {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 8px;
+  color: #8da4be;
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  padding-left: 8px;
+  margin-left: 4px;
+}
+
+/* Modals backdrop */
+.crew-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 14, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 16px;
+}
+
+/* Crew setup modal box */
+.crew-setup-box, .gonogo-poll-box {
+  background: rgba(6, 16, 32, 0.94);
+  border: 1px solid rgba(0, 229, 255, 0.35);
+  border-radius: 12px;
+  max-width: 860px;
+  width: 100%;
+  padding: 24px 28px;
+  box-shadow: 0 0 50px rgba(0, 229, 255, 0.15), 0 20px 60px rgba(0, 0, 0, 0.8);
+  color: #e2e8f0;
+  max-height: 92vh;
+  overflow-y: auto;
+}
+
+.crew-header-strip, .gonogo-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: #00e5ff;
+  margin-bottom: 6px;
+}
+
+.crew-modal-tag, .poll-alert-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #00e5ff;
+}
+
+.crew-station-count, .poll-protocol-tag {
+  color: #8da4be;
+}
+
+.crew-setup-box h2, .gonogo-poll-box h2 {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+  margin: 4px 0 8px 0;
+  text-shadow: 0 0 14px rgba(0, 229, 255, 0.3);
+}
+
+.dialog-lead {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 12px;
+  line-height: 1.5;
+  color: #94a3b8;
+  margin-bottom: 18px;
+}
+
+/* 4-role grid */
+.crew-roles-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+@media (max-width: 720px) {
+  .crew-roles-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.crew-role-card {
+  background: rgba(4, 14, 28, 0.7);
+  border: 1px solid rgba(100, 160, 200, 0.25);
+  border-radius: 8px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.crew-role-card:hover {
+  border-color: rgba(0, 229, 255, 0.45);
+  background: rgba(6, 20, 38, 0.85);
+}
+
+.crew-role-card.role-flight { border-left: 3px solid #00e5ff; }
+.crew-role-card.role-systems { border-left: 3px solid #ffaa00; }
+.crew-role-card.role-science { border-left: 3px solid #00ffaa; }
+.crew-role-card.role-comms { border-left: 3px solid #bb88ff; }
+
+.role-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.role-card-icon {
+  font-size: 20px;
+}
+
+.role-callsign {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: #00e5ff;
+  display: block;
+}
+
+.crew-role-card.role-systems .role-callsign { color: #ffaa00; }
+.crew-role-card.role-science .role-callsign { color: #00ffaa; }
+.crew-role-card.role-comms .role-callsign { color: #bb88ff; }
+
+.role-card-titles h3 {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.role-card-desc {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 11px;
+  line-height: 1.4;
+  color: #8da4be;
+  margin: 0;
+  min-height: 32px;
+}
+
+.role-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.role-input-group label {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #79dfff;
+}
+
+.crew-input {
+  background: rgba(2, 8, 18, 0.85);
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 12px;
+  font-weight: 600;
+  color: #ffffff;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.crew-input:focus {
+  border-color: #00e5ff;
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.35);
+}
+
+.crew-coop-info-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(0, 229, 255, 0.08);
+  border: 1px solid rgba(0, 229, 255, 0.25);
+  border-radius: 6px;
+  padding: 10px 14px;
+  margin-bottom: 20px;
+}
+
+.coop-info-icon {
+  font-size: 18px;
+}
+
+.crew-coop-info-box p {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 11px;
+  line-height: 1.4;
+  color: #c0d8ea;
+  margin: 0;
+}
+
+.crew-coop-info-box strong {
+  color: #00e5ff;
+}
+
+/* Pre-Launch GO / NO-GO Poll Modal */
+.poll-stations-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.poll-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(4, 14, 28, 0.7);
+  border: 1px solid rgba(100, 160, 200, 0.25);
+  border-radius: 8px;
+  padding: 12px 16px;
+  transition: all 0.2s ease;
+}
+
+.poll-card.voted-go {
+  background: rgba(0, 255, 170, 0.08);
+  border-color: rgba(0, 255, 170, 0.5);
+}
+
+.poll-card-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.poll-icon {
+  font-size: 22px;
+}
+
+.poll-role-badge {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  color: #00e5ff;
+  display: block;
+}
+
+.poll-name {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.poll-check {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 11px;
+  color: #94a3b8;
+  margin: 2px 0 0 0;
+}
+
+.poll-vote-btn {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  padding: 8px 18px;
+  border-radius: 6px;
+  background: rgba(14, 30, 54, 0.8);
+  border: 1px solid rgba(100, 160, 200, 0.4);
+  color: #79dfff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.poll-vote-btn:hover {
+  background: rgba(0, 229, 255, 0.2);
+  border-color: #00e5ff;
+  color: #ffffff;
+}
+
+.poll-vote-btn.active {
+  background: #00ffaa !important;
+  border-color: #00ffaa !important;
+  color: #020e18 !important;
+  box-shadow: 0 0 16px rgba(0, 255, 170, 0.4) !important;
+}
+
+.poll-readiness-banner {
+  text-align: center;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  margin-bottom: 18px;
+  transition: all 0.2s ease;
+}
+
+.poll-readiness-banner.waiting {
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  color: #fbbf24;
+}
+
+.poll-readiness-banner.all-go {
+  background: rgba(0, 255, 170, 0.16);
+  border: 1px solid #00ffaa;
+  color: #00ffaa;
+  box-shadow: 0 0 20px rgba(0, 255, 170, 0.25);
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+/* Anomaly modal multi-officer triage strip */
+.crew-anomaly-triage-strip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(187, 136, 255, 0.1);
+  border: 1px solid rgba(187, 136, 255, 0.35);
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin-bottom: 12px;
+}
+
+.crew-triage-badge {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: #bb88ff;
+  white-space: nowrap;
+}
+
+.crew-triage-desc {
+  font-family: var(--font-body, 'Inter', sans-serif);
+  font-size: 11px;
+  color: #c0d8ea;
+}
+
+/* Station directive badges inside anomaly choices */
+.choice-advisory {
+  display: inline-block;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  padding: 2px 6px;
+  border-radius: 3px;
+  margin-bottom: 4px;
+}
+
+.choice-advisory.tag-comms {
+  background: rgba(187, 136, 255, 0.15);
+  border: 1px solid rgba(187, 136, 255, 0.4);
+  color: #bb88ff;
+}
+
+.choice-advisory.tag-science {
+  background: rgba(0, 255, 170, 0.15);
+  border: 1px solid rgba(0, 255, 170, 0.4);
+  color: #00ffaa;
+}
+
+.choice-advisory.tag-systems {
+  background: rgba(255, 170, 0, 0.15);
+  border: 1px solid rgba(255, 170, 0, 0.4);
+  color: #ffaa00;
+}
+
+/* Certificate 4-Crew Flight Team Section */
+.cert-crew-manifest {
+  margin: 12px 0 16px 0;
+  width: 100%;
+}
+
+.cert-crew-title {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  color: #00e5ff;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.cert-crew-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+@media (max-width: 600px) {
+  .cert-crew-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.cert-crew-card {
+  background: rgba(2, 10, 24, 0.5);
+  border: 1px solid rgba(100, 160, 200, 0.3);
+  border-radius: 6px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+}
+
+.cert-crew-badge {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid;
+  margin-bottom: 2px;
+}
+
+.cert-crew-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cert-crew-role {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 7.5px;
+  color: #8da4be;
+  text-transform: uppercase;
+}
+
+.cert-crew-name {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+  outline: none;
+  cursor: text;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.25);
+  padding: 0 4px;
+}
+
+.cert-crew-name:focus {
+  border-bottom-color: #00e5ff;
+  background: rgba(0, 229, 255, 0.1);
+}
