@@ -1499,77 +1499,93 @@ export class RocketLaunchSimulation {
         <div class="optics-data">
           <span>KSC OPTICAL TRACKER 39B-2 // 1200mm F/8</span>
           <span id="optics-telemetry">AZ: 090.0°  EL: +04.2°  RANGE: 3,420 M</span>
-          <span class="lock-tag">● AUTO-ACQUISITION LOCK [NOMINAL]</span>
+          <span class="lock-tag">● AUTO-LOCK [NOMINAL]</span>
         </div>
       </div>
 
       <div class="launch-hud-container">
-        <!-- Top Navigation & Camera Controls -->
+        <!-- Slim Floating Top Bar (Single-line Ribbon) -->
         <div class="launch-top-bar">
           <div class="launch-brand">
             <span class="meatball-dot"></span>
             <div>
-              <strong>NASA KENNEDY SPACE CENTER // LC-39B</strong>
+              <strong>NASA KSC // LC-39B</strong>
               <small id="launch-vehicle-header-subtitle">${this.launchVehicle.name.toUpperCase()} • ${this.missionClass.name}</small>
             </div>
           </div>
 
-          <!-- Cinematic Director Badge (Scenario-based automated cinematography) -->
-          <div class="launch-director-badge" id="launch-director-badge">
-            <span class="director-rec-dot"></span>
-            <span class="director-tag">CINEMATIC DIRECTOR</span>
-            <span class="director-sep">//</span>
-            <strong id="director-cam-title">PAD 39B UMBILICAL TRACKING</strong>
+          <!-- Integrated Center Flight Status Ribbon (MET + Stage Title) -->
+          <div class="launch-top-center-cluster">
+            <div class="timer-badge">
+              <span class="timer-label">MET</span>
+              <span id="launch-met" class="timer-val">T-00:05</span>
+            </div>
+            <div id="launch-phase-banner" class="phase-banner">
+              <span class="eyebrow" id="launch-phase-eyebrow">COUNTDOWN</span>
+              <h2 id="launch-phase-title">IGNITION SEQUENCE</h2>
+            </div>
+            <!-- Cinematic Director Badge -->
+            <div class="launch-director-badge" id="launch-director-badge">
+              <span class="director-rec-dot"></span>
+              <strong id="director-cam-title">PAD 39B TRACKING</strong>
+            </div>
           </div>
 
-          <!-- Time Warp & Skip -->
+          <!-- Actions & Controls -->
           <div class="launch-top-actions">
-            <button id="launch-speed-btn" class="outline-btn-small" title="Toggle Simulation Speed">SPEED: 1X</button>
-            <button id="launch-skip-btn" class="launch-skip-btn" title="Skip to Orbit (ESC)">SKIP TO ORBIT ⏭</button>
+            <button id="launch-hud-toggle-btn" class="outline-btn-small" title="Toggle HUD Display (H)">HUD [H]</button>
+            <button id="launch-speed-btn" class="outline-btn-small" title="Toggle Simulation Speed">1X</button>
+            <button id="launch-skip-btn" class="launch-skip-btn" title="Skip to Orbit (ESC)">SKIP ⏭</button>
           </div>
         </div>
 
-        <!-- Center Telemetry & Gauges -->
+        <!-- Compact Telemetry Clusters (Corner Glass Wings, Center 100% Unobstructed) -->
         <div class="launch-telemetry-grid">
-          <!-- Left Column -->
+          <!-- Left Column: Compact Flight Telemetry -->
           <div class="telemetry-col left-gauges">
             <div class="telemetry-card">
-              <span class="telemetry-label">ALTITUDE</span>
-              <div class="telemetry-val-row">
-                <strong id="launch-alt-val">0.0</strong>
-                <small>KM</small>
+              <div class="telemetry-compact-row">
+                <span class="telemetry-label">ALT</span>
+                <div class="telemetry-val-group">
+                  <strong id="launch-alt-val">0.0</strong>
+                  <small>KM</small>
+                </div>
               </div>
               <div class="gauge-track">
                 <div id="launch-alt-bar" class="gauge-fill" style="width: 0%"></div>
               </div>
-              <span class="sub-metric">ORBIT TARGET: 185.0 KM</span>
             </div>
 
             <div class="telemetry-card">
-              <span class="telemetry-label">INERTIAL VELOCITY</span>
-              <div class="telemetry-val-row">
-                <strong id="launch-vel-val">0</strong>
-                <small>M/S</small>
+              <div class="telemetry-compact-row">
+                <span class="telemetry-label">VEL</span>
+                <div class="telemetry-val-group">
+                  <strong id="launch-vel-val">0</strong>
+                  <small>M/S</small>
+                </div>
               </div>
               <div class="gauge-track">
                 <div id="launch-vel-bar" class="gauge-fill" style="width: 0%"></div>
               </div>
-              <span class="sub-metric">CIRCULAR V: 7,850 M/S</span>
             </div>
 
             <div class="telemetry-card">
-              <span class="telemetry-label">MACH NUMBER</span>
-              <div class="telemetry-val-row">
-                <strong id="launch-mach-val">0.00</strong>
-                <small id="launch-mach-tag" class="mach-tag">SUBSONIC</small>
+              <div class="telemetry-compact-row">
+                <span class="telemetry-label">MACH</span>
+                <div class="telemetry-val-group">
+                  <strong id="launch-mach-val">0.00</strong>
+                  <small id="launch-mach-tag" class="mach-tag">SUBSONIC</small>
+                </div>
               </div>
             </div>
 
             <div class="telemetry-card" id="card-stress">
-              <span class="telemetry-label">AERODYNAMIC STRESS</span>
-              <div class="telemetry-val-row">
-                <strong id="launch-stress-val">12%</strong>
-                <small id="launch-stress-tag" class="stress-tag nominal">NOMINAL</small>
+              <div class="telemetry-compact-row">
+                <span class="telemetry-label">STRESS</span>
+                <div class="telemetry-val-group">
+                  <strong id="launch-stress-val">12%</strong>
+                  <small id="launch-stress-tag" class="stress-tag nominal">NOMINAL</small>
+                </div>
               </div>
               <div class="gauge-track">
                 <div id="launch-stress-bar" class="gauge-fill stress-fill" style="width: 12%"></div>
@@ -1577,109 +1593,98 @@ export class RocketLaunchSimulation {
             </div>
           </div>
 
-          <!-- Center Column (Completely clear central viewport for unobstructed rocket and Earth view) -->
-          <div class="launch-center-hud">
-            <div class="launch-center-top">
-              <div class="timer-badge">
-                <span class="timer-label">MISSION ELAPSED TIME</span>
-                <span id="launch-met" class="timer-val">T-00:05</span>
-              </div>
+          <!-- Center Column (100% CLEAR - Unobstructed 3D Viewport) -->
+          <div class="launch-center-hud"></div>
 
-              <div id="launch-phase-banner" class="phase-banner">
-                <span class="eyebrow" id="launch-phase-eyebrow">PRE-LAUNCH TERMINAL COUNTDOWN</span>
-                <h2 id="launch-phase-title">MAIN ENGINE IGNITION SEQUENCE</h2>
-              </div>
-            </div>
-
-            <div class="launch-center-bottom">
-              <!-- Pitch Corridor Guidance (Unobstructed in center) -->
-              <div class="pitch-corridor-box">
-                <div class="corridor-row">
-                  <span>VEHICLE PITCH: <b id="launch-pitch-val">90.0°</b></span>
-                  <span>TARGET CORRIDOR: <b id="launch-target-pitch">90.0°</b></span>
-                </div>
-                <div class="corridor-bar-track">
-                  <div id="launch-pitch-pointer" class="pitch-pointer"></div>
-                  <div class="corridor-optimal-zone"></div>
-                </div>
-                <div class="corridor-subtext">
-                  <span id="sas-status-tag" class="sas-active">SAS AUTO-PILOT ENGAGED</span>
-                  <span>CORRIDOR TOLERANCE: ±3.5°</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Right Column -->
+          <!-- Right Column: Dynamics & Staging -->
           <div class="telemetry-col right-gauges">
             <div class="telemetry-card" id="card-max-q">
-              <span class="telemetry-label">DYNAMIC PRESSURE (Q)</span>
-              <div class="telemetry-val-row">
-                <strong id="launch-q-val">0.0</strong>
-                <small>KPA</small>
+              <div class="telemetry-compact-row">
+                <span class="telemetry-label">DYN PRESS (Q)</span>
+                <div class="telemetry-val-group">
+                  <strong id="launch-q-val">0.0</strong>
+                  <small>KPA</small>
+                </div>
               </div>
               <div class="gauge-track">
                 <div id="launch-q-bar" class="gauge-fill q-fill" style="width: 0%"></div>
               </div>
-              <span id="launch-q-status" class="sub-metric">ATMOSPHERIC REGIME</span>
+              <span id="launch-q-status" class="sub-metric">ATMOSPHERE</span>
             </div>
 
             <div class="telemetry-card">
-              <span class="telemetry-label">PROPELLANT REMAINING</span>
-              <div class="telemetry-val-row">
-                <strong id="launch-prop-val">100%</strong>
-                <small id="launch-twr-val">TWR: 1.55</small>
+              <div class="telemetry-compact-row">
+                <span class="telemetry-label">FUEL</span>
+                <div class="telemetry-val-group">
+                  <strong id="launch-prop-val">100%</strong>
+                  <small id="launch-twr-val">TWR: 1.55</small>
+                </div>
               </div>
               <div class="gauge-track">
                 <div id="launch-prop-bar" class="gauge-fill" style="width: 100%"></div>
               </div>
             </div>
 
-            <!-- Staging Pills -->
+            <!-- Staging Mini-Pills -->
             <div class="stages-status-card">
               <div class="stage-pill active" id="status-pill-srb">
                 <span>01</span>
-                <b>SOLID ROCKET BOOSTERS (SRB)</b>
+                <b>BOOSTERS</b>
                 <small id="status-tag-srb">BURNING</small>
               </div>
               <div class="stage-pill standby" id="status-pill-fairing">
                 <span>02</span>
-                <b id="status-pill-fairing-title">${this.launchVehicle.fairingDiameter} PAYLOAD FAIRING</b>
-                <small id="status-tag-fairing">PROTECTIVE SHROUD</small>
+                <b id="status-pill-fairing-title">FAIRING</b>
+                <small id="status-tag-fairing">COVER</small>
               </div>
               <div class="stage-pill standby" id="status-pill-spacecraft">
                 <span>03</span>
-                <b>SPACECRAFT SEPARATION</b>
+                <b>SEPARATION</b>
                 <small id="status-tag-spacecraft">DOCKED</small>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Bottom Controls & Flight Director Comms -->
+        <!-- Bottom Controls & Flight Director Comms (Floating Split Glass Pods) -->
         <div class="launch-bottom-bar">
           <div class="launch-comms-box">
             <div class="comm-avatar">◈</div>
             <div class="comm-text-wrap">
               <div class="comm-header">
                 <strong id="launch-comm-speaker">HOUSTON // FLIGHT DIRECTOR</strong>
-                <span class="comm-live-tag">MISSION AUDIO LINK</span>
+                <span class="comm-live-tag">LIVE LINK</span>
               </div>
               <p id="launch-comm-text">Odyssey 07 launch vehicle on Pad 39B. Countdown sequence activated.</p>
             </div>
           </div>
 
-          <div class="launch-pilot-actions">
-            <button id="launch-sas-toggle-btn" class="outline-button active">
-              SAS: <b>[ON]</b>
-            </button>
-            <button id="launch-throttle-btn" class="outline-button">
-              THROTTLE: <b id="launch-throttle-text">100%</b>
-            </button>
-            <div class="steering-arrows">
-              <button id="launch-steer-left" class="small-arrow-btn" aria-label="Steer Pitch Left">‹ [A]</button>
-              <span>STEER PITCH</span>
-              <button id="launch-steer-right" class="small-arrow-btn" aria-label="Steer Pitch Right">[D] ›</button>
+          <div class="launch-pilot-cluster">
+            <!-- Pitch Corridor Guidance (Integrated snugly above controls) -->
+            <div class="pitch-corridor-box">
+              <div class="corridor-row">
+                <span>PITCH: <b id="launch-pitch-val">90.0°</b></span>
+                <span>TARGET: <b id="launch-target-pitch">90.0°</b></span>
+                <span id="sas-status-tag" class="sas-active">SAS ON</span>
+              </div>
+              <div class="corridor-bar-track">
+                <div id="launch-pitch-pointer" class="pitch-pointer"></div>
+                <div class="corridor-optimal-zone"></div>
+              </div>
+            </div>
+
+            <div class="launch-pilot-actions">
+              <button id="launch-sas-toggle-btn" class="outline-button active">
+                SAS: <b>[ON]</b>
+              </button>
+              <button id="launch-throttle-btn" class="outline-button">
+                THROTTLE: <b id="launch-throttle-text">100%</b>
+              </button>
+              <div class="steering-arrows">
+                <button id="launch-steer-left" class="small-arrow-btn" aria-label="Steer Pitch Left">‹ [A]</button>
+                <span>STEER</span>
+                <button id="launch-steer-right" class="small-arrow-btn" aria-label="Steer Pitch Right">[D] ›</button>
+              </div>
             </div>
           </div>
         </div>
@@ -1688,12 +1693,15 @@ export class RocketLaunchSimulation {
         <div id="launch-action-prompt" class="launch-action-prompt docked" hidden>
           <div class="prompt-icon">⚡</div>
           <div class="prompt-text">
-            <b id="launch-prompt-title">STAGE ACTION REQUIRED</b>
-            <span id="launch-prompt-desc">Auto-staging in 3.5s // Press [SPACE] to stage now</span>
-            <div class="auto-stage-bar-wrap"><div id="launch-auto-stage-bar" class="auto-stage-fill"></div></div>
+            <b id="launch-prompt-title">STAGE SEPARATION READY</b>
+            <span id="launch-prompt-desc">Press [SPACE] or Click to Jettison Boosters</span>
+            <div class="auto-stage-bar-wrap">
+              <div id="launch-auto-stage-bar" class="auto-stage-fill" style="width: 0%"></div>
+            </div>
           </div>
-          <button id="launch-stage-trigger-btn" class="launch-stage-btn pulse-btn" aria-label="Trigger Stage Separation">
-            <span id="launch-trigger-label">SEPARATE BOOSTERS</span> <kbd>[SPACE]</kbd>
+          <button id="launch-stage-trigger-btn" class="launch-stage-btn" title="Execute Staging (SPACE)">
+            <kbd>SPACE</kbd>
+            <span id="launch-trigger-label">JETTISON</span>
           </button>
         </div>
       </div>
@@ -1708,6 +1716,10 @@ export class RocketLaunchSimulation {
      ========================================================================= */
   bindEvents() {
     this.onKeyDown = (e) => {
+      if (e.key === 'h' || e.key === 'H') {
+        this.toggleHud();
+        return;
+      }
       if (e.key === 'Escape') {
         this.completeLaunch();
         return;
@@ -1778,6 +1790,12 @@ export class RocketLaunchSimulation {
     window.addEventListener('mousemove', this.onMouseMove);
     window.addEventListener('mouseup', this.onMouseUp);
     dom.addEventListener('wheel', this.onWheel, { passive: true });
+
+    // HUD Cinema Toggle Button
+    const hudToggleBtn = this.overlay.querySelector('#launch-hud-toggle-btn');
+    if (hudToggleBtn) {
+      hudToggleBtn.onclick = () => this.toggleHud();
+    }
 
     // Speed / Warp Button
     const speedBtn = this.overlay.querySelector('#launch-speed-btn');
@@ -1871,6 +1889,13 @@ export class RocketLaunchSimulation {
 
   setCameraMode(mode) {
     this.cameraMode = mode;
+  }
+
+  toggleHud() {
+    this.hudMinimal = !this.hudMinimal;
+    this.overlay.classList.toggle('hud-minimal', this.hudMinimal);
+    const btn = this.overlay.querySelector('#launch-hud-toggle-btn');
+    if (btn) btn.textContent = this.hudMinimal ? 'HUD: OFF' : 'HUD [H]';
   }
 
   updateSasButton() {
