@@ -93,22 +93,27 @@ html, body {
 .brief-panel {
   position: absolute !important;
   left: 28px !important;
-  top: 62px !important;
-  width: clamp(310px, 24vw, 360px) !important;
-  max-width: 380px !important;
-  overflow: visible !important;
+  top: 56px !important;
+  width: clamp(320px, 25vw, 380px) !important;
+  max-width: 400px !important;
+  max-height: calc(100vh - 78px) !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
   z-index: 40 !important;
+  padding: 16px 18px !important;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
 .right-panels {
   position: absolute !important;
   right: 28px !important;
-  top: 62px !important;
+  top: 56px !important;
   width: clamp(280px, 20vw, 310px) !important;
   max-width: 330px !important;
   display: flex !important;
   flex-direction: column !important;
-  gap: 16px !important;
+  gap: 14px !important;
   z-index: 40 !important;
 }
 
@@ -122,22 +127,21 @@ html, body {
 /* Category Header: "MISSION BRIEFING" */
 .brief-panel .panel-caption {
   font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace !important;
-  font-size: 12px !important; /* text-xs */
-  font-weight: 700 !important; /* font-bold */
-  letter-spacing: 0.25em !important; /* tracking-[0.25em] */
-  color: #00E5FF !important; /* text-cyan-400 */
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.22em !important;
+  color: #38bdf8 !important;
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
-  border-bottom: 1px solid rgba(0, 229, 255, 0.2) !important; /* border-b border-cyan-500/20 */
-  padding-bottom: 8px !important; /* pb-2 */
-  margin-bottom: 12px !important; /* mb-3 */
-  text-shadow: 0 0 10px rgba(0, 229, 255, 0.4) !important;
+  border-bottom: 1px solid rgba(56, 189, 248, 0.2) !important;
+  padding-bottom: 6px !important;
+  margin-bottom: 8px !important;
 }
 
 #mission-code {
   font-family: 'JetBrains Mono', monospace !important;
-  font-size: 11px !important;
+  font-size: 10.5px !important;
   font-weight: 700 !important;
   color: #7dd3fc !important;
   letter-spacing: 0.15em !important;
@@ -146,154 +150,156 @@ html, body {
 /* Transmission Subtitle: "THE LAST TRANSMISSION" */
 .brief-panel .eyebrow,
 #mission-subtitle {
-  color: rgba(125, 211, 252, 0.85) !important; /* text-cyan-300/80 */
+  color: rgba(125, 211, 252, 0.85) !important;
   font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace !important;
-  font-size: 11px !important; /* text-[11px] */
+  font-size: 10.5px !important;
   font-weight: 700 !important;
-  letter-spacing: 0.18em !important; /* tracking-wider */
+  letter-spacing: 0.16em !important;
   text-transform: uppercase !important;
-  text-shadow: 0 0 8px rgba(0, 229, 255, 0.4) !important;
-  margin: 6px 0 2px 0 !important;
+  margin: 4px 0 2px 0 !important;
 }
 
-/* Target Heading: "MISSION: MARS" */
+/* Target Heading: "MISSION: MARS", "MISSION: EUROPA / JUPITER" */
 .brief-panel h1 {
-  font-family: 'Rajdhani', 'Orbitron', sans-serif !important;
-  font-size: clamp(1.6rem, 2.3vw, 2.2rem) !important; /* text-2xl md:text-3xl */
-  font-weight: 900 !important; /* font-extrabold */
-  font-style: italic !important;
-  letter-spacing: 0.08em !important; /* tracking-wider */
-  line-height: 1.15 !important;
-  white-space: nowrap !important;
-  color: #FFFFFF !important; /* text-white pure sharp white */
+  font-family: 'Rajdhani', var(--display, sans-serif) !important;
+  font-size: clamp(1.2rem, 1.6vw, 1.55rem) !important;
+  font-weight: 800 !important;
+  font-style: normal !important;
+  letter-spacing: 0.04em !important;
+  line-height: 1.2 !important;
+  white-space: normal !important;
+  word-break: break-word !important;
+  overflow-wrap: break-word !important;
+  max-width: 100% !important;
+  color: #FFFFFF !important;
   -webkit-text-fill-color: #FFFFFF !important;
   background: none !important;
-  filter: drop-shadow(0 0 12px rgba(0, 229, 255, 0.35)) !important; /* drop-shadow-[0_0_12px_rgba(0,229,255,0.3)] */
-  margin: 8px 0 14px 0 !important; /* my-2 */
+  filter: none !important;
+  margin: 4px 0 8px 0 !important;
 }
 
 .brief-panel h1 span,
 #planet-name {
-  color: #FFFFFF !important;
-  -webkit-text-fill-color: #FFFFFF !important;
-  text-shadow: 0 0 16px rgba(0, 229, 255, 0.6) !important;
+  color: #38bdf8 !important;
+  -webkit-text-fill-color: #38bdf8 !important;
+  text-shadow: 0 0 10px rgba(56, 189, 248, 0.4) !important;
+  white-space: normal !important;
+  word-break: break-word !important;
 }
 
 /* Glowing Cyber Tags: "[ SEARCH • DISCOVERY ]" and "[ CLASS III • HABITABLE VOID ]" */
 .mission-tags {
   display: flex !important;
   align-items: center !important;
-  gap: 8px !important;
+  gap: 6px !important;
   flex-wrap: wrap !important;
-  margin: 10px 0 16px 0 !important;
+  margin: 6px 0 10px 0 !important;
 }
 
 .mission-tags span {
   display: inline-flex !important;
   align-items: center !important;
-  background: rgba(8, 47, 73, 0.5) !important; /* bg-cyan-950/50 */
-  border: 1px solid rgba(0, 229, 255, 0.4) !important; /* border border-cyan-400/40 */
-  color: #7dd3fc !important; /* text-cyan-300 */
+  background: rgba(8, 47, 73, 0.5) !important;
+  border: 1px solid rgba(56, 189, 248, 0.35) !important;
+  color: #7dd3fc !important;
   font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace !important;
-  font-size: 11px !important; /* text-xs */
+  font-size: 10px !important;
   font-weight: 700 !important;
-  letter-spacing: 0.10em !important;
-  padding: 4px 10px !important; /* px-2.5 py-1 */
-  border-radius: 4px !important; /* rounded */
+  letter-spacing: 0.08em !important;
+  padding: 3px 8px !important;
+  border-radius: 3px !important;
   text-transform: uppercase !important;
-  box-shadow: 0 0 10px rgba(0, 229, 255, 0.15) !important;
-  text-shadow: 0 0 6px rgba(0, 229, 255, 0.4) !important;
 }
 
 .mission-tags span:before {
   content: "[ " !important;
-  color: rgba(0, 229, 255, 0.6) !important;
+  color: rgba(56, 189, 248, 0.6) !important;
   margin-right: 2px !important;
 }
 
 .mission-tags span:after {
   content: " ]" !important;
-  color: rgba(0, 229, 255, 0.6) !important;
+  color: rgba(56, 189, 248, 0.6) !important;
   margin-left: 2px !important;
 }
 
 /* Narrative Body: Soft Slate-100 high-legibility text */
 .brief-copy,
 .brief-panel p#mission-description {
-  color: #f1f5f9 !important; /* text-slate-100 Soft Slate-100 */
+  color: #e2e8f0 !important;
   font-family: 'Space Grotesk', 'IBM Plex Mono', sans-serif !important;
-  font-size: 13.5px !important; /* text-sm */
-  line-height: 1.65 !important; /* leading-relaxed */
-  font-weight: 400 !important; /* font-normal */
-  margin: 16px 0 !important; /* my-4 */
-  letter-spacing: 0.02em !important;
+  font-size: 12px !important;
+  line-height: 1.55 !important;
+  font-weight: 400 !important;
+  margin: 10px 0 !important;
+  letter-spacing: 0.01em !important;
 }
 
-/* Mission Specs Table (Grid 2-col): Pure White Range + Electric Cyan Transfer */
+/* Mission Specs Table (Grid 2-col) */
 .brief-stats {
   display: grid !important;
   grid-template-columns: 1fr 1fr !important;
-  gap: 12px !important;
-  margin: 16px 0 !important;
-  background: rgba(0, 229, 255, 0.04) !important;
-  border: 1px solid rgba(0, 229, 255, 0.18) !important;
-  border-radius: 6px !important;
-  padding: 12px 14px !important;
+  gap: 8px 12px !important;
+  margin: 10px 0 !important;
+  background: rgba(3, 8, 16, 0.6) !important;
+  border: 1px solid rgba(56, 189, 248, 0.22) !important;
+  border-radius: 4px !important;
+  padding: 10px 12px !important;
 }
 
 .brief-stats div {
   display: flex !important;
   flex-direction: column !important;
-  gap: 4px !important;
+  gap: 2px !important;
 }
 
 .brief-stats div span {
-  font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace !important;
-  font-size: 9.5px !important;
+  font-family: 'IBM Plex Mono', monospace !important;
+  font-size: 8.5px !important;
   font-weight: 700 !important;
-  letter-spacing: 0.16em !important;
-  color: #7dd3fc !important; /* text-cyan-300 / pale ice cyan */
+  letter-spacing: 0.12em !important;
+  color: #7dd3fc !important;
   text-transform: uppercase !important;
 }
 
-.brief-stats div:first-child b,
+.brief-stats div b {
+  font-family: 'IBM Plex Mono', monospace !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  color: #FFFFFF !important;
+  letter-spacing: 0.04em !important;
+  word-break: break-word !important;
+}
+
 #destination-range {
-  font-family: 'JetBrains Mono', monospace !important;
-  font-size: 15px !important; /* text-base */
-  font-weight: 800 !important; /* font-bold */
-  color: #FFFFFF !important; /* text-white Pure Sharp White */
-  letter-spacing: 0.06em !important;
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.4) !important;
+  color: #FFFFFF !important;
 }
 
-.brief-stats div:last-child b,
 #transfer-time {
-  font-family: 'JetBrains Mono', monospace !important;
-  font-size: 15px !important; /* text-base */
-  font-weight: 800 !important; /* font-bold */
-  color: #00E5FF !important; /* text-cyan-400 Vivid Electric Cyan */
-  letter-spacing: 0.06em !important;
-  text-shadow: 0 0 10px rgba(0, 229, 255, 0.6) !important;
+  color: #38bdf8 !important;
 }
 
-/* Primary Objective Pill: Glowing Callout Box */
+#planet-radius,
+#planet-gravity {
+  color: #e2e8f0 !important;
+}
+
+/* Primary Objective Pill */
 .mission-goal {
   border: none !important;
-  border-left: 3px solid #00e5ff !important; /* border-l-2 border-cyan-400 */
-  background: rgba(8, 47, 73, 0.35) !important; /* bg-cyan-950/30 */
-  padding: 10px 14px !important; /* px-3 py-2 */
-  border-radius: 0 6px 6px 0 !important;
-  margin: 16px 0 0 0 !important;
+  border-left: 3px solid #38bdf8 !important;
+  background: rgba(8, 47, 73, 0.35) !important;
+  padding: 8px 12px !important;
+  border-radius: 0 4px 4px 0 !important;
+  margin: 8px 0 0 0 !important;
   display: flex !important;
   align-items: center !important;
   gap: 10px !important;
-  box-shadow: 0 0 16px rgba(0, 229, 255, 0.12), inset 0 0 12px rgba(0, 229, 255, 0.08) !important;
 }
 
 .mission-goal .target-icon {
-  color: #00e5ff !important;
-  font-size: 16px !important;
-  filter: drop-shadow(0 0 8px #00e5ff) !important;
+  color: #38bdf8 !important;
+  font-size: 15px !important;
   flex-shrink: 0;
 }
 
@@ -306,42 +312,40 @@ html, body {
 
 .mission-goal small {
   font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace !important;
-  font-size: 9.5px !important;
+  font-size: 8.5px !important;
   font-weight: 700 !important;
-  color: #7dd3fc !important; /* text-cyan-300 */
-  letter-spacing: 0.18em !important;
+  color: #7dd3fc !important;
+  letter-spacing: 0.16em !important;
   text-transform: uppercase !important;
   display: block !important;
 }
 
 .mission-goal strong {
   font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace !important;
-  font-size: 12.5px !important; /* text-xs */
+  font-size: 11.5px !important;
   font-weight: 800 !important;
-  color: #a5f3fc !important; /* text-cyan-200 */
-  letter-spacing: 0.10em !important;
-  text-shadow: 0 0 8px rgba(0, 229, 255, 0.5) !important;
+  color: #e0f2fe !important;
+  letter-spacing: 0.08em !important;
 }
 
 .brief-footer {
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
-  font-family: 'JetBrains Mono', 'IBM Plex Mono', monospace !important;
-  font-size: 9px !important;
+  font-family: 'IBM Plex Mono', monospace !important;
+  font-size: 8.5px !important;
   font-weight: 700 !important;
-  letter-spacing: 0.16em !important;
+  letter-spacing: 0.12em !important;
   color: #7dd3fc !important;
-  border-top: 1px solid rgba(0, 229, 255, 0.15) !important;
-  padding-top: 12px !important;
-  margin-top: 14px !important;
+  border-top: 1px solid rgba(56, 189, 248, 0.18) !important;
+  padding-top: 8px !important;
+  margin-top: 10px !important;
   text-transform: uppercase !important;
 }
 
 .brief-footer span:last-child {
-  color: #00e5ff !important;
-  font-size: 14px !important;
-  filter: drop-shadow(0 0 6px #00e5ff) !important;
+  color: #38bdf8 !important;
+  font-size: 13px !important;
 }
 
 /* ==========================================================================
@@ -523,12 +527,22 @@ html, body {
 .route-labels {
   display: flex !important;
   justify-content: space-between !important;
+  align-items: center !important;
   color: #FFFFFF !important;
   font-family: 'JetBrains Mono', monospace !important;
-  font-size: 11.5px !important;
+  font-size: 11px !important;
   font-weight: 700 !important;
-  letter-spacing: 0.12em !important;
+  letter-spacing: 0.08em !important;
   margin-top: 6px !important;
+}
+
+#trajectory-target {
+  text-align: right !important;
+  max-width: 65% !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  color: #38bdf8 !important;
 }
 
 .journey-dots {
