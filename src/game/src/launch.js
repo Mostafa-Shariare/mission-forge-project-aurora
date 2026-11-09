@@ -2478,8 +2478,8 @@ export class RocketLaunchSimulation {
       targetShot = 'orbital_burn';
       shotTitle = 'ORBITAL INSERTION CHASE';
     }
-    // 4. SRB booster staging: maintain Korolev Cross camera for 7.5s so player sees the boosters separate & tumble!
-    else if (this.phase === 'srb_sep' || (this.srbSeparated && (this.time - this.srbSeparationTime < 7.5))) {
+    // 4. SRB booster staging: maintain Korolev Cross camera for 10.0s so player sees the boosters separate & tumble!
+    else if (this.phase === 'srb_sep' || (this.srbSeparated && (this.time - this.srbSeparationTime < 10.0))) {
       targetShot = 'srb_sep';
       shotTitle = 'SRB SEPARATION KOROLEV CROSS';
     }
@@ -3085,16 +3085,16 @@ export class RocketLaunchSimulation {
 
       // Smooth cinematic zoom & pull-back while boosters separate symmetrically in 3D
       const sepAge = this.srbSeparated && this.srbSeparationTime ? (this.time - this.srbSeparationTime) : 0;
-      const progress = Math.min(1.0, sepAge / 6.0);
-      const camX = (22 + progress * 10) * userZoom;
-      const camY = (-10 - progress * 8) * userZoom;
-      const camZ = (82 + progress * 24) * userZoom;
+      const progress = Math.min(1.0, sepAge / 8.0);
+      const camX = (45 + progress * 20) * userZoom;
+      const camY = (-6 - progress * 12) * userZoom;
+      const camZ = (112 + progress * 38) * userZoom;
 
       const sepCamOffset = new T.Vector3(camX, camY, camZ);
       sepCamOffset.applyQuaternion(this.rocketGroup.quaternion);
       const camPos = rocketPos.clone().add(sepCamOffset).add(shakeVec);
 
-      const targetOffset = new T.Vector3(0, 16 - progress * 4, 0);
+      const targetOffset = new T.Vector3(0, 14 - progress * 8, 0);
       targetOffset.applyQuaternion(this.rocketGroup.quaternion);
       const lookTarget = rocketPos.clone().add(targetOffset);
 
@@ -3102,18 +3102,18 @@ export class RocketLaunchSimulation {
       this.camera.lookAt(lookTarget);
 
     } else if (shot === 'mesosphere') {
-      // [5] Mesosphere High-Altitude Exterior Chase Cam
-      if (Math.abs(this.camera.fov - 52) > 0.5) {
-        this.camera.fov += (52 - this.camera.fov) * dt * 3.0;
+      // [5] Mesosphere High-Altitude Exterior Chase Cam (Wide 3/4 Exterior View)
+      if (Math.abs(this.camera.fov - 54) > 0.5) {
+        this.camera.fov += (54 - this.camera.fov) * dt * 3.0;
         this.camera.updateProjectionMatrix();
       }
 
       // Panoramic high-altitude chase framing the core stage, radiant engine plume, and curved Earth below
-      const mesoCamOffset = new T.Vector3(-36 * userZoom, -14 * userZoom, 88 * userZoom);
+      const mesoCamOffset = new T.Vector3(-62 * userZoom, 6 * userZoom, 132 * userZoom);
       mesoCamOffset.applyQuaternion(this.rocketGroup.quaternion);
       const camPos = rocketPos.clone().add(mesoCamOffset).add(shakeVec);
 
-      const lookAhead = new T.Vector3(0, 28, 0);
+      const lookAhead = new T.Vector3(0, 14, 0);
       lookAhead.applyQuaternion(this.rocketGroup.quaternion);
       const lookTarget = rocketPos.clone().add(lookAhead);
 

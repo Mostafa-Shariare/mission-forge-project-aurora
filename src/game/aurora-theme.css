@@ -828,10 +828,11 @@ html, body {
 }
 
 .aurora-return-btn:hover {
-  background: #00e5ff !important;
-  color: #020611 !important;
-  box-shadow: 0 0 16px rgba(0, 229, 255, 0.85) !important;
-  transform: translateX(-1px) !important;
+  background: linear-gradient(180deg, #182e4a 0%, #0d1a2c 100%) !important;
+  border-color: #38bdf8 !important;
+  color: #ffffff !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 4px 14px rgba(0, 0, 0, 0.7), 0 0 8px rgba(56, 189, 248, 0.2) !important;
+  transform: translateY(-1px) !important;
 }
 
 .nasa-provenance-btn {
@@ -1154,9 +1155,10 @@ body:has(#modal-layer:not([hidden])) .menu-bottom {
 }
 
 .assembly-dialog .close-dialog:hover {
-  background: #00e5ff !important;
-  color: #020611 !important;
-  box-shadow: 0 0 16px #00e5ff !important;
+  background: rgba(239, 68, 68, 0.25) !important;
+  border-color: #f87171 !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.4) !important;
 }
 
 /* Topline Subheader: "ORBITAL ASSEMBLY BAY • VESSEL ODYSSEY 07" */
@@ -2300,25 +2302,36 @@ body:has(#modal-layer:not([hidden])) .menu-bottom {
 }
 
 .debrief-quick-actions .primary-button {
-  background: linear-gradient(135deg, #00f0ff 0%, #00b4d8 100%) !important;
-  border: 1px solid #38f8ff !important;
-  border-radius: 6px !important;
-  color: #020611 !important;
-  -webkit-text-fill-color: #020611 !important;
+  background: linear-gradient(180deg, #13243a 0%, #08121f 100%) !important;
+  border: 1px solid #38bdf8 !important;
+  border-radius: 2px !important;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px)) !important;
+  color: #f0f9ff !important;
+  -webkit-text-fill-color: #f0f9ff !important;
   font-family: 'Rajdhani', sans-serif !important;
-  font-weight: 700 !important;
+  font-weight: 800 !important;
   font-size: 13.5px !important;
   letter-spacing: 0.14em !important;
   text-transform: uppercase !important;
   padding: 10px 22px !important;
-  box-shadow: 0 0 25px rgba(0, 229, 255, 0.6) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 4px 14px rgba(0, 0, 0, 0.7) !important;
   cursor: pointer !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.debrief-quick-actions .primary-button:hover {
+  background: linear-gradient(180deg, #1c3656 0%, #0e1e32 100%) !important;
+  border-color: #7dd3fc !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 6px 20px rgba(0, 0, 0, 0.8), 0 0 12px rgba(56, 189, 248, 0.28) !important;
+  transform: translateY(-1px) !important;
 }
 
 .debrief-quick-actions .primary-button span,
 .debrief-quick-actions .primary-button b {
-  color: #020611 !important;
-  -webkit-text-fill-color: #020611 !important;
+  color: #f0f9ff !important;
+  -webkit-text-fill-color: #f0f9ff !important;
   font-weight: 800 !important;
 }
 
@@ -2759,10 +2772,10 @@ body:has(#modal-layer:not([hidden])) .menu-bottom {
 }
 
 .mode-toggle-btn.active {
-  color: #031422 !important;
-  background: #00E5FF !important;
-  border-color: #00E5FF !important;
-  box-shadow: 0 0 14px rgba(0, 229, 255, 0.5) !important;
+  color: #ffffff !important;
+  background: linear-gradient(180deg, #182e4a 0%, #0d1a2c 100%) !important;
+  border-color: #38bdf8 !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 2px 8px rgba(0, 0, 0, 0.6) !important;
   font-weight: 800 !important;
 }
 
@@ -2909,9 +2922,10 @@ body:has(#modal-layer:not([hidden])) .menu-bottom {
 }
 
 .btn-suggested-build:hover {
-  background: #00E5FF !important;
-  color: #04101A !important;
-  box-shadow: 0 0 14px rgba(0, 229, 255, 0.6) !important;
+  background: linear-gradient(180deg, #182e4a 0%, #0d1a2c 100%) !important;
+  border-color: #38bdf8 !important;
+  color: #ffffff !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 2px 8px rgba(0, 0, 0, 0.6) !important;
 }
 
 /* Component card kid improvements */
@@ -3049,9 +3063,10 @@ body:has(#modal-layer:not([hidden])) .menu-bottom {
 }
 
 .quick-act-btn.cta:hover {
-  background: #00E5FF;
-  color: #030a12;
-  box-shadow: 0 0 12px rgba(0, 229, 255, 0.5);
+  background: linear-gradient(180deg, #182e4a 0%, #0d1a2c 100%) !important;
+  border-color: #38bdf8 !important;
+  color: #ffffff !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 2px 8px rgba(0, 0, 0, 0.6) !important;
 }
 
 .hangar-stage {
@@ -3155,9 +3170,10 @@ body:has(#modal-layer:not([hidden])) .menu-bottom {
 }
 
 .hangar-tools button:hover {
-  background: #00E5FF;
-  color: #020810;
-  box-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+  background: linear-gradient(180deg, #182e4a 0%, #0d1a2c 100%) !important;
+  border-color: #38bdf8 !important;
+  color: #ffffff !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 2px 8px rgba(0, 0, 0, 0.6) !important;
 }
 
 .hangar-hint {
@@ -3195,8 +3211,9 @@ body:has(#modal-layer:not([hidden])) .menu-bottom {
 }
 
 .nav-chevron:hover:not(:disabled) {
-  background: #00E5FF;
-  color: #030a12;
+  background: linear-gradient(180deg, #182e4a 0%, #0d1a2c 100%) !important;
+  border-color: #38bdf8 !important;
+  color: #ffffff !important;
 }
 
 .nav-chevron:disabled {
@@ -3749,26 +3766,31 @@ body:has(#modal-layer:not([hidden])) .menu-bottom {
 .launch-action-btn {
   width: 100% !important;
   height: 44px !important;
-  background: #00E5FF !important;
-  color: #020810 !important;
+  background: linear-gradient(180deg, #13243a 0%, #08121f 100%) !important;
+  border: 1px solid #38bdf8 !important;
+  color: #f0f9ff !important;
+  -webkit-text-fill-color: #f0f9ff !important;
   font-family: var(--font-title, 'Rajdhani', sans-serif) !important;
-  font-size: 15px !important;
+  font-size: 14.5px !important;
   font-weight: 800 !important;
   letter-spacing: 0.14em !important;
-  border: none !important;
-  border-radius: 4px !important;
+  border-radius: 2px !important;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px)) !important;
   cursor: pointer !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   gap: 8px !important;
-  box-shadow: 0 0 20px rgba(0, 229, 255, 0.5) !important;
-  transition: all 0.25s ease !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 4px 14px rgba(0, 0, 0, 0.7) !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
 }
 
 .launch-action-btn:hover:not(:disabled) {
-  background: #50efff !important;
-  box-shadow: 0 0 30px rgba(0, 229, 255, 0.8) !important;
+  background: linear-gradient(180deg, #1c3656 0%, #0e1e32 100%) !important;
+  border-color: #7dd3fc !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 6px 20px rgba(0, 0, 0, 0.8), 0 0 12px rgba(56, 189, 248, 0.28) !important;
   transform: translateY(-1px);
 }
 
@@ -4633,10 +4655,11 @@ body:has(#modal-layer:not([hidden])) .menu-bottom {
   font-family: var(--font-mono, 'IBM Plex Mono', monospace);
   font-size: 7.5px;
   font-weight: 800;
-  background: #00e5ff;
-  color: #020c18;
-  padding: 1px 4px;
-  border-radius: 3px;
+  background: rgba(56, 189, 248, 0.16);
+  border: 1px solid #38bdf8;
+  color: #38bdf8;
+  padding: 1px 5px;
+  border-radius: 2px;
   letter-spacing: 0.08em;
 }
 
@@ -5737,8 +5760,9 @@ body:has(#modal-layer:not([hidden])) .menu-bottom {
 }
 
 .status-pill.my-pill {
-  background: #00e5ff;
-  color: #020c18;
+  background: rgba(56, 189, 248, 0.18);
+  border: 1px solid #38bdf8;
+  color: #38bdf8;
 }
 
 .status-pill.connected-pill {
@@ -6024,4 +6048,416 @@ body:has(#modal-layer:not([hidden])) .menu-bottom {
   border-radius: 2px;
   cursor: pointer;
 }
+
+/* ==========================================================================
+   AAA TACTICAL AEROSPACE HUD SCROLLBARS (UNIVERSAL ZERO-BORDER SLEEK TRACKS)
+   ========================================================================== */
+*::-webkit-scrollbar,
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+div::-webkit-scrollbar,
+main::-webkit-scrollbar,
+section::-webkit-scrollbar,
+aside::-webkit-scrollbar {
+  width: 5px !important;
+  height: 5px !important;
+}
+
+*::-webkit-scrollbar-track,
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track,
+div::-webkit-scrollbar-track,
+main::-webkit-scrollbar-track,
+section::-webkit-scrollbar-track,
+aside::-webkit-scrollbar-track {
+  background: rgba(3, 8, 16, 0.95) !important;
+  border-left: 1px solid rgba(56, 189, 248, 0.12) !important;
+}
+
+*::-webkit-scrollbar-thumb,
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb,
+div::-webkit-scrollbar-thumb,
+main::-webkit-scrollbar-thumb,
+section::-webkit-scrollbar-thumb,
+aside::-webkit-scrollbar-thumb {
+  background: #172d47 !important;
+  border-radius: 2px !important;
+  border: 1px solid rgba(56, 189, 248, 0.35) !important;
+}
+
+*::-webkit-scrollbar-thumb:hover,
+html::-webkit-scrollbar-thumb:hover,
+body::-webkit-scrollbar-thumb:hover,
+div::-webkit-scrollbar-thumb:hover,
+main::-webkit-scrollbar-thumb:hover,
+section::-webkit-scrollbar-thumb:hover,
+aside::-webkit-scrollbar-thumb:hover {
+  background: #38bdf8 !important;
+}
+
+* {
+  scrollbar-width: thin !important;
+  scrollbar-color: #172d47 rgba(3, 8, 16, 0.95) !important;
+}
+
+/* ==========================================================================
+   UNIVERSAL DARK TITANIUM AEROSPACE ACTUATOR BUTTONS (ZERO CHEAP CYAN BLOCKS)
+   ========================================================================== */
+.primary-button,
+.hero-start-btn,
+#commit-plan,
+#begin-stage,
+.launch-action-btn,
+#repair-confirm,
+#survey-confirm,
+#analysis-confirm,
+.debrief-quick-actions .primary-button {
+  background: linear-gradient(180deg, #13243a 0%, #08121f 100%) !important;
+  border: 1px solid #38bdf8 !important;
+  color: #f0f9ff !important;
+  -webkit-text-fill-color: #f0f9ff !important;
+  font-family: 'Rajdhani', var(--font-title, sans-serif) !important;
+  font-weight: 800 !important;
+  font-size: 13.5px !important;
+  letter-spacing: 0.15em !important;
+  text-transform: uppercase !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 4px 14px rgba(0, 0, 0, 0.7) !important;
+  clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 9px, 100% 100%, 9px 100%, 0 calc(100% - 9px)) !important;
+  border-radius: 2px !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  cursor: pointer !important;
+  text-shadow: none !important;
+}
+
+.primary-button:hover:not(:disabled),
+.hero-start-btn:hover:not(:disabled),
+#commit-plan:hover:not(:disabled),
+#begin-stage:hover:not(:disabled),
+.launch-action-btn:hover:not(:disabled),
+#repair-confirm:hover:not(:disabled),
+#survey-confirm:hover:not(:disabled),
+#analysis-confirm:hover:not(:disabled),
+.debrief-quick-actions .primary-button:hover:not(:disabled) {
+  background: linear-gradient(180deg, #1c3656 0%, #0e1e32 100%) !important;
+  border-color: #7dd3fc !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.32), 0 6px 20px rgba(0, 0, 0, 0.8), 0 0 12px rgba(56, 189, 248, 0.28) !important;
+  transform: translateY(-1px) !important;
+}
+
+.primary-button:disabled,
+.hero-start-btn:disabled,
+#commit-plan:disabled,
+#begin-stage:disabled,
+.launch-action-btn:disabled,
+#repair-confirm:disabled,
+#survey-confirm:disabled,
+#analysis-confirm:disabled {
+  opacity: 0.38 !important;
+  cursor: not-allowed !important;
+  filter: grayscale(1) !important;
+  border-color: rgba(148, 163, 184, 0.3) !important;
+  background: rgba(10, 18, 30, 0.6) !important;
+  box-shadow: none !important;
+  color: #64748b !important;
+  -webkit-text-fill-color: #64748b !important;
+  transform: none !important;
+}
+
+/* ==========================================================================
+   UNIVERSAL HOLOGRAPHIC AEROSPACE COCKPIT DIALOG FRAMES
+   ========================================================================== */
+.dialog.planning-dialog,
+.dialog.briefing-dialog,
+.dialog.event-dialog,
+.dialog.operation-dialog,
+.dialog.assembly-dialog,
+.dialog.complete-dialog,
+.dialog.failed-dialog,
+#gonogo-poll-dialog > div {
+  background: linear-gradient(155deg, rgba(9, 18, 32, 0.98) 0%, rgba(4, 9, 17, 0.99) 100%) !important;
+  border: 1px solid rgba(56, 189, 248, 0.38) !important;
+  border-radius: 4px !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 24px 64px rgba(0, 0, 0, 0.9) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+}
+
+.close-dialog {
+  background: rgba(15, 23, 42, 0.85) !important;
+  border: 1px solid rgba(56, 189, 248, 0.35) !important;
+  border-radius: 2px !important;
+  color: #94a3b8 !important;
+  clip-path: polygon(0 0, calc(100% - 4px) 0, 100% 4px, 100% 100%, 4px 100%, 0 calc(100% - 4px)) !important;
+  transition: all 0.2s ease !important;
+  cursor: pointer !important;
+}
+
+.close-dialog:hover {
+  background: rgba(239, 68, 68, 0.25) !important;
+  border-color: #f87171 !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.4) !important;
+}
+
+/* ==========================================================================
+   TRAJECTORY PLANNING MODAL (TACTICAL FDF CONSOLE)
+   ========================================================================== */
+.dialog.planning-dialog {
+  width: min(980px, 95vw) !important;
+  max-height: 94vh !important;
+  padding: 20px 24px !important;
+}
+
+.tactical-arch-banner {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 12px !important;
+  background: rgba(3, 8, 16, 0.75) !important;
+  border: 1px solid rgba(56, 189, 248, 0.22) !important;
+  border-radius: 3px !important;
+  padding: 10px 14px !important;
+  margin-bottom: 12px !important;
+}
+
+.tactical-arch-banner .arch-badge-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.tactical-arch-banner .arch-badge-label {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #7dd3fc;
+}
+
+.tactical-arch-banner b {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 11px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.arch-val-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.arch-cost-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.arch-cost-stack b.cost-ok { color: #34d399; }
+.arch-cost-stack b.cost-warn { color: #f59e0b; }
+
+.arch-budget-bar {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.arch-budget-fill.ok {
+  background: #34d399;
+  height: 100%;
+}
+
+.arch-budget-fill.warn {
+  background: #f59e0b;
+  height: 100%;
+}
+
+.tactical-transfer-map {
+  background: radial-gradient(circle at 45% 50%, rgba(14, 28, 48, 0.6) 0%, rgba(3, 8, 16, 0.9) 100%) !important;
+  border: 1px solid rgba(56, 189, 248, 0.25) !important;
+  border-radius: 4px !important;
+  padding: 12px !important;
+  position: relative !important;
+}
+
+.tactical-route-cards {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 12px !important;
+  margin-top: 12px !important;
+}
+
+.tactical-route-card {
+  background: linear-gradient(170deg, rgba(12, 22, 38, 0.85) 0%, rgba(6, 12, 22, 0.95) 100%) !important;
+  border: 1px solid rgba(56, 189, 248, 0.25) !important;
+  border-radius: 3px !important;
+  padding: 12px 14px !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  text-align: left !important;
+  position: relative !important;
+  cursor: pointer !important;
+}
+
+.tactical-route-card:hover {
+  border-color: #38bdf8 !important;
+  background: linear-gradient(170deg, rgba(16, 32, 54, 0.9) 0%, rgba(8, 16, 30, 0.98) 100%) !important;
+  transform: translateY(-2px) !important;
+}
+
+.tactical-route-card[aria-pressed="true"] {
+  border-color: #38bdf8 !important;
+  background: linear-gradient(170deg, rgba(20, 42, 70, 0.92) 0%, rgba(9, 20, 36, 0.98) 100%) !important;
+  box-shadow: inset 0 2px 0 #38bdf8, 0 6px 18px rgba(0, 0, 0, 0.7) !important;
+}
+
+.plan-status-badge {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #7dd3fc;
+}
+
+/* ==========================================================================
+   DEEP SPACE EMERGENCY ANOMALY (TACTICAL AMBER/RED ALERT FDIR)
+   ========================================================================== */
+.dialog.event-dialog {
+  width: min(760px, 94vw) !important;
+  border: 1px solid rgba(239, 68, 68, 0.45) !important;
+  background: linear-gradient(155deg, rgba(24, 10, 16, 0.98) 0%, rgba(10, 5, 10, 0.99) 100%) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 100, 100, 0.15), 0 24px 64px rgba(0, 0, 0, 0.9) !important;
+  padding: 20px 24px !important;
+}
+
+.anomaly-alert-tag {
+  background: rgba(239, 68, 68, 0.16) !important;
+  border: 1px solid rgba(239, 68, 68, 0.5) !important;
+  color: #fca5a5 !important;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace) !important;
+  font-size: 9px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.12em !important;
+  padding: 3px 8px !important;
+  border-radius: 2px !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.tactical-choice-card {
+  background: linear-gradient(170deg, rgba(20, 24, 36, 0.85) 0%, rgba(10, 14, 22, 0.95) 100%) !important;
+  border: 1px solid rgba(148, 163, 184, 0.22) !important;
+  border-radius: 3px !important;
+  padding: 12px 16px !important;
+  margin-bottom: 8px !important;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+  cursor: pointer !important;
+}
+
+.tactical-choice-card:hover {
+  border-color: #38bdf8 !important;
+  background: linear-gradient(170deg, rgba(24, 38, 58, 0.9) 0%, rgba(12, 20, 32, 0.98) 100%) !important;
+  transform: translateX(4px) !important;
+}
+
+.tactical-choice-card .choice-key-num {
+  background: rgba(56, 189, 248, 0.14) !important;
+  border: 1px solid #38bdf8 !important;
+  color: #38bdf8 !important;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace) !important;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  border-radius: 2px !important;
+  width: 26px !important;
+  height: 26px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0;
+}
+
+.choice-head-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 3px;
+}
+
+.choice-system-tag {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 8px;
+  font-weight: 700;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  padding: 1px 5px;
+  border-radius: 2px;
+  letter-spacing: 0.08em;
+}
+
+/* ==========================================================================
+   TOPBAR COCKPIT CANOPY BAR
+   ========================================================================== */
+.topbar {
+  background: linear-gradient(180deg, rgba(6, 12, 22, 0.96) 0%, rgba(3, 7, 14, 0.92) 100%) !important;
+  border-bottom: 1px solid rgba(56, 189, 248, 0.22) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8) !important;
+}
+
+.nav-button {
+  background: transparent !important;
+  border: 1px solid transparent !important;
+  border-radius: 2px !important;
+  color: #94a3b8 !important;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace) !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.12em !important;
+  padding: 6px 12px !important;
+  transition: all 0.2s ease !important;
+}
+
+.nav-button:hover {
+  color: #f0f9ff !important;
+  background: rgba(56, 189, 248, 0.08) !important;
+  border-color: rgba(56, 189, 248, 0.25) !important;
+}
+
+.nav-button.active {
+  color: #ffffff !important;
+  background: rgba(56, 189, 248, 0.15) !important;
+  border: 1px solid rgba(56, 189, 248, 0.45) !important;
+  box-shadow: inset 0 1px 0 rgba(56, 189, 248, 0.6) !important;
+}
+
+.aurora-return-btn,
+.nasa-provenance-btn,
+.crew-mode-toggle-btn {
+  background: linear-gradient(180deg, #101c2e 0%, #09121f 100%) !important;
+  border: 1px solid rgba(56, 189, 248, 0.38) !important;
+  border-radius: 2px !important;
+  color: #e0f2fe !important;
+  clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px)) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 2px 8px rgba(0, 0, 0, 0.5) !important;
+  transition: all 0.2s ease !important;
+}
+
+.aurora-return-btn:hover,
+.nasa-provenance-btn:hover,
+.crew-mode-toggle-btn:hover {
+  background: linear-gradient(180deg, #182e4a 0%, #0d1a2c 100%) !important;
+  border-color: #38bdf8 !important;
+  color: #ffffff !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 4px 14px rgba(0, 0, 0, 0.7), 0 0 8px rgba(56, 189, 248, 0.2) !important;
+  transform: translateY(-1px) !important;
+}
+
 

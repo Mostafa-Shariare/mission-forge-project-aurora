@@ -15,24 +15,34 @@ export function plannerMarkup(stats, destination='mars', missionClassId='discove
     rapid: { icon: '[EXPRESS]', title: 'RAPID RESPONSE', tag: 'HIGH VELOCITY', color: 'amber' }
   };
 
+  const costRatio = Math.min(100, Math.round((totalCost / missionClass.costLimit) * 100));
+  const isBudgetOk = totalCost <= missionClass.costLimit;
+
   return `<div class="mission-planner">
     <div class="planner-authority-strip">${renderRoleAuthorityTag('flight', 'AUTHORITY: TRAJECTORY &amp; FLIGHT COMMIT')}</div>
-    <div class="planner-arch-banner">
+    <div class="planner-arch-banner tactical-arch-banner">
       <div class="arch-badge-item">
-        <span class="arch-badge-label">LAUNCH VEHICLE</span>
+        <span class="arch-badge-label">[01] NASA PROGRAM</span>
+        <b class="arch-val-tag"><span class="status-pip live"></span>${missionClass.name.toUpperCase()} ($${missionClass.costLimit}M CAP)</b>
+      </div>
+      <div class="arch-badge-item">
+        <span class="arch-badge-label">[02] LAUNCH VEHICLE</span>
         <b>${launchVehicle.shortName} (${launchVehicle.fairingDiameter} FAIRING)</b>
       </div>
       <div class="arch-badge-item">
-        <span class="arch-badge-label">TOTAL MISSION BUDGET</span>
-        <b class="${totalCost <= missionClass.costLimit ? 'cost-ok' : 'cost-warn'}">$${totalCost}M / $${missionClass.costLimit}M</b>
+        <span class="arch-badge-label">[03] MISSION BUDGET</span>
+        <div class="arch-cost-stack">
+          <b class="${isBudgetOk ? 'cost-ok' : 'cost-warn'}">$${totalCost}M / $${missionClass.costLimit}M <small>(${costRatio}%)</small></b>
+          <div class="arch-budget-bar"><div class="arch-budget-fill ${isBudgetOk ? 'ok' : 'warn'}" style="width:${costRatio}%"></div></div>
+        </div>
       </div>
       <div class="arch-badge-item">
-        <span class="arch-badge-label">C₃ INJECTION BOOST</span>
+        <span class="arch-badge-label">[04] C₃ INJECTION BOOST</span>
         <b>${launchVehicle.deltaVBonus > 0 ? `+${launchVehicle.deltaVBonus.toFixed(1)} km/s Δv` : 'STANDARD DIRECT'}</b>
       </div>
     </div>
 
-    <div class="transfer-map">
+    <div class="transfer-map tactical-transfer-map">
       <svg viewBox="0 0 760 270" role="img" aria-label="Earth to destination transfer trajectory">
         <defs>
           <radialGradient id="sun-glow">
@@ -40,38 +50,51 @@ export function plannerMarkup(stats, destination='mars', missionClassId='discove
             <stop offset="0.6" stop-color="#ff9922" stop-opacity="0.35"/>
             <stop offset="1" stop-color="#473c2c" stop-opacity="0"/>
           </radialGradient>
+          <linearGradient id="orbit-grad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#38bdf8"/>
+            <stop offset="50%" stop-color="#818cf8"/>
+            <stop offset="100%" stop-color="#f43f5e"/>
+          </linearGradient>
         </defs>
+        <!-- Orbital Mechanics Reference Coordinate Grid -->
+        <line x1="40" y1="135" x2="720" y2="135" stroke="rgba(56, 189, 248, 0.15)" stroke-width="1" stroke-dasharray="3 3"/>
+        <line x1="320" y1="20" x2="320" y2="250" stroke="rgba(56, 189, 248, 0.15)" stroke-width="1" stroke-dasharray="3 3"/>
         <circle cx="320" cy="135" r="105" fill="url(#sun-glow)"/>
-        <ellipse cx="320" cy="135" rx="180" ry="72"/>
-        <ellipse cx="320" cy="135" rx="310" ry="119"/>
+        <!-- Earth Orbit 1.0 AU -->
+        <ellipse cx="320" cy="135" rx="180" ry="72" stroke="rgba(56, 189, 248, 0.28)" stroke-width="1" fill="none" stroke-dasharray="4 4"/>
+        <!-- Destination Orbit -->
+        <ellipse cx="320" cy="135" rx="310" ry="119" stroke="rgba(244, 63, 94, 0.28)" stroke-width="1" fill="none" stroke-dasharray="4 4"/>
         <circle cx="320" cy="135" r="14" class="map-sun"/>
-        <path class="transfer-arc" d="M140 135 C180 10 530 0 630 135"/>
-        <circle cx="140" cy="135" r="12" class="map-earth"/>
-        <circle cx="630" cy="135" r="15" class="map-mars"/>
-        <text x="96" y="172">EARTH</text>
-        <text x="560" y="177">${destination.toUpperCase()}</text>
+        <!-- Hohmann Transfer Ellipse Arc -->
+        <path class="transfer-arc" d="M140 135 C180 10 530 0 630 135" stroke="url(#orbit-grad)" stroke-width="2.5" fill="none"/>
+        <circle cx="140" cy="135" r="10" class="map-earth"/>
+        <circle cx="630" cy="135" r="13" class="map-mars"/>
+        <!-- Telemetry Coordinates -->
+        <text x="80" y="165" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#94a3b8" letter-spacing="1">EARTH [1.0 AU]</text>
+        <text x="540" y="170" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#fda4af" letter-spacing="1">${destination.toUpperCase()} [ARRIVAL]</text>
+        <text x="328" y="36" font-family="'IBM Plex Mono', monospace" font-size="8" fill="#38bdf8" letter-spacing="1">HOHMANN TRANSFER Δθ = 180°</text>
       </svg>
       <div class="planner-story">
         <span class="eyebrow">FLIGHT TRAJECTORY // ${destination.toUpperCase()}</span>
-        <h3>Select Transit Profile: ${destination.toUpperCase()}</h3>
-        <p>Higher transit velocity reduces flight duration but demands larger delta-V and propellant margin.</p>
+        <h3>Mission choices carry real consequences.</h3>
+        <p>Configure flight reserves and approach parameters. Balance propellant margin against transit duration before leaving Earth.</p>
       </div>
     </div>
 
-    <div class="route-cards">
+    <div class="route-cards tactical-route-cards">
       ${FLIGHT_PLANS.map((p,i)=>{
         const r = projectedReserves(stats,p);
         const meta = planBadges[p.id] || { icon: '[ROUTE]', title: p.name, tag: 'FLIGHT ROUTE', color: 'cyan' };
         return `
-        <button class="route-choice-card" data-plan="${p.id}" aria-pressed="${i===1}">
+        <button class="route-choice-card tactical-route-card" data-plan="${p.id}" aria-pressed="${i===1}">
           <div class="route-card-top">
             <span class="route-plan-tag tag-${meta.color}">${meta.icon} ${meta.tag}</span>
-            <span class="route-num">0${i+1}</span>
+            <span class="route-num">PROFILE 0${i+1}</span>
           </div>
           <h3 class="route-title">${meta.title}</h3>
           <div class="route-days-badge">
             <b>${p.days}</b>
-            <span>DAYS IN TRANSIT</span>
+            <span>DAYS / TRAJECTORY PROFILE</span>
           </div>
           <p class="route-desc">${p.description}</p>
           <div class="route-meters-box">
@@ -89,7 +112,7 @@ export function plannerMarkup(stats, destination='mars', missionClassId='discove
     </div>
 
     <div class="dialog-footer planner-footer">
-      <span id="plan-status" aria-live="polite">BALANCED FLIGHT SELECTED · SIX CHAPTERS</span>
+      <span id="plan-status" class="plan-status-badge" aria-live="polite">BALANCED TRANSFER SELECTED · SIX CHAPTERS · FIELD OPERATIONS</span>
       <button id="commit-plan" class="primary-button hero-start-btn tactical-btn">
         <span>COMMIT PLAN &amp; LAUNCH ROCKET</span>
         <span class="btn-arrow">↗</span>

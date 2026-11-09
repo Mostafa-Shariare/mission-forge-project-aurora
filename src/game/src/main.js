@@ -863,16 +863,18 @@ function handleEvent(event){
         <p class="dilemma-text">Earth is millions of miles away—Houston cannot send commands in time. <strong>Commander, choose your spacecraft's emergency defense!</strong></p>
       </div>
 
-      <div class="event-choices">
+      <div class="event-choices tactical-event-choices">
         ${e.choices.map((c,i)=>{
           const f = formatEventDetail(c.detail);
           return `
-          <button class="event-choice modern-choice-card" data-effect="${c.effect}">
+          <button class="event-choice modern-choice-card tactical-choice-card" data-effect="${c.effect}">
             <div class="choice-card-left">
-              <span class="choice-key-num">${i+1}</span>
+              <span class="choice-key-num">0${i+1}</span>
               <div class="choice-text-block">
-                <strong class="choice-title">${c.label}</strong>
-                ${c.system ? `<span class="choice-system-tag">${c.system}</span>` : ''}
+                <div class="choice-head-row">
+                  <strong class="choice-title">${c.label}</strong>
+                  ${c.system ? `<span class="choice-system-tag">[SYS] ${c.system}</span>` : ''}
+                </div>
                 <p class="choice-desc">${f.description}</p>
                 <div class="choice-badges-row">${f.badgesHtml}</div>
               </div>
