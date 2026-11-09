@@ -19,13 +19,25 @@
  * 5. Multi-Officer Debrief & NASA Flight Certification Manifest.
  */
 
+export const CREW_ICONS = {
+  flight: `<svg class="role-svg-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4.5c1.62-1.63 5-2.5 5-2.5"/><path d="M12 9v5s3.03-.55 4.5-2c1.63-1.62 2.5-5 2.5-5"/></svg>`,
+  systems: `<svg class="role-svg-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`,
+  science: `<svg class="role-svg-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.31L4.17 19.5A2 2 0 0 0 5.89 22h12.22a2 2 0 0 0 1.72-2.5L14 9.31V2"/><line x1="8" y1="2" x2="16" y2="2"/><line x1="7" y1="15" x2="17" y2="15"/></svg>`,
+  comms: `<svg class="role-svg-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"/><path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5"/><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5"/><path d="M19.1 4.9c3.9 3.9 3.9 10.3 0 14.2"/></svg>`,
+  solo: `<svg class="mode-svg-badge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 19 21 12 17 5 21 12 2"/></svg>`,
+  team: `<svg class="mode-svg-badge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="18" r="3"/><circle cx="19" cy="18" r="3"/><circle cx="12" cy="13" r="2"/><line x1="12" y1="8" x2="12" y2="11"/><line x1="6.8" y1="15.8" x2="10.5" y2="13.7"/><line x1="17.2" y1="15.8" x2="13.5" y2="13.7"/></svg>`,
+  copy: `<svg class="btn-svg-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`,
+  check: `<svg class="btn-svg-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`,
+  arrow: `<svg class="btn-svg-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>`
+};
+
 export const CREW_ROLES = [
   {
     id: 'flight',
     code: 'FLIGHT',
     title: 'Flight Director',
     callsign: 'FLIGHT',
-    icon: '🚀',
+    icon: CREW_ICONS.flight,
     color: '#00e5ff',
     badgeClass: 'role-flight',
     domain: 'Mission Architecture & Trajectory',
@@ -37,7 +49,7 @@ export const CREW_ROLES = [
     code: 'SYSTEMS',
     title: 'Spacecraft Systems Engineer',
     callsign: 'EECOM',
-    icon: '🛠️',
+    icon: CREW_ICONS.systems,
     color: '#ffaa00',
     badgeClass: 'role-systems',
     domain: 'Subsystems, Power & Mass Balance',
@@ -49,7 +61,7 @@ export const CREW_ROLES = [
     code: 'SCIENCE',
     title: 'Science Payload Specialist',
     callsign: 'SCIENCE',
-    icon: '🔬',
+    icon: CREW_ICONS.science,
     color: '#00ffaa',
     badgeClass: 'role-science',
     domain: 'Planetary Science & Surface Ops',
@@ -61,7 +73,7 @@ export const CREW_ROLES = [
     code: 'COMMS',
     title: 'Comms & Flight Dynamics Officer',
     callsign: 'FIDO / CAPCOM',
-    icon: '📡',
+    icon: CREW_ICONS.comms,
     color: '#bb88ff',
     badgeClass: 'role-comms',
     domain: 'DSN Telemetry, Cruise & Power Grid',
@@ -632,7 +644,7 @@ export function showModeSelectScreen(container, { onSolo, onTeamLaunch } = {}) {
             <div class="mode-option-card solo-card" id="btnChooseSolo">
               <div class="mode-card-badge">SINGLE-PLAYER AUTONOMOUS</div>
               <div class="mode-card-header">
-                <span class="mode-card-icon">🚀</span>
+                <span class="mode-card-icon">${CREW_ICONS.solo}</span>
                 <div>
                   <h2>SOLO EXPLORER</h2>
                   <span class="mode-card-kicker">AUTONOMOUS COMMAND</span>
@@ -642,13 +654,13 @@ export function showModeSelectScreen(container, { onSolo, onTeamLaunch } = {}) {
                 Take sole helm of the Odyssey 07. Personally configure all 9 spacecraft subsystems, pilot every orbital maneuver, and conduct planetary exploration individually.
               </p>
               <ul class="mode-features-list">
-                <li><span>✓</span> Full autonomous control of all flight stages</li>
-                <li><span>✓</span> Solo engineering &amp; planetary sample drilling</li>
-                <li><span>✓</span> Quick-start with zero setup needed</li>
+                <li><span class="feat-dot">[+]</span> Full autonomous control of all flight stages</li>
+                <li><span class="feat-dot">[+]</span> Solo engineering &amp; planetary sample drilling</li>
+                <li><span class="feat-dot">[+]</span> Quick-start with zero setup needed</li>
               </ul>
-              <button class="primary-button mode-cta-btn">
+              <button class="primary-button mode-cta-btn tactical-btn">
                 <span>LAUNCH SOLO EXPEDITION</span>
-                <b>→</b>
+                ${CREW_ICONS.arrow}
               </button>
             </div>
 
@@ -656,7 +668,7 @@ export function showModeSelectScreen(container, { onSolo, onTeamLaunch } = {}) {
             <div class="mode-option-card team-card" id="btnChooseTeam">
               <div class="mode-card-badge team-badge">4-PLAYER COLLABORATIVE</div>
               <div class="mode-card-header">
-                <span class="mode-card-icon">👥</span>
+                <span class="mode-card-icon">${CREW_ICONS.team}</span>
                 <div>
                   <h2>4-PLAYER MULTI-CREW</h2>
                   <span class="mode-card-kicker">DISTRIBUTED MISSION CONTROL</span>
@@ -666,13 +678,13 @@ export function showModeSelectScreen(container, { onSolo, onTeamLaunch } = {}) {
                 Form a collaborative NASA flight squad. Take turns piloting your assigned segment while teammates observe live telemetry from their console stations!
               </p>
               <ul class="mode-features-list">
-                <li><span>★</span> 4 NASA Stations: Flight, Systems, Science &amp; Comms</li>
-                <li><span>★</span> Turn-based segment command with live spectator feeds</li>
-                <li><span>★</span> Join instantly with a generated Room Code</li>
+                <li><span class="feat-dot">[+]</span> 4 NASA Stations: Flight, Systems, Science &amp; Comms</li>
+                <li><span class="feat-dot">[+]</span> Turn-based segment command with live spectator feeds</li>
+                <li><span class="feat-dot">[+]</span> Join instantly with a generated Room Code</li>
               </ul>
-              <button class="primary-button hero-start-btn mode-cta-btn">
+              <button class="primary-button hero-start-btn mode-cta-btn tactical-btn">
                 <span>ENTER TEAM OPERATIONS</span>
-                <b>✦</b>
+                ${CREW_ICONS.arrow}
               </button>
             </div>
           </div>
@@ -717,7 +729,7 @@ export function showModeSelectScreen(container, { onSolo, onTeamLaunch } = {}) {
                 <span class="code-label">MISSION ACCESS CODE:</span>
                 <div class="code-display-row">
                   <span class="code-val">${genCode}</span>
-                  <button class="copy-code-btn" id="btnCopyCode" title="Copy Room Code">COPY CODE 📋</button>
+                  <button class="copy-code-btn" id="btnCopyCode" title="Copy Room Code">${CREW_ICONS.copy} <span>COPY CODE</span></button>
                 </div>
               </div>
 
@@ -738,9 +750,9 @@ export function showModeSelectScreen(container, { onSolo, onTeamLaunch } = {}) {
                 </div>
               </div>
 
-              <button class="primary-button hero-start-btn team-hub-action-btn" id="btnConfirmCreateTeam">
+              <button class="primary-button hero-start-btn team-hub-action-btn tactical-btn" id="btnConfirmCreateTeam">
                 <span>CREATE &amp; OPEN LOBBY</span>
-                <b>🚀</b>
+                ${CREW_ICONS.arrow}
               </button>
             </div>
 
@@ -772,9 +784,9 @@ export function showModeSelectScreen(container, { onSolo, onTeamLaunch } = {}) {
                 </div>
               </div>
 
-              <button class="outline-button team-hub-action-btn" id="btnConfirmJoinTeam">
+              <button class="outline-button team-hub-action-btn tactical-btn" id="btnConfirmJoinTeam">
                 <span>CONNECT TO MISSION CONTROL</span>
-                <b>✦</b>
+                ${CREW_ICONS.arrow}
               </button>
             </div>
           </div>
@@ -804,8 +816,8 @@ export function showModeSelectScreen(container, { onSolo, onTeamLaunch } = {}) {
         try {
           navigator.clipboard.writeText(genCode);
           const btn = root.querySelector('#btnCopyCode');
-          btn.textContent = 'COPIED! ✓';
-          setTimeout(() => { if (btn) btn.textContent = 'COPY CODE 📋'; }, 2000);
+          btn.innerHTML = `${CREW_ICONS.check} <span>COPIED!</span>`;
+          setTimeout(() => { if (btn) btn.innerHTML = `${CREW_ICONS.copy} <span>COPY CODE</span>`; }, 2000);
         } catch {}
       };
 
@@ -836,7 +848,7 @@ export function showModeSelectScreen(container, { onSolo, onTeamLaunch } = {}) {
             <div class="lobby-code-badge">
               <span>MISSION ACCESS CODE:</span>
               <strong id="lobbyCodeVal">${activeCode}</strong>
-              <button class="copy-small-btn" id="btnCopyLobbyCode">COPY 📋</button>
+              <button class="copy-small-btn" id="btnCopyLobbyCode">${CREW_ICONS.copy} COPY</button>
             </div>
             <h2>FLIGHT SQUADRON LOBBY</h2>
             <p class="mode-subtitle">4 Flight Stations Active. Share the Room Code with team members to join via split-screen or separate tabs.</p>
@@ -869,7 +881,7 @@ export function showModeSelectScreen(container, { onSolo, onTeamLaunch } = {}) {
           </div>
 
           <div class="lobby-instructions-box">
-            <span class="info-icon">💡</span>
+            <span class="info-tag">[PROTOCOL]</span>
             <div>
               <strong>SEGMENT-BASED MISSION COMMAND:</strong>
               <p>During flight, when a specific chapter or subsystem begins, that designated officer takes the helm with full controls. All other team members watch live telemetry in Observer Mode!</p>
@@ -877,10 +889,10 @@ export function showModeSelectScreen(container, { onSolo, onTeamLaunch } = {}) {
           </div>
 
           <div class="lobby-actions-footer">
-            <button class="outline-button" id="btnLeaveLobby">LEAVE TEAM (SOLO)</button>
-            <button class="primary-button hero-start-btn" id="btnStartExpedition">
+            <button class="outline-button tactical-btn" id="btnLeaveLobby">LEAVE TEAM (SOLO)</button>
+            <button class="primary-button hero-start-btn tactical-btn" id="btnStartExpedition">
               <span>ENTER ASSEMBLY BAY &amp; LAUNCH</span>
-              <b>🚀</b>
+              ${CREW_ICONS.arrow}
             </button>
           </div>
         </div>
@@ -890,8 +902,8 @@ export function showModeSelectScreen(container, { onSolo, onTeamLaunch } = {}) {
         try {
           navigator.clipboard.writeText(activeCode);
           const btn = root.querySelector('#btnCopyLobbyCode');
-          btn.textContent = 'COPIED!';
-          setTimeout(() => { if (btn) btn.textContent = 'COPY 📋'; }, 2000);
+          btn.innerHTML = `${CREW_ICONS.check} COPIED!`;
+          setTimeout(() => { if (btn) btn.innerHTML = `${CREW_ICONS.copy} COPY`; }, 2000);
         } catch {}
       };
 
@@ -1046,7 +1058,7 @@ export function renderRoleAuthorityTag(roleId, customNote = '') {
         <span class="auth-role">${role.title.toUpperCase()} // ${role.callsign}</span>
         <strong class="auth-name">${member.name}</strong>
       </div>
-      <span class="auth-status-badge">${isMyAuthority ? '🟢 YOUR COMMAND' : '👁️ OBSERVER MODE'}</span>
+      <span class="auth-status-badge">${isMyAuthority ? '<span class="status-pip live"></span> YOUR COMMAND' : '<span class="status-pip obs"></span> OBSERVER MODE'}</span>
       ${customNote ? `<span class="auth-note">${customNote}</span>` : ''}
     </div>
   `;
@@ -1090,82 +1102,82 @@ export function showGoNoGoPollModal(onAllGo, arch = {}) {
             <span class="poll-protocol-tag">NASA LAUNCH COMMIT PROTOCOL // ${crew.roomCode || 'SOLO'}</span>
           </div>
           <h2>TERMINAL COUNTDOWN: GO / NO-GO POLL</h2>
-          <p class="dialog-lead">Flight Director is polling all console stations for launch commit. Each station must verify their readiness criteria and cast a <b>GO</b> vote.</p>
+          <p class="dialog-lead">Flight Director is polling all console stations for launch commit. Each station must verify readiness criteria and cast a <b>GO</b> vote.</p>
         </div>
 
         <div class="poll-stations-grid">
           <!-- 1. SYSTEMS -->
           <div class="poll-card ${crew.pollVotes.systems ? 'voted-go' : ''}">
             <div class="poll-card-left">
-              <span class="poll-icon">🛠️</span>
+              <span class="poll-icon">${CREW_ICONS.systems}</span>
               <div>
                 <span class="poll-role-badge">SYSTEMS / EECOM</span>
                 <strong class="poll-name">${memberMap.systems}</strong>
                 <p class="poll-check">Vehicle assembled, power bus &amp; payload mass verified within limits.</p>
               </div>
             </div>
-            <button class="poll-vote-btn ${crew.pollVotes.systems ? 'active' : ''}" data-vote-role="systems">
-              ${crew.pollVotes.systems ? '✓ GO' : 'REPORT GO'}
+            <button class="poll-vote-btn tactical-btn ${crew.pollVotes.systems ? 'active' : ''}" data-vote-role="systems">
+              ${crew.pollVotes.systems ? '[ GO VERIFIED ]' : 'VERIFY GO'}
             </button>
           </div>
 
           <!-- 2. SCIENCE -->
           <div class="poll-card ${crew.pollVotes.science ? 'voted-go' : ''}">
             <div class="poll-card-left">
-              <span class="poll-icon">🔬</span>
+              <span class="poll-icon">${CREW_ICONS.science}</span>
               <div>
                 <span class="poll-role-badge">SCIENCE SPECIALIST</span>
                 <strong class="poll-name">${memberMap.science}</strong>
                 <p class="poll-check">Scientific instruments initialized, target exploration priorities logged.</p>
               </div>
             </div>
-            <button class="poll-vote-btn ${crew.pollVotes.science ? 'active' : ''}" data-vote-role="science">
-              ${crew.pollVotes.science ? '✓ GO' : 'REPORT GO'}
+            <button class="poll-vote-btn tactical-btn ${crew.pollVotes.science ? 'active' : ''}" data-vote-role="science">
+              ${crew.pollVotes.science ? '[ GO VERIFIED ]' : 'VERIFY GO'}
             </button>
           </div>
 
           <!-- 3. COMMS / FIDO -->
           <div class="poll-card ${crew.pollVotes.comms ? 'voted-go' : ''}">
             <div class="poll-card-left">
-              <span class="poll-icon">📡</span>
+              <span class="poll-icon">${CREW_ICONS.comms}</span>
               <div>
                 <span class="poll-role-badge">COMMS &amp; DYNAMICS (FIDO)</span>
                 <strong class="poll-name">${memberMap.comms}</strong>
                 <p class="poll-check">DSN telemetry stations tracking, carrier lock and comms delays calibrated.</p>
               </div>
             </div>
-            <button class="poll-vote-btn ${crew.pollVotes.comms ? 'active' : ''}" data-vote-role="comms">
-              ${crew.pollVotes.comms ? '✓ GO' : 'REPORT GO'}
+            <button class="poll-vote-btn tactical-btn ${crew.pollVotes.comms ? 'active' : ''}" data-vote-role="comms">
+              ${crew.pollVotes.comms ? '[ GO VERIFIED ]' : 'VERIFY GO'}
             </button>
           </div>
 
           <!-- 4. FLIGHT DIRECTOR -->
           <div class="poll-card ${crew.pollVotes.flight ? 'voted-go' : ''}">
             <div class="poll-card-left">
-              <span class="poll-icon">🚀</span>
+              <span class="poll-icon">${CREW_ICONS.flight}</span>
               <div>
                 <span class="poll-role-badge">FLIGHT DIRECTOR</span>
                 <strong class="poll-name">${memberMap.flight}</strong>
                 <p class="poll-check">Range safety clear, mission architecture and budget verified.</p>
               </div>
             </div>
-            <button class="poll-vote-btn ${crew.pollVotes.flight ? 'active' : ''}" data-vote-role="flight">
-              ${crew.pollVotes.flight ? '✓ GO' : 'REPORT GO'}
+            <button class="poll-vote-btn tactical-btn ${crew.pollVotes.flight ? 'active' : ''}" data-vote-role="flight">
+              ${crew.pollVotes.flight ? '[ GO VERIFIED ]' : 'VERIFY GO'}
             </button>
           </div>
         </div>
 
         <div class="poll-readiness-banner ${isReady ? 'all-go' : 'waiting'}">
           ${isReady 
-            ? '<span>🚀 ALL STATIONS REPORT GO // FLIGHT DIRECTOR AUTHORIZES LAUNCH</span>' 
-            : '<span>⏳ AWAITING CONSOLE VOTES // ALL 4 STATIONS MUST REPORT GO</span>'}
+            ? '<span>ALL STATIONS REPORT GO // FLIGHT DIRECTOR AUTHORIZES LAUNCH</span>' 
+            : '<span>AWAITING CONSOLE VOTES // ALL 4 STATIONS MUST REPORT GO</span>'}
         </div>
 
         <div class="dialog-footer gonogo-footer">
-          <button id="pollAbortBtn" class="outline-button">STAND DOWN / ABORT</button>
-          <button id="pollLaunchBtn" class="primary-button hero-start-btn" ${!isReady || !isFlightDirector ? 'disabled' : ''}>
+          <button id="pollAbortBtn" class="outline-button tactical-btn">STAND DOWN / ABORT</button>
+          <button id="pollLaunchBtn" class="primary-button hero-start-btn tactical-btn" ${!isReady || !isFlightDirector ? 'disabled' : ''}>
             <span>${!isFlightDirector ? 'AWAITING FLIGHT COMMIT...' : isReady ? 'COMMIT ALL STATIONS &amp; LAUNCH' : 'STATIONS POLLING...'}</span>
-            <b>🚀</b>
+            ${CREW_ICONS.arrow}
           </button>
         </div>
       </div>

@@ -88,7 +88,7 @@ export const DESTINATION_STAGES = {
     {title:'VESTA GRAVITATIONAL INSERTION',short:'Insertion',verb:'Fly through orbital approach rings',kind:'gates',color:'#b4a995',chapter:'01',commander:'Dawn Mission Director',message:'Welcome to Asteroid Vesta! Vesta is an irregular protoplanet. Guide your spacecraft through the glowing orbital insertion rings to stabilize into initial survey orbit.',tip:'Press W to move forward · S to brake · A and D to turn · Follow the rings.',fact:'NASA Dawn spacecraft entered orbit around Vesta in 2011 using xenon ion propulsion, the first spacecraft to orbit a main belt asteroid.'},
     {title:'RHEASILVIA BOULDER EJECTA',short:'Ejecta Field',verb:'Dodge tumbling boulder ejecta from ancient impacts',kind:'gates',color:'#d6b885',chapter:'02',commander:'Flight Engineer Reyes',message:'Warning: Approaching the Rheasilvia impact ejecta stream! Massive tumbling boulders are orbiting at high speeds. Steer clear or press 3 for shields.',tip:'Steer with A and D · Press 3 for shields · Press SPACE to boost · Press R to repair.',fact:'The impact that gouged Rheasilvia crater ejected one percent of Vesta’s entire volume into space, creating the vestoid asteroids and HED meteorites.'},
     {title:'SURVEY ORBIT RECONNAISSANCE',short:'Survey Orbit',verb:'Find and scan three global mapping beacons',kind:'scan',color:'#84d8cc',chapter:'03',commander:'Science Officer Sen',message:'Three global reconnaissance beacons established in Survey Orbit! Fly close, slow below 12 m/s, and hold E to scan pyroxene and iron reflectance.',tip:'Fly close to the beacon · Slow below 12 m/s · Hold E to scan.',fact:'In Survey Orbit at 2,700 km altitude, Dawn mapped the overall shape, mass distribution, and global mineral patterns of Vesta.'},
-    {title:'ORBIT TRANSITION (HAMO ➔ LAMO)',short:'Orbit Shift',verb:'Maneuver into the low-altitude mapping corridor',kind:'rendezvous',color:'#c4baa8',chapter:'04',commander:'Dawn Mission Director',message:'Initiating orbital descent! Match velocity in the capture corridor. Slow below 10 m/s and press E to lock into observation orbit.',tip:'Fly into the green corridor · Slow below 10 m/s · Press E to lock orbit.',fact:'Transitioning between orbits around an irregular asteroid requires careful thruster burns to avoid unstable gravitational resonance.'},
+    {title:'ORBIT TRANSITION (HAMO -> LAMO)',short:'Orbit Shift',verb:'Maneuver into the low-altitude mapping corridor',kind:'rendezvous',color:'#c4baa8',chapter:'04',commander:'Dawn Mission Director',message:'Initiating orbital descent! Match velocity in the capture corridor. Slow below 10 m/s and press E to lock into observation orbit.',tip:'Fly into the green corridor · Slow below 10 m/s · Press E to lock orbit.',fact:'Transitioning between orbits around an irregular asteroid requires careful thruster burns to avoid unstable gravitational resonance.'},
     {title:'DAWN PROTOCOL: RHEASILVIA MAPPING',short:'Basin Mapping',verb:'Navigate observation passes and map ancient mineral signatures',kind:'explore',color:'#a2ddd4',chapter:'05',commander:'Science Officer Sen',message:'Entering primary mapping passes over Rheasilvia crater! Choose your orbit: High Orbit (HAMO) is safe with standard scans; Low Orbit (LAMO) gives +80% high-resolution science but risks boulder ejecta and gravity shear! Match speed at waypoints and hold E to scan.',tip:'Altitude with ↑/↓ · Press T to toggle HAMO/LAMO · Slow under 12 m/s · Hold E to scan.',fact:'Low-Altitude Mapping Orbit (LAMO) orbited just 210 km above Vesta, providing sub-meter stereo imaging and elemental neutron mapping.'},
     {title:'ESCAPE BURN & CARRIER RENDEZVOUS',short:'Departure',verb:'Dock with the carrier ship for the journey home',kind:'dock',color:'#88ccec',chapter:'06',commander:'Dawn Mission Director',message:'Mapping protocol complete! Firing escape burn to leave Vesta orbit. Fly toward the carrier ship, slow below 8 m/s, and press E to dock.',tip:'Fly to the carrier ship · Slow below 8 m/s · Press E to dock safely.',fact:'Dawn was the first spacecraft ever to leave orbit around one extraterrestrial body (Vesta) and travel to orbit another (dwarf planet Ceres).'}
   ],
@@ -205,8 +205,8 @@ export const NASA_MISSION_CLASSES = [
     baseMassLimit: 85, // 85 t payload mass cap
     tag: 'COST-CAPPED · COMPETITIVE',
     badge: 'DISCOVERY · $500M CAP',
-    description: '💡 Smart-budget NASA mission ($500M cap). Great for lean robotic scouts like Dawn and Kepler!',
-    icon: '🔭',
+    description: 'Cost-capped NASA mission ($500M cap). Optimized for lean robotic exploration scouts such as Dawn and Kepler.',
+    icon: '[DISCOVERY]',
     examples: 'Dawn, Kepler, InSight, Psyche'
   },
   {
@@ -217,8 +217,8 @@ export const NASA_MISSION_CLASSES = [
     baseMassLimit: 110, // 110 t payload mass cap
     tag: 'DECADAL PRIORITY · MID-SCALE',
     badge: 'NEW FRONTIERS · $1.0B CAP',
-    description: '💡 Mid-sized NASA missions ($1.0B cap). Balanced exploration like New Horizons and Juno!',
-    icon: '🛰',
+    description: 'Mid-scale strategic NASA mission ($1.0B cap). Balanced planetary exploration like New Horizons, Juno, and OSIRIS-REx.',
+    icon: '[NEW FRONTIERS]',
     examples: 'New Horizons, Juno, OSIRIS-REx'
   },
   {
@@ -229,8 +229,8 @@ export const NASA_MISSION_CLASSES = [
     baseMassLimit: 150, // 150 t payload mass cap
     tag: 'LARGE STRATEGIC · MULTI-BILLION',
     badge: 'FLAGSHIP · $3.25B CAP',
-    description: '💡 Mega NASA missions ($3.25B cap). Heavy rovers & deep-space labs like Perseverance and Europa Clipper!',
-    icon: '🪐',
+    description: 'Premier large strategic mission ($3.25B cap). Multi-instrument exploration platforms like Europa Clipper and Perseverance.',
+    icon: '[FLAGSHIP]',
     examples: 'Europa Clipper, Perseverance, Cassini'
   }
 ];
@@ -248,8 +248,8 @@ export const LAUNCH_VEHICLES = [
     deltaVBonus: 0.0, // baseline trans-injection
     c3Capability: 'Standard C3 (Inner Solar System & LEO)',
     tag: '5.2m COMPOSITE FAIRING · 76 t',
-    description: '💡 Reliable rocket with 5.2m cargo hood ($85M). Perfect for light & medium explorers.',
-    icon: '🚀'
+    description: 'High-reliability medium-lift vehicle with 5.2m composite fairing ($85M). Baseline injection profile.',
+    icon: '[FALCON 9]'
   },
   {
     id: 'heavy_workhorse',
@@ -263,8 +263,8 @@ export const LAUNCH_VEHICLES = [
     deltaVBonus: 0.65, // +0.65 km/s injection boost
     c3Capability: 'High C3 (Direct Mars & Asteroid Injection)',
     tag: '5.4m EXTENDED FAIRING · 98 t',
-    description: '💡 Powerful triple-core booster ($160M). Extra turbo boost for far planets (+0.65 km/s).',
-    icon: '⚡'
+    description: 'Triple-core heavy-lift booster ($160M). Provides high C3 injection boost (+0.65 km/s) for interplanetary targets.',
+    icon: '[HEAVY LIFT]'
   },
   {
     id: 'sls_block1b',
@@ -278,8 +278,8 @@ export const LAUNCH_VEHICLES = [
     deltaVBonus: 1.45, // +1.45 km/s direct Jovian injection
     c3Capability: 'Ultra-High C3 (Direct Jovian Injection)',
     tag: '8.4m HEAVY FAIRING · 135 t',
-    description: '💡 Giant NASA deep-space rocket ($320M). Maximum boost for distant Moon and Jupiter voyages.',
-    icon: '🛸'
+    description: 'NASA super heavy-lift exploration booster ($320M). Direct high-energy planetary injection (+1.45 km/s Δv).',
+    icon: '[NASA SLS]'
   },
   {
     id: 'nextgen_starship',
@@ -293,8 +293,8 @@ export const LAUNCH_VEHICLES = [
     deltaVBonus: 1.10, // +1.10 km/s injection boost
     c3Capability: 'Max Volume (Mega-Payloads & Habitats)',
     tag: '9.0m CAVERNOUS BAY · 160 t',
-    description: 'Fully reusable super-heavy architecture with a massive 9.0m payload bay ($210M). Eliminates fairing volume bottlenecks for extreme mass-heavy expeditions (+1.10 km/s Δv).',
-    icon: '🌌'
+    description: 'Fully reusable super-heavy architecture with 9.0m payload bay ($210M). High volume for massive expeditions (+1.10 km/s Δv).',
+    icon: '[SUPER HEAVY]'
   }
 ];
 

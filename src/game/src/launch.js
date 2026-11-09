@@ -336,7 +336,7 @@ function createFairingTexture() {
 
   ctx.fillStyle = '#ffbb00';
   ctx.font = '700 12px monospace';
-  ctx.fillText('★ EXPLORATION ★', cx, cy + 34);
+  ctx.fillText('EXPLORATION FLIGHT', cx, cy + 34);
 
   // Mirror crest on right half
   ctx.drawImage(canvas, 0, 0, 256, 512, 256, 0, 256, 512);
@@ -1910,7 +1910,7 @@ export class RocketLaunchSimulation {
 
         <!-- Staging Action Prompt - Docked Unobtrusively at Bottom-Right HUD with ample breathing room -->
         <div id="launch-action-prompt" class="launch-action-prompt docked" hidden>
-          <div class="prompt-icon">⚡</div>
+          <div class="prompt-icon">[STAGE]</div>
           <div class="prompt-text">
             <b id="launch-prompt-title">STAGE SEPARATION READY</b>
             <span id="launch-prompt-desc">Press [SPACE] or Click to Jettison Boosters</span>
@@ -3218,7 +3218,7 @@ export class RocketLaunchSimulation {
     this.overlay.querySelector('#launch-q-bar').style.width = `${clamp((this.dynamicPressure / 36) * 100, 0, 100)}%`;
     const qStatus = this.overlay.querySelector('#launch-q-status');
     if (qStatus) {
-      qStatus.textContent = this.dynamicPressure > 28 ? '⚠ MAX-Q FLIGHT REGIME' : this.altitude > 80000 ? 'VACUUM REGIME' : 'TROPOSPHERE DENSITY';
+      qStatus.textContent = this.dynamicPressure > 28 ? 'MAX-Q FLIGHT REGIME' : this.altitude > 80000 ? 'VACUUM REGIME' : 'TROPOSPHERE DENSITY';
     }
 
     const propPercent = Math.max(0, Math.round((this.propellantMass / 2100000) * 100));

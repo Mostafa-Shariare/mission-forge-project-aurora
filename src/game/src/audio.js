@@ -592,10 +592,10 @@ export class FlightAudio {
   }
 
   getBgmButtonLabel(){
-    if(this.bgmMode === 'adaptive') return `♪ ADAPTIVE [${this.activeTrackId === 'main' ? 'TH-1' : 'TH-2'}]`;
-    if(this.bgmMode === 'main') return '♪ THEME 1';
-    if(this.bgmMode === 'alt') return '♪ THEME 2';
-    return `♪ PLAYLIST [${this.activeTrackId === 'main' ? '1' : '2'}]`;
+    if(this.bgmMode === 'adaptive') return `BGM: ADAPTIVE [${this.activeTrackId === 'main' ? 'TH-1' : 'TH-2'}]`;
+    if(this.bgmMode === 'main') return 'BGM: THEME 1';
+    if(this.bgmMode === 'alt') return 'BGM: THEME 2';
+    return `BGM: PLAYLIST [${this.activeTrackId === 'main' ? '1' : '2'}]`;
   }
 
   getBgmDescription(){

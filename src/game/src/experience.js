@@ -20,14 +20,14 @@ export function interactionLimits(sim){return {range:sim.isSurface?24:sim.stage=
 export function missionGuidance(sim){
   if(!sim.target)return {title:sim.canDepartSurface?'Samples aboard · press X to depart':'All goals completed!',detail:'Review your findings and continue the mission.',state:'ready'};
   if(sim.destination.id==='asteroid'&&sim.boulderProximity){
-    return {title:'⚠ BOULDER EJECTA HAZARD',detail:'Low-altitude pass near boulder ejecta! Steer away or ascend to HAMO with T to avoid collision.',state:'blocked'};
+    return {title:'[WARNING] BOULDER EJECTA HAZARD',detail:'Low-altitude pass near boulder ejecta! Steer away or ascend to HAMO with T to avoid collision.',state:'blocked'};
   }
   if(sim.destination.id==='jupiter'&&sim.stage===4){
     if(sim.radiationSurge&&sim.route!=='shield'){
-      return {title:'⚡ RADIATION SURGE: SHIELDS REQUIRED',detail:'Intense Jovian magnetic flux is bombarding the ship! Press 3 to route power to SHIELDS immediately.',state:'blocked'};
+      return {title:'[ALERT] RADIATION SURGE: SHIELDS REQUIRED',detail:'Intense Jovian magnetic flux is bombarding the ship! Press 3 to route power to SHIELDS immediately.',state:'blocked'};
     }
     if(sim.radiationDose>75){
-      return {title:'⚠ HIGH RADIATION DOSE: RETREAT RECOMMENDED',detail:`Cumulative radiation dose is critical (${Math.round(sim.radiationDose)}%). Press X to retreat to safety and secure mission survival.`,state:'blocked'};
+      return {title:'[WARNING] HIGH RADIATION DOSE: RETREAT RECOMMENDED',detail:`Cumulative radiation dose is critical (${Math.round(sim.radiationDose)}%). Press X to retreat to safety and secure mission survival.`,state:'blocked'};
     }
     if(sim.canRetreat&&!sim.radiationSurge){
       return {title:`Observation window open (${sim.measurementsCollected}/3 scans)`,detail:'Radiation is quiet. Hold E to scan the current target, or press X to retreat to safe orbit with your data.',state:'ready'};

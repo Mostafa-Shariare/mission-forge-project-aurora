@@ -53,7 +53,7 @@ function showScanProvenanceCard(targetName, prov) {
   if (!card || !targetName) return;
   const isMuted = (typeof localStorage !== 'undefined') && localStorage.getItem('aurora-mute-pds-card') === 'true';
   if (isMuted) {
-    notify(`🛰 NASA PDS: ${targetName} telemetry verified`, 'info');
+    notify(`NASA PDS: ${targetName} telemetry verified`, 'info');
     return;
   }
   const destinationId = sim?.destination?.id || DESTINATIONS[selected].id;
@@ -211,15 +211,15 @@ function updateAudioButton(){
     b.classList.toggle('active',!audio.muted);
     b.classList.toggle('muted',audio.muted);
     if(!audio.muted){
-      b.innerHTML = '<span class="sound-eq-wave" aria-hidden="true"><span class="eq-bar bar-1"></span><span class="eq-bar bar-2"></span><span class="eq-bar bar-3"></span><span class="eq-bar bar-4"></span></span><span class="sound-icon-note">♫</span>';
+      b.innerHTML = '<span class="sound-eq-wave" aria-hidden="true"><span class="eq-bar bar-1"></span><span class="eq-bar bar-2"></span><span class="eq-bar bar-3"></span><span class="eq-bar bar-4"></span></span><span class="sound-icon-note">AUDIO</span>';
     } else {
-      b.innerHTML = '<span class="sound-mute-wrap" aria-hidden="true"><span class="sound-icon-note muted">♪</span><span class="sound-mute-slash"></span><span class="sound-mute-badge"></span></span>';
+      b.innerHTML = '<span class="sound-mute-wrap" aria-hidden="true"><span class="sound-icon-note muted">MUTED</span><span class="sound-mute-slash"></span><span class="sound-mute-badge"></span></span>';
     }
   }
 function updateBgmButton(){
     const b=$('#bgm-track-button');
     if(!b)return;
-    b.textContent = audio.getBgmButtonLabel ? audio.getBgmButtonLabel() : '♪ BGM';
+    b.textContent = audio.getBgmButtonLabel ? audio.getBgmButtonLabel() : 'BGM';
     b.title = `Current Soundtrack: ${audio.getBgmTrackTitle ? audio.getBgmTrackTitle() : 'BGM'} (Press B to cycle)`;
   }
 function soundToggle(){audio.start();audio.toggle();updateAudioButton();updateBgmButton();persistSettings();}
@@ -257,7 +257,7 @@ function selectDestination(index, broadcast = true){
   }
 }
 function buildCards(){
-  $('#destination-cards').innerHTML=DESTINATIONS.map((d,i)=>`<button class="destination-card ${i===selected?'selected':''}" data-destination="${i}" aria-pressed="${i===selected}" aria-label="Select ${d.name} mission"><span class="card-index">0${i+1} / ${d.id==='earth'?'LOW ORBIT':d.id==='jupiter'?'DEEP SPACE':'EXPEDITION'}</span><span class="card-planet" style="background-image:url('./textures/${d.id==='earth'?'earth.jpg':d.texture}')"></span><span class="card-text">${d.name}<small>${d.subtitle}</small></span><span class="card-corner">${records[d.id]?'✓':'↗'}</span></button>`).join('');
+  $('#destination-cards').innerHTML=DESTINATIONS.map((d,i)=>`<button class="destination-card ${i===selected?'selected':''}" data-destination="${i}" aria-pressed="${i===selected}" aria-label="Select ${d.name} mission"><span class="card-index">0${i+1} / ${d.id==='earth'?'LOW ORBIT':d.id==='jupiter'?'DEEP SPACE':'EXPEDITION'}</span><span class="card-planet" style="background-image:url('./textures/${d.id==='earth'?'earth.jpg':d.texture}')"></span><span class="card-text">${d.name}<small>${d.subtitle}</small></span><span class="card-corner">${records[d.id]?'[OK]':'[SELECT]'}</span></button>`).join('');
 }
 function designDialog(broadcast = true){
   assembly?.dispose();assembly=null;
@@ -386,7 +386,7 @@ function showBriefing(){
     const isCur = i === stageIdx;
     return `
       <div class="stepper-step ${isCur ? 'active' : ''} ${isPast ? 'done' : ''}">
-        <span class="stepper-num">${isPast ? '✓' : '0' + (i + 1)}</span>
+        <span class="stepper-num">${isPast ? 'OK' : '0' + (i + 1)}</span>
         <span class="stepper-label">${st.short || ('CH 0' + (i + 1))}</span>
       </div>
     `;
@@ -462,7 +462,7 @@ function showBriefing(){
     <div class="briefing-modal-header">
       <div class="briefing-meta-pill">
         <span class="briefing-ch-tag">CHAPTER 0${stageIdx + 1} OF 06</span>
-        <span class="briefing-dest-tag">🪐 ${(sim?.destination?.name || 'MISSION').toUpperCase()}</span>
+        <span class="briefing-dest-tag">TARGET // ${(sim?.destination?.name || 'MISSION').toUpperCase()}</span>
       </div>
       <h2 id="dialog-title" class="briefing-title">${s.title}</h2>
       <div class="briefing-stepper-wrap">
@@ -472,7 +472,7 @@ function showBriefing(){
 
     <div class="briefing-objective-card">
       <div class="objective-header-strip">
-        <span class="objective-target-icon">🎯</span>
+        <span class="objective-target-icon">[DIRECTIVE]</span>
         <span class="objective-header-label">MISSION DIRECTIVE</span>
       </div>
       <div class="objective-main-goal">${goal}</div>
@@ -487,7 +487,7 @@ function showBriefing(){
 
     ${s.fact ? `
     <div class="briefing-discovery-card">
-      <span class="discovery-icon">💡</span>
+      <span class="discovery-icon">[INSIGHT]</span>
       <div class="discovery-body">
         <strong>NASA SCIENCE FACT</strong>
         <p>${s.fact}</p>
@@ -495,10 +495,10 @@ function showBriefing(){
     </div>` : ''}
 
     <div class="dialog-footer briefing-footer">
-      <span class="checkpoint-saved-pill">✓ CHECKPOINT SAVED</span>
-      <button class="primary-button hero-start-btn" id="begin-stage">
+      <span class="checkpoint-saved-pill"><span class="pip-dot"></span> CHECKPOINT COMMITTED</span>
+      <button class="primary-button hero-start-btn tactical-btn" id="begin-stage">
         <span>${btnText}</span>
-        <b>🚀</b>
+        <span class="btn-arrow">↗</span>
       </button>
     </div>
   `);
@@ -537,7 +537,7 @@ function buildFlightHud(){
             </div>
           </div>
           <div class="dsn-mode-pill" id="dsn-mode-pill">
-            <span class="dsn-mode-icon">⚡</span>
+            <span class="dsn-mode-icon">[FDIR]</span>
             <span id="dsn-mode-text">AUTONOMOUS FAULT PROTECTION ACTIVE</span>
           </div>
         </section>
@@ -557,7 +557,7 @@ function updateObjectives(){
   if(freeRover&&sim.destination.id==='mars'){
     tubesHtml = `<div class="mars-tubes-counter" style="display:flex;justify-content:space-between;align-items:center;padding:5px 8px;margin-bottom:8px;background:#18100bc0;border:1px solid #9e5b3280;font:8px var(--mono);color:#f2b68c;"><span>CORE SAMPLE STORAGE</span><b>${sim.sampleTubesUsed}/${sim.maxSampleTubes} TUBES</b></div>`;
   }
-  $('#objective-list').innerHTML=tubesHtml+sim.targets.map((t,i)=>freeRover?`<li class="${t.done?'done':i===sim.targetIndex?'active':''}"><button class="rover-target" data-rover-target="${i}" aria-pressed="${i===sim.targetIndex&&!t.done}" ${t.done?'disabled':''}><span>${t.done?'✓':'0'+(i+1)}</span>${t.name}</button></li>`:`<li class="${i<sim.targetIndex?'done':i===sim.targetIndex?'active':''}">${t.name}</li>`).join('');
+  $('#objective-list').innerHTML=tubesHtml+sim.targets.map((t,i)=>freeRover?`<li class="${t.done?'done':i===sim.targetIndex?'active':''}"><button class="rover-target" data-rover-target="${i}" aria-pressed="${i===sim.targetIndex&&!t.done}" ${t.done?'disabled':''}><span>${t.done?'OK':'0'+(i+1)}</span>${t.name}</button></li>`:`<li class="${i<sim.targetIndex?'done':i===sim.targetIndex?'active':''}">${t.name}</li>`).join('');
   $('#objective-fraction').textContent=`${String(freeRover?sim.targets.filter(t=>t.done).length:Math.min(sim.targetIndex+1,sim.targets.length)).padStart(2,'0')} / ${String(sim.targets.length).padStart(2,'0')}`;
   if(freeRover&&!$('#rover-map')){
     $('#objective-list').insertAdjacentHTML('afterend','<canvas id="rover-map" width="190" height="100" aria-label="Surface map showing the rover and three selectable evidence sites"></canvas>');
@@ -640,7 +640,7 @@ function drawRoverMap(){
     c.fillRect(0, 0, 190, 12);
     c.fillStyle = '#ffffff';
     c.font = 'bold 7px monospace';
-    c.fillText('⚠ DUST STORM ACTIVE · SOLAR GEN -85%', 6, 9);
+    c.fillText('ALERT // DUST STORM ACTIVE · SOLAR GEN -85%', 6, 9);
   }
 }
 function communicate(speaker,message,speak=true){transcript=message;typed=0;$('#comm-speaker').textContent=speaker.toUpperCase();$('#comm-state').textContent='INCOMING TRANSMISSION';audio.playQuindar('intro');if(speak){audio.speak(message,()=>{setTimeout(()=>audio.playQuindar('outro'),200);});}else{setTimeout(()=>{audio.playQuindar('outro');},Math.min(2400,Math.max(800,message.length*36)));}}
@@ -648,17 +648,17 @@ function handleEvent(event){
   if(event.type==='operation')operationDialog(event.kind);
   if(event.type==='operationResolved'){audio.cue('success');notify('DECISION LOGGED · YOUR MISSION HAS CHANGED');}
   if(event.type==='begin'){const s=stageInfo();communicate(s.commander,s.message);audio.playLaunchSequence();}
-  if(event.type==='target'){audio.playWaypointChime();notify('✓ '+event.name+' COMPLETE');updateObjectives();showScanProvenanceCard(event.name, event.provenance);}
+  if(event.type==='target'){audio.playWaypointChime();notify('LOGGED // '+event.name+' COMPLETE');updateObjectives();showScanProvenanceCard(event.name, event.provenance);}
   if(event.type==='sampleStored'){
     audio.cue('success');
-    notify(`✓ SAMPLE TUBE ${event.tubeIndex}/${event.maxTubes} SEALED: ${event.sampleName}`);
+    notify(`SAMPLE TUBE ${event.tubeIndex}/${event.maxTubes} SEALED: ${event.sampleName}`);
     communicate('Science Officer Sen',`Sample tube ${event.tubeIndex} sealed and hermetically stored! Rock core registered for Earth return.`);
     updateObjectives();
     showScanProvenanceCard(event.sampleName, event.provenance);
   }
   if(event.type==='bonusAnomaly'){
     audio.cue('success');
-    notify('★ BONUS DISCOVERY: '+event.name+' (+'+event.score+' PTS)');
+    notify('DISCOVERY BONUS: '+event.name+' (+'+event.score+' PTS)');
     communicate('Science Officer Sen','Bonus discovery analyzed! Valuable science data recovered: '+event.name+'.');
     updateHud();
     showScanProvenanceCard(event.name, event.provenance);
@@ -666,28 +666,28 @@ function handleEvent(event){
   if(event.type==='orbitModeChange'){
     audio.cue('click');
     const isLamo=event.mode==='LAMO';
-    notify(isLamo?'⚡ ORBIT TRANSITION: LAMO (210 KM) · Image detail +80% · Watch for ejecta!':'ORBIT TRANSITION: HAMO (700 KM) · Safe survey orbit');
+    notify(isLamo?'ORBIT TRANSITION: LAMO (210 KM) · Image detail +80% · Watch for ejecta!':'ORBIT TRANSITION: HAMO (700 KM) · Safe survey orbit');
     communicate('Flight Dynamics',isLamo?'Spacecraft inserted into Low-Altitude Mapping Orbit. High-resolution sensors active. Beware irregular gravity and boulder ejecta.':'Ascended to High-Altitude Mapping Orbit. Global survey mode active.');
     updateHud();
   }
   if(event.type==='multiAngleLock'){
     audio.cue('scan');
-    notify(`★ MULTI-ANGLE SPECTRAL LOCK: Sector ${event.count}/3 acquired for ${event.targetName}`);
+    notify(`SPECTRAL LOCK: Sector ${event.count}/3 acquired for ${event.targetName}`);
   }
   if(event.type==='lamoObservationBonus'){
     audio.cue('discovery');
-    notify(`⚡ CLOSE ORBIT BONUS: +${event.bonus} Science points for low-altitude pass over ${event.targetName}!`);
+    notify(`CLOSE ORBIT BONUS: +${event.bonus} Science points for low-altitude pass over ${event.targetName}!`);
     communicate('Science Officer Sen',`Low-altitude pass captured ultra-high-resolution mineral signatures! +${event.bonus} bonus science points awarded.`);
   }
   if(event.type==='retreatSuccess'){
     audio.cue('discovery');
-    notify(`⚡ TACTICAL RETREAT SUCCESSFUL: +${event.bonus} Survival Margin Bonus! (Dose: ${event.dose}%)`);
+    notify(`TACTICAL RETREAT SUCCESSFUL: +${event.bonus} Survival Margin Bonus! (Dose: ${event.dose}%)`);
     communicate('Flight Director',`Excellent decision! Spacecraft retreated to safe orbit with ${event.measurements} critical measurement(s). Radiation dose held to ${event.dose}%.`);
   }
   if(event.type==='radiationSurgeChange'){
     if(event.surge){
       audio.startKlaxon();
-      notify('⚡ RADIATION SURGE ACTIVE · Divert power to Shields (3) immediately!','warning');
+      notify('RADIATION SURGE ACTIVE · Divert power to Shields (3) immediately!','warning');
       communicate('Flight Engineer Reyes','Radiation surge incoming! Magnetic flux spiking. Route power to shields now!');
     }else{
       audio.stopKlaxon();
@@ -698,14 +698,14 @@ function handleEvent(event){
   }
   if(event.type==='measurementRecorded'){
     audio.cue('success');
-    notify(`✓ MEASUREMENT ${event.count}/3 LOGGED: ${event.name} (Dose: ${event.dose}%)`);
+    notify(`MEASUREMENT ${event.count}/3 LOGGED: ${event.name} (Dose: ${event.dose}%)`);
     communicate('Science Officer Sen',`Measurement ${event.count} secured! Data saved. Cumulative radiation dose is now ${event.dose}%. Choose whether to risk another scan or press X to retreat.`);
     updateObjectives();
     updateHud();
   }
   if(event.type==='camBurnSuccess'){
     audio.cue('discovery');
-    notify(`⚡ COLLISION AVOIDED: CAM burn cleared conjunction! +15 Pts (Total cleared: ${event.avoided})`);
+    notify(`COLLISION AVOIDED: CAM burn cleared conjunction! +15 Pts (Total cleared: ${event.avoided})`);
     communicate('Flight Engineer Reyes',`CAM maneuver nominal! Trajectory altered. Debris conjunction cleared with positive separation.`);
     updateHud();
   }
@@ -713,7 +713,7 @@ function handleEvent(event){
     if(event.risk==='critical'){
       audio.startKlaxon();
       const miss = event.closestApproach ? event.closestApproach.missDistance.toFixed(1) : '15';
-      notify(`⚠ CRITICAL CONJUNCTION: Debris on collision course (Miss ${miss}m)! Press B for CAM burn`,'warning');
+      notify(`CRITICAL CONJUNCTION: Debris on collision course (Miss ${miss}m)! Press B for CAM burn`,'warning');
       communicate('Flight Director',`Traffic Alert! Conjunction warning on radar. Object closing fast. Press B to execute a collision avoidance burn!`);
     } else if(event.risk==='elevated'){
       audio.stopKlaxon();
@@ -733,13 +733,13 @@ function handleEvent(event){
   }
   if(event.type==='solarStormWarning'){
     audio.startKlaxon();
-    notify(`⚡ CORONAL MASS EJECTION DETECTED: Impact in ${event.timeToImpact}s! Press 3 for SHIELDS`,'warning');
+    notify(`CORONAL MASS EJECTION DETECTED: Impact in ${event.timeToImpact}s! Press 3 for SHIELDS`,'warning');
     communicate('Flight Dynamics',`Coronal Mass Ejection detected from the Sun! Plasma wave incoming in ${event.timeToImpact} seconds. Route power to shields immediately!`);
     updateHud();
   }
   if(event.type==='solarStormStart'){
     audio.cue('solar_storm');
-    notify('⚡ SOLAR STORM ACTIVE · Hold SHIELDS (3) to deflect coronal plasma!','warning');
+    notify('SOLAR STORM ACTIVE · Hold SHIELDS (3) to deflect coronal plasma!','warning');
     communicate('Flight Engineer Reyes','Solar storm has reached the ship! Hold shields up to absorb the coronal blast!');
     updateHud();
   }
@@ -749,26 +749,26 @@ function handleEvent(event){
   if(event.type==='solarStormEnd'){
     audio.stopKlaxon();
     audio.cue('success');
-    notify('✓ SOLAR STORM PASSED · Coronal plasma receding · Telemetry nominal','info');
+    notify('SOLAR STORM PASSED · Coronal plasma receding · Telemetry nominal','info');
     communicate('Flight Director','Coronal Mass Ejection has cleared our sector. Spacecraft systems and radiation levels returning to nominal.');
     updateHud();
   }
   if(event.type==='route'){
     if(event.route==='shield'){
       audio.cue('shield');
-      notify('🛡️ SHIELDS ENERGIZED · 360° Magnetic Deflection Grid Online','info');
+      notify('SHIELDS ENERGIZED · 360° Magnetic Deflection Grid Online','info');
     }else if(event.route==='science'){
       audio.cue('sensor_stream');
-      notify('🔬 SCIENCE PRIORITY · Sensor array amplified +55%','info');
+      notify('SCIENCE PRIORITY · Sensor array amplified +55%','info');
     }else if(event.route==='engine'){
       audio.cue('click');
-      notify('🚀 ENGINES PRIORITY · Propulsion thrust boosted +25%','info');
+      notify('ENGINES PRIORITY · Propulsion thrust boosted +25%','info');
     }
     updateHud();
   }
   if(event.type==='pulse'){
     audio.cue('scan');
-    notify('📡 LIDAR RADAR SWEEP ACTIVE · 360° Sensor Pulse Deployed','info');
+    notify('LIDAR RADAR SWEEP ACTIVE · 360° Sensor Pulse Deployed','info');
   }
   if(event.type==='interactionHint')notify(event.message);
   if(event.type==='selection'){audio.cue('click');updateObjectives();communicate('Rover navigation','New marker selected: '+event.name+'. Drive to the marker.',false);}
@@ -821,17 +821,17 @@ function handleEvent(event){
     for (const part of parts) {
       const lower = part.toLowerCase();
       if (lower.includes('science')) {
-        badges.push(`<span class="choice-badge badge-cyan">🔬 ${part.toUpperCase()}</span>`);
+        badges.push(`<span class="choice-badge badge-cyan">[SCI] ${part.toUpperCase()}</span>`);
       } else if (lower.includes('power')) {
-        badges.push(`<span class="choice-badge badge-amber">⚡ ${part.toUpperCase()}</span>`);
+        badges.push(`<span class="choice-badge badge-amber">[PWR] ${part.toUpperCase()}</span>`);
       } else if (lower.includes('fuel')) {
-        badges.push(`<span class="choice-badge badge-blue">⛽ ${part.toUpperCase()}</span>`);
+        badges.push(`<span class="choice-badge badge-blue">[PROP] ${part.toUpperCase()}</span>`);
       } else if (lower.includes('hull safe') || lower.includes('protected') || lower.includes('safe recovery') || lower.includes('zero damage') || lower.includes('stays safe')) {
-        badges.push(`<span class="choice-badge badge-green">🛡️ HULL SAFE</span>`);
+        badges.push(`<span class="choice-badge badge-green">[HULL NOMINAL]</span>`);
       } else if (lower.includes('damage')) {
-        badges.push(`<span class="choice-badge badge-red">⚠ HULL DAMAGE</span>`);
+        badges.push(`<span class="choice-badge badge-red">[HULL DAMAGE]</span>`);
       } else if (lower.includes('restored') || lower.includes('repaired')) {
-        badges.push(`<span class="choice-badge badge-green">🔧 REPAIRED</span>`);
+        badges.push(`<span class="choice-badge badge-green">[REPAIRED]</span>`);
       } else {
         description = part;
       }
@@ -852,8 +852,8 @@ function handleEvent(event){
     showDialog('event',`
       <div class="anomaly-header">
         <div class="anomaly-top-strip">
-          <span class="anomaly-alert-tag"><i class="pulse-dot"></i> 🚨 DEEP SPACE EMERGENCY</span>
-          <span class="anomaly-station-tag">📡 DSN ${dsn?.activeStation || 'GROUND STATION'}</span>
+          <span class="anomaly-alert-tag"><i class="pulse-dot"></i> EMERGENCY DIRECTIVE</span>
+          <span class="anomaly-station-tag">DSN // ${dsn?.activeStation || 'GROUND STATION'}</span>
         </div>
         <h2 id="dialog-title" class="anomaly-title">${e.title}</h2>
       </div>
@@ -1140,7 +1140,7 @@ function buildDebriefCarousel(sim, isFailed, failEvent) {
       <div class="debrief-quick-actions">
         <button class="primary-button" id="carouselBtnNext" data-menu><span>CHOOSE THE NEXT FRONTIER</span><b>↗</b></button>
         <button class="outline-button" id="carouselBtnExport">EXPORT LOG ↓</button>
-        <button class="outline-button" id="carouselBtnCert">OFFICIAL CERTIFICATE ✦</button>
+        <button class="outline-button" id="carouselBtnCert">OFFICIAL CERTIFICATE ↗</button>
       </div>
     </div>
   </div>
@@ -1373,7 +1373,7 @@ function showCertificateModal(sim, resultData){
       </div>
     </div>
     <div class="cert-modal-actions">
-      <button class="primary-button" id="certPrintBtn">PRINT / SAVE PDF 🖨</button>
+      <button class="primary-button" id="certPrintBtn">PRINT / SAVE PDF</button>
       <button class="outline-button" id="certBackBtn">RETURN TO DEBRIEF ↗</button>
     </div>
   </div>
@@ -1622,23 +1622,23 @@ function updateHud(){
   if(sim.isSurface&&sim.stormActive){
     audio.updateWind(sim.stormIntensity);
     hazardTipActive=true;
-    $('#flight-tip').innerHTML='<span style="color:var(--amber)">⚠ DUST STORM: Solar battery charging reduced by up to 85%</span>';
+    $('#flight-tip').innerHTML='<span style="color:var(--amber)">[ALERT] DUST STORM: Solar battery charging reduced by up to 85%</span>';
   } else if(sim.isSurface&&sim.destination.id==='mars'&&sim.position.x>25){
     hazardTipActive=true;
-    $('#flight-tip').innerHTML='<span style="color:var(--amber)">⚠ SÉÍTAH DUNES: Soft sand slippage · Motor power drain elevated</span>';
+    $('#flight-tip').innerHTML='<span style="color:var(--amber)">[ALERT] SÉÍTAH DUNES: Soft sand slippage · Motor power drain elevated</span>';
   } else if(sim.destination.id==='asteroid'&&sim.boulderProximity){
     hazardTipActive=true;
-    $('#flight-tip').innerHTML='<span style="color:var(--red)">⚠ LAMO HAZARD: Boulder ejecta proximity! Adjust velocity &amp; altitude</span>';
+    $('#flight-tip').innerHTML='<span style="color:var(--red)">[WARNING] LAMO HAZARD: Boulder ejecta proximity! Adjust velocity &amp; altitude</span>';
   } else if(sim.destination.id==='asteroid'&&sim.currentOrbitRegime==='LAMO'){
     hazardTipActive=true;
-    $('#flight-tip').innerHTML='<span style="color:#00e5ff">⚡ LAMO CLOSE ORBIT: Gravity shear active · Image detail +80% · Press <kbd>T</kbd> for HAMO</span>';
+    $('#flight-tip').innerHTML='<span style="color:#00e5ff">[REGIME] LAMO CLOSE ORBIT: Gravity shear active · Image detail +80% · Press <kbd>T</kbd> for HAMO</span>';
   } else if(sim.destination.id==='asteroid'){
     hazardTipActive=true;
     $('#flight-tip').innerHTML='<span>ORBIT: HAMO (700 KM) · Safe survey orbit · Press <kbd>T</kbd> or dive <kbd>↓</kbd> for LAMO pass</span>';
   } else if(sim.stage===3&&sim.reentryIntensity>0.3){
     audio.updateWind(sim.reentryIntensity);
     hazardTipActive=true;
-    $('#flight-tip').innerHTML='<span style="color:var(--red)">⚠ SLOW DOWN: Hold brake <kbd>S</kbd> to cool down</span>';
+    $('#flight-tip').innerHTML='<span style="color:var(--red)">[WARNING] SLOW DOWN: Hold brake <kbd>S</kbd> to cool down</span>';
     if(!reentryCommsSent){
       reentryCommsSent=true;
       communicate('Flight Director','Going too fast! Hold S to slow down.');
@@ -1647,17 +1647,17 @@ function updateHud(){
   } else if(sim.solarStormActive){
     hazardTipActive=true;
     if(sim.route==='shield'){
-      $('#flight-tip').innerHTML='<span style="color:var(--mint)">🛡️ MAGNETIC SHIELDS ACTIVE · DEFLECTING CORONAL PLASMA STREAM · +SCIENCE TELEMETRY</span>';
+      $('#flight-tip').innerHTML='<span style="color:var(--mint)">[SHIELDS] MAGNETIC DEFLECTION ACTIVE · DEFLECTING CORONAL PLASMA STREAM · +SCIENCE TELEMETRY</span>';
     }else{
-      $('#flight-tip').innerHTML='<span style="color:var(--red)">⚡ CORONAL MASS EJECTION ACTIVE: Divert power to SHIELDS <kbd>3</kbd> immediately!</span>';
+      $('#flight-tip').innerHTML='<span style="color:var(--red)">[ALERT] CORONAL MASS EJECTION ACTIVE: Divert power to SHIELDS <kbd>3</kbd> immediately!</span>';
     }
   } else if(sim.solarStormWarning>0){
     hazardTipActive=true;
-    $('#flight-tip').innerHTML=`<span style="color:var(--amber)">⚡ CORONAL MASS EJECTION INCOMING: Impact in ${Math.ceil(sim.solarStormWarning)}s · Press <kbd>3</kbd> for SHIELDS</span>`;
+    $('#flight-tip').innerHTML=`<span style="color:var(--amber)">[ALERT] CORONAL MASS EJECTION INCOMING: Impact in ${Math.ceil(sim.solarStormWarning)}s · Press <kbd>3</kbd> for SHIELDS</span>`;
   } else if(sim.destination.id==='jupiter'&&sim.stage===4){
     hazardTipActive=true;
     if(sim.radiationSurge){
-      $('#flight-tip').innerHTML='<span style="color:var(--red)">⚡ RADIATION SURGE: Divert to SHIELDS <kbd>3</kbd>! · Instrument degradation</span>';
+      $('#flight-tip').innerHTML='<span style="color:var(--red)">[ALERT] RADIATION SURGE: Divert to SHIELDS <kbd>3</kbd>! · Instrument degradation</span>';
     } else if(sim.canRetreat){
       $('#flight-tip').innerHTML=`<span style="color:var(--mint)">OBSERVATION WINDOW: Scan <kbd>E</kbd> · Risk vs Reward · Press <kbd>X</kbd> to RETREAT (${sim.measurementsCollected}/3 scans · Dose ${Math.round(sim.radiationDose)}%)</span>`;
     } else {
@@ -1665,7 +1665,7 @@ function updateHud(){
     }
   } else if(sim.destination.id==='jupiter'&&sim.radiationFlux>0.35){
     hazardTipActive=true;
-    $('#flight-tip').innerHTML='<span style="color:#00e5ff">⚡ RADIATION STORM: Press <kbd>3</kbd> for shields!</span>';
+    $('#flight-tip').innerHTML='<span style="color:#00e5ff">[ALERT] RADIATION STORM: Press <kbd>3</kbd> for shields!</span>';
   } else if(sim.destination.id==='moon'&&sim.stage===3){
     hazardTipActive=true;
     const vSpeed = Math.abs(sim.velocity.y).toFixed(1);
@@ -1674,27 +1674,27 @@ function updateHud(){
     $('#flight-tip').innerHTML=`<span style="color:${speedColor}">DESCENT: ${vSpeed} M/S (TARGET &lt; 3.5 M/S) · DRIFT: ${hSpeed} M/S · W/S THRUST</span>`;
   } else if(sim.destination.id==='moon'&&sim.isSurface&&sim.equipmentDamaged){
     hazardTipActive=true;
-    $('#flight-tip').innerHTML='<span style="color:var(--red)">⚠ EQUIPMENT DAMAGED: Scanner degraded · Battery drain +40%</span>';
+    $('#flight-tip').innerHTML='<span style="color:var(--red)">[ALERT] EQUIPMENT DAMAGED: Scanner degraded · Battery drain +40%</span>';
   } else if(sim.destination.id==='moon'&&sim.inShadow){
     hazardTipActive=true;
-    $('#flight-tip').innerHTML='<span style="color:#75cdff">❄ SHACKLETON PSR: Extreme darkness · Headlights ON · Press <kbd>Q</kbd> for LIDAR</span>';
+    $('#flight-tip').innerHTML='<span style="color:#75cdff">[SHADOW] SHACKLETON PSR: Extreme darkness · Headlights ON · Press <kbd>Q</kbd> for LIDAR</span>';
   } else if(sim.destination.id==='earth'&&sim.conjunctionRisk==='critical'){
     hazardTipActive=true;
     const ca = sim.closestApproach;
     const miss = ca ? ca.missDistance.toFixed(1) : '15';
     const tca = ca ? ca.tca.toFixed(1) : '4';
-    $('#flight-tip').innerHTML=`<span style="color:var(--red)">⚠ CRITICAL CONJUNCTION: TCA ${tca}s · Miss ${miss}m! Press <kbd>B</kbd> for CAM burn!</span>`;
+    $('#flight-tip').innerHTML=`<span style="color:var(--red)">[ALERT] CRITICAL CONJUNCTION: TCA ${tca}s · Miss ${miss}m! Press <kbd>B</kbd> for CAM burn!</span>`;
   } else if(sim.destination.id==='earth'&&sim.conjunctionRisk==='elevated'){
     hazardTipActive=true;
     const ca = sim.closestApproach;
     const miss = ca ? ca.missDistance.toFixed(1) : '35';
-    $('#flight-tip').innerHTML=`<span style="color:var(--amber)">⚡ CONJUNCTION MONITOR: Close approach predicted (${miss}m) · Schedule CAM burn <kbd>B</kbd></span>`;
+    $('#flight-tip').innerHTML=`<span style="color:var(--amber)">[ALERT] CONJUNCTION MONITOR: Close approach predicted (${miss}m) · Schedule CAM burn <kbd>B</kbd></span>`;
   } else if(sim.destination.id==='earth'&&!sim.groundStationPass){
     hazardTipActive=true;
-    $('#flight-tip').innerHTML='<span style="color:#75cdff">⌁ GROUND STATION LOS: Tracking uncertainty ±35m · Propellant: ' + Math.round(sim.fuel) + '%</span>';
+    $('#flight-tip').innerHTML='<span style="color:#75cdff">GROUND STATION LOS: Tracking uncertainty ±35m · Propellant: ' + Math.round(sim.fuel) + '%</span>';
   } else if(sim.destination.id==='earth'&&sim.stage===1){
     hazardTipActive=true;
-    $('#flight-tip').innerHTML='<span style="color:var(--amber)">⚠ SPACE JUNK: Steer around floating metal pieces · Press <kbd>B</kbd> for CAM burn</span>';
+    $('#flight-tip').innerHTML='<span style="color:var(--amber)">[ALERT] SPACE DEBRIS: Steer around floating fragments · Press <kbd>B</kbd> for CAM burn</span>';
   } else {
     audio.updateWind(0);
     if(sim.reentryIntensity<=0.1)reentryCommsSent=false;

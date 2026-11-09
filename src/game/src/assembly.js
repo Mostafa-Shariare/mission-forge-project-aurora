@@ -12,28 +12,28 @@ export function getSubsystemRole(slot) {
 }
 
 const SUBSYSTEM_TABS = [
-  { icon: '🚀', name: 'PROPULSION' },
-  { icon: '⚡', name: 'POWER' },
-  { icon: '🛡️', name: 'SHIELDS' },
-  { icon: '🔬', name: 'SCANNERS' },
-  { icon: '📡', name: 'COMMS' },
-  { icon: '❄️', name: 'COOLING' },
-  { icon: '🎯', name: 'STEERING' },
-  { icon: '🚜', name: 'ROVER' },
-  { icon: '⛽', name: 'TANKS' }
+  { icon: '01', name: 'PROPULSION' },
+  { icon: '02', name: 'POWER' },
+  { icon: '03', name: 'SHIELDS' },
+  { icon: '04', name: 'SCANNERS' },
+  { icon: '05', name: 'COMMS' },
+  { icon: '06', name: 'COOLING' },
+  { icon: '07', name: 'STEERING' },
+  { icon: '08', name: 'ROVER' },
+  { icon: '09', name: 'TANKS' }
 ];
 
 function getPrimarySpec(slot, choice, p) {
   switch (slot) {
-    case 0: return choice === 1 ? '⚡ 0.35 N' : (choice === 2 ? '⚡ 280 kN' : '⚡ 200 kN');
-    case 1: return choice === 0 ? '☀️ 18 kW' : (choice === 1 ? '🔋 2.4 kW' : '⚡ 20 kW');
-    case 2: return choice === 0 ? '🛡️ Whipple' : (choice === 1 ? '🛡️ Shield 0.55×' : '🛡️ Vault 0.32×');
-    case 3: return choice === 0 ? '📷 Spectrometer' : (choice === 1 ? '🔬 Radar 1.3×' : '🌟 Lab 1.6×');
-    case 4: return choice === 0 ? '📡 Patch 2k' : (choice === 1 ? '📡 Dish 28k' : '⚡ Laser 128k');
-    case 5: return choice === 0 ? '❄️ Passive' : (choice === 1 ? '❄️ Wings +30%' : '❄️ Pump +60%');
-    case 6: return choice === 0 ? '🎯 RCS' : (choice === 1 ? '🎯 Wheels +15%' : '🎯 Dual +30%');
-    case 7: return choice === 0 ? '🚜 Scout 1.0×' : (choice === 1 ? '🚜 Arm 1.1×' : '🚜 Vault 1.2×');
-    case 8: return choice === 0 ? '⛽ 28 t Fuel' : (choice === 1 ? '⛽ 34 t Fuel' : '⛽ 40 t Fuel');
+    case 0: return choice === 1 ? '0.35 N [ION]' : (choice === 2 ? '280 kN [BIPROP]' : '200 kN [METHALOX]');
+    case 1: return choice === 0 ? '18 kW [SOLAR]' : (choice === 1 ? '2.4 kW [RTG]' : '20 kW [FUSION]');
+    case 2: return choice === 0 ? 'Whipple Shield' : (choice === 1 ? 'Deflector 0.55×' : 'Vault Armor 0.32×');
+    case 3: return choice === 0 ? 'Spectrometer' : (choice === 1 ? 'SAR Radar 1.3×' : 'Bio Lab 1.6×');
+    case 4: return choice === 0 ? 'S-Band Patch 2k' : (choice === 1 ? 'X-Band Dish 28k' : 'Laser Optical 128k');
+    case 5: return choice === 0 ? 'Passive Thermal' : (choice === 1 ? 'Loop Radiators +30%' : 'Cryo Pump +60%');
+    case 6: return choice === 0 ? 'Cold-Gas RCS' : (choice === 1 ? 'Reaction Wheels +15%' : 'Dual Guidance +30%');
+    case 7: return choice === 0 ? 'Scout Chassis 1.0×' : (choice === 1 ? 'Sampling Arm 1.1×' : 'Return Vault 1.2×');
+    case 8: return choice === 0 ? '28 t Propellant' : (choice === 1 ? '34 t Propellant' : '40 t Propellant');
     default: return `${p.mass} t`;
   }
 }
@@ -61,8 +61,8 @@ function componentCard(hangar, slot, choice) {
     <strong class="part-title">${cardTitle}</strong>
     <div class="part-stats-row">
       <span class="stat-badge spec" title="Primary Specification">${primarySpec}</span>
-      <span class="stat-badge mass" title="Dry Mass">⚖️ ${p.mass} t</span>
-      <span class="stat-badge cost" title="Hardware Cost">💰 $${p.cost}M</span>
+      <span class="stat-badge mass" title="Dry Mass">MASS: ${p.mass} t</span>
+      <span class="stat-badge cost" title="Hardware Cost">$${p.cost}M</span>
     </div>
   </button>`;
 }
@@ -99,10 +99,10 @@ export class AssemblyHangar {
           </div>
           <div class="hangar-stage-badge" id="hangar-stage-badge">STAGE 01 / 09 • PROPULSION</div>
           <div class="hangar-quick-actions">
-            <button type="button" data-hangar="suggested" class="quick-act-btn cta" title="Auto-build recommended balanced spacecraft">✨ AUTO-BUILD</button>
-            <button type="button" data-hangar="remove" class="quick-act-btn" title="Remove current module">✕ REMOVE</button>
-            <button type="button" data-hangar="explode" class="quick-act-btn" aria-pressed="false" title="Toggle exploded view">💥 EXPLODED</button>
-            <button type="button" data-hangar="reset" class="quick-act-btn" title="Reset camera view">↺ RESET</button>
+            <button type="button" data-hangar="suggested" class="quick-act-btn cta" title="Auto-build recommended balanced spacecraft">AUTO-OPTIMIZE</button>
+            <button type="button" data-hangar="remove" class="quick-act-btn" title="Remove current module">REMOVE</button>
+            <button type="button" data-hangar="explode" class="quick-act-btn" aria-pressed="false" title="Toggle exploded view">EXPLODE</button>
+            <button type="button" data-hangar="reset" class="quick-act-btn" title="Reset camera view">RESET</button>
           </div>
         </div>
 
@@ -134,7 +134,7 @@ export class AssemblyHangar {
           <button data-hangar="previous-section" aria-label="Previous subsystem" class="nav-chevron">‹</button>
           <div class="hangar-slots" role="group" aria-label="Assembly subsystems">
             ${SYSTEMS.map((s,i)=>{
-              const tab = SUBSYSTEM_TABS[i] || { icon: '⚙️', name: s.label.replace(/^\d+\s*[\/•]\s*/,'') };
+              const tab = SUBSYSTEM_TABS[i] || { icon: `0${i+1}`, name: s.label.replace(/^\d+\s*[\/•]\s*/,'') };
               return `<button data-slot="${i}" aria-pressed="${i===0}" class="slot-pill-btn" title="${tab.name}">
                 <div class="slot-header-line">
                   <span class="slot-icon">${tab.icon}</span>
@@ -173,7 +173,7 @@ export class AssemblyHangar {
 
         <!-- Collapsible Mission Architecture Configuration -->
         <details class="readiness-accordion" id="arch-accordion">
-          <summary><span class="acc-icon">⚙️</span> MISSION ARCHITECTURE <span class="acc-caret">▾</span></summary>
+          <summary><span class="acc-tag">[01]</span> MISSION ARCHITECTURE <span class="acc-caret">▾</span></summary>
           <div class="accordion-body">
             <div class="arch-authority-badge">${renderRoleAuthorityTag('flight', 'AUTHORITY: BUDGET &amp; LAUNCH VEHICLE')}</div>
             <div class="arch-control-group">
@@ -200,7 +200,7 @@ export class AssemblyHangar {
 
         <!-- Collapsible Advanced Science -->
         <details class="readiness-accordion" id="science-accordion">
-          <summary><span class="acc-icon">🔬</span> ADVANCED ORBITAL READOUTS <span class="acc-caret">▾</span></summary>
+          <summary><span class="acc-tag">[02]</span> ADVANCED ORBITAL READOUTS <span class="acc-caret">▾</span></summary>
           <div class="accordion-body" id="advanced-stats-body"></div>
         </details>
 
@@ -459,7 +459,7 @@ export class AssemblyHangar {
     this.revealSlot();
     this.root.querySelectorAll('[data-slot]').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.slot === slot)));
     const slotNum = String(slot + 1).padStart(2, '0');
-    const tab = SUBSYSTEM_TABS[slot] || { icon: '⚙️', name: SYSTEMS[slot].label.replace(/^\d+\s*[\/•]\s*/,'') };
+    const tab = SUBSYSTEM_TABS[slot] || { icon: `0${slot+1}`, name: SYSTEMS[slot].label.replace(/^\d+\s*[\/•]\s*/,'') };
     
     const stageBadge = this.root.querySelector('#hangar-stage-badge');
     if (stageBadge) stageBadge.textContent = `STAGE ${slotNum} / 09 • ${tab.name}`;
@@ -479,7 +479,7 @@ export class AssemblyHangar {
     if (crew.isCrewMode() && !crew.canControlRole(getSubsystemRole(slot)) && msgEl) {
       const member = crew.getMember(getSubsystemRole(slot));
       const role = CREW_ROLES.find(r => r.id === getSubsystemRole(slot)) || CREW_ROLES[0];
-      msgEl.innerHTML = `<span class="spectator-msg-pill">👁️ SPECTATOR MODE</span> ONLY <b>${member.name} (${role.callsign})</b> CAN CONFIGURE THIS SUBSYSTEM`;
+      msgEl.innerHTML = `<span class="spectator-msg-pill">OBSERVER MODE</span> ONLY <b>${member.name} (${role.callsign})</b> CAN CONFIGURE THIS SUBSYSTEM`;
     }
 
     this.root.querySelector('.hangar-options').innerHTML = SYSTEMS[slot].choices.map((p, i) => componentCard(this, slot, i)).join('');
@@ -620,7 +620,7 @@ export class AssemblyHangar {
     this.root.querySelectorAll('[data-slot]').forEach((b, i) => {
       b.classList.toggle('socket-installed', this.installed[i]);
       const checkEl = this.root.querySelector('#check-' + i);
-      if (checkEl) checkEl.textContent = this.installed[i] ? '✓' : '';
+      if (checkEl) checkEl.textContent = this.installed[i] ? 'OK' : '';
     });
 
     const installedParts = stats.parts.filter((_, i) => this.installed[i]);
@@ -660,7 +660,7 @@ export class AssemblyHangar {
       <div class="hud-telemetry-cluster">
         <div class="hud-gauge-card ${budgetClass}">
           <div class="gauge-head">
-            <span class="gauge-label"><span class="icon">💰</span> MISSION BUDGET</span>
+            <span class="gauge-label"><span class="metric-tag">[BUDGET]</span> TOTAL COST</span>
             <b class="gauge-val">$${currentTotalCost}M <span class="cap">/ $${stats.missionClass.costLimit}M</span></b>
           </div>
           <div class="gauge-track"><div class="gauge-bar ${budgetClass}" style="width: ${budgetPercent}%"></div></div>
@@ -669,7 +669,7 @@ export class AssemblyHangar {
 
         <div class="hud-gauge-card ${massClass}">
           <div class="gauge-head">
-            <span class="gauge-label"><span class="icon">⚖️</span> PAYLOAD MASS</span>
+            <span class="gauge-label"><span class="metric-tag">[MASS]</span> PAYLOAD MASS</span>
             <b class="gauge-val">${currentMass.toFixed(1)} t <span class="cap">/ ${stats.launchVehicle.maxPayloadMass} t</span></b>
           </div>
           <div class="gauge-track"><div class="gauge-bar ${massClass}" style="width: ${massPercent}%"></div></div>
@@ -678,7 +678,7 @@ export class AssemblyHangar {
 
         <div class="hud-gauge-card ${powerClass}">
           <div class="gauge-head">
-            <span class="gauge-label"><span class="icon">⚡</span> POWER STATUS</span>
+            <span class="gauge-label"><span class="metric-tag">[POWER]</span> POWER MARGIN</span>
             <b class="gauge-val">${stats.powerMargin >= 0 ? '+' : ''}${stats.powerMargin.toFixed(2)} kW</b>
           </div>
           <div class="gauge-track"><div class="gauge-bar ${powerClass}" style="width: ${powerPercent}%"></div></div>
@@ -687,7 +687,7 @@ export class AssemblyHangar {
 
         <div class="hud-gauge-card speed">
           <div class="gauge-head">
-            <span class="gauge-label"><span class="icon">🚀</span> PROJECTED Δv</span>
+            <span class="gauge-label"><span class="metric-tag">[ΔV]</span> PROJECTED Δv</span>
             <b class="gauge-val">${stats.deltaV.toFixed(2)} km/s</b>
           </div>
           <div class="gauge-track"><div class="gauge-bar speed" style="width: ${speedPercent}%"></div></div>
@@ -696,7 +696,7 @@ export class AssemblyHangar {
 
         <div class="hud-gauge-card ${sysClass}">
           <div class="gauge-head">
-            <span class="gauge-label"><span class="icon">🛡️</span> SYSTEMS CHECK</span>
+            <span class="gauge-label"><span class="metric-tag">[SYS]</span> SYSTEMS CHECK</span>
             <b class="gauge-val">${count} / ${SYSTEMS.length}</b>
           </div>
           <div class="gauge-track"><div class="gauge-bar ${sysClass}" style="width: ${sysPercent}%"></div></div>

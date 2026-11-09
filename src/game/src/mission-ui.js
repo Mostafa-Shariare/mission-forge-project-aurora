@@ -10,9 +10,9 @@ export function plannerMarkup(stats, destination='mars', missionClassId='discove
   const totalCost = stats.totalMissionCost || (stats.cost + launchVehicle.cost);
 
   const planBadges = {
-    reserve: { icon: '🛡️', title: 'SAFE CRUISE', tag: 'FUEL SAVER', color: 'green' },
-    balanced: { icon: '⭐', title: 'BALANCED FLIGHT', tag: 'RECOMMENDED', color: 'cyan' },
-    rapid: { icon: '🔥', title: 'FAST EXPRESS', tag: 'MAX SPEED', color: 'amber' }
+    reserve: { icon: '[SAFE]', title: 'RESERVE PROFILE', tag: 'FUEL CONSERVATIVE', color: 'green' },
+    balanced: { icon: '[NOMINAL]', title: 'BALANCED TRANSFER', tag: 'RECOMMENDED', color: 'cyan' },
+    rapid: { icon: '[EXPRESS]', title: 'RAPID RESPONSE', tag: 'HIGH VELOCITY', color: 'amber' }
   };
 
   return `<div class="mission-planner">
@@ -20,15 +20,15 @@ export function plannerMarkup(stats, destination='mars', missionClassId='discove
     <div class="planner-arch-banner">
       <div class="arch-badge-item">
         <span class="arch-badge-label">LAUNCH VEHICLE</span>
-        <b>🚀 ${launchVehicle.shortName} (${launchVehicle.fairingDiameter} FAIRING)</b>
+        <b>${launchVehicle.shortName} (${launchVehicle.fairingDiameter} FAIRING)</b>
       </div>
       <div class="arch-badge-item">
         <span class="arch-badge-label">TOTAL MISSION BUDGET</span>
-        <b class="${totalCost <= missionClass.costLimit ? 'cost-ok' : 'cost-warn'}">💰 $${totalCost}M / $${missionClass.costLimit}M</b>
+        <b class="${totalCost <= missionClass.costLimit ? 'cost-ok' : 'cost-warn'}">$${totalCost}M / $${missionClass.costLimit}M</b>
       </div>
       <div class="arch-badge-item">
         <span class="arch-badge-label">C₃ INJECTION BOOST</span>
-        <b>⚡ ${launchVehicle.deltaVBonus > 0 ? `+${launchVehicle.deltaVBonus.toFixed(1)} km/s Δv` : 'STANDARD DIRECT'}</b>
+        <b>${launchVehicle.deltaVBonus > 0 ? `+${launchVehicle.deltaVBonus.toFixed(1)} km/s Δv` : 'STANDARD DIRECT'}</b>
       </div>
     </div>
 
@@ -52,16 +52,16 @@ export function plannerMarkup(stats, destination='mars', missionClassId='discove
         <text x="560" y="177">${destination.toUpperCase()}</text>
       </svg>
       <div class="planner-story">
-        <span class="eyebrow">🚀 FLIGHT TRAJECTORY // ${destination.toUpperCase()}</span>
-        <h3>Choose your flight speed to ${destination.toUpperCase()}!</h3>
-        <p>Faster speeds reach ${destination.toUpperCase()} in fewer days, but burn more of your ship's fuel reserve.</p>
+        <span class="eyebrow">FLIGHT TRAJECTORY // ${destination.toUpperCase()}</span>
+        <h3>Select Transit Profile: ${destination.toUpperCase()}</h3>
+        <p>Higher transit velocity reduces flight duration but demands larger delta-V and propellant margin.</p>
       </div>
     </div>
 
     <div class="route-cards">
       ${FLIGHT_PLANS.map((p,i)=>{
         const r = projectedReserves(stats,p);
-        const meta = planBadges[p.id] || { icon: '🚀', title: p.name, tag: 'FLIGHT ROUTE', color: 'cyan' };
+        const meta = planBadges[p.id] || { icon: '[ROUTE]', title: p.name, tag: 'FLIGHT ROUTE', color: 'cyan' };
         return `
         <button class="route-choice-card" data-plan="${p.id}" aria-pressed="${i===1}">
           <div class="route-card-top">
@@ -90,9 +90,9 @@ export function plannerMarkup(stats, destination='mars', missionClassId='discove
 
     <div class="dialog-footer planner-footer">
       <span id="plan-status" aria-live="polite">BALANCED FLIGHT SELECTED · SIX CHAPTERS</span>
-      <button id="commit-plan" class="primary-button hero-start-btn">
+      <button id="commit-plan" class="primary-button hero-start-btn tactical-btn">
         <span>COMMIT PLAN &amp; LAUNCH ROCKET</span>
-        <b>🚀</b>
+        <span class="btn-arrow">↗</span>
       </button>
     </div>
   </div>`;
@@ -127,10 +127,10 @@ export function campaignDebrief(sim){
   const totalCost = (sim.stats?.totalMissionCost || (sim.stats?.cost + launchVehicle.cost)) || 360;
 
   const costCommendation = c.missionClass === 'discovery' 
-    ? '🏆 NASA DISCOVERY EFFICIENCY MEDAL: Mission executed under strict $500M competitive cost cap!' 
+    ? 'COMMENDATION: NASA DISCOVERY EFFICIENCY MEDAL — Mission executed under strict $500M competitive cost cap!' 
     : c.missionClass === 'new_frontiers' 
-      ? '⭐ NASA NEW FRONTIERS COMMENDATION: Decadal planetary survey objectives successfully achieved!' 
-      : '🪐 NASA FLAGSHIP STRATEGIC COMMENDATION: Multi-billion dollar strategic exploration mandate accomplished!';
+      ? 'COMMENDATION: NASA NEW FRONTIERS AWARD — Decadal planetary survey objectives successfully achieved!' 
+      : 'COMMENDATION: NASA FLAGSHIP STRATEGIC CITATION — Multi-billion dollar strategic exploration mandate accomplished!';
 
   return `<section class="engineering-debrief">
     <span class="eyebrow">NASA SCIENCE EVALUATION // ${destData.agency}</span>
