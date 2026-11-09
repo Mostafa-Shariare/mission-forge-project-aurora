@@ -217,12 +217,28 @@ export class AssemblyHangar {
 
     this.change = e => {
       if (e.target.id === 'mission-class-select') {
+        if (crew.isCrewMode() && crew.myRole !== 'flight' && !crew.overrideAuthority) {
+          e.target.value = this.missionClass;
+          alert('Authority Lock: Only Flight Director can modify the NASA Program Budget Cap.');
+          return;
+        }
         this.missionClass = e.target.value;
         this.refresh();
+        if (crew.isCrewMode()) {
+          crew.broadcast('ARCHITECTURE_CHANGE', { missionClass: this.missionClass, launchVehicle: this.launchVehicle });
+        }
       }
       if (e.target.id === 'launch-vehicle-select') {
+        if (crew.isCrewMode() && crew.myRole !== 'flight' && !crew.overrideAuthority) {
+          e.target.value = this.launchVehicle;
+          alert('Authority Lock: Only Flight Director can select the Launch Vehicle.');
+          return;
+        }
         this.launchVehicle = e.target.value;
         this.refresh();
+        if (crew.isCrewMode()) {
+          crew.broadcast('ARCHITECTURE_CHANGE', { missionClass: this.missionClass, launchVehicle: this.launchVehicle });
+        }
       }
     };
     root.addEventListener('change', this.change);
@@ -364,6 +380,18 @@ export class AssemblyHangar {
           this.slot = curSlot;
           this.selectSlot(curSlot);
         }
+      } else if (event === 'architectureChanged' && data) {
+        if (data.missionClass) {
+          this.missionClass = data.missionClass;
+          const s = this.root.querySelector('#mission-class-select');
+          if (s) s.value = data.missionClass;
+        }
+        if (data.launchVehicle) {
+          this.launchVehicle = data.launchVehicle;
+          const s = this.root.querySelector('#launch-vehicle-select');
+          if (s) s.value = data.launchVehicle;
+        }
+        this.refresh();
       }
     });
   }

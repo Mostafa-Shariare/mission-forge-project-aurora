@@ -8,9 +8,15 @@
  * 2. Team Operations: Create Team (generates Room Code) & Join Team (connects via Code)
  * 3. Segment-by-Segment Flight Command: The designated specialist controls the ship
  *    during their segment, while all other team members observe in Spectator Mode!
- * 4. Cross-window / multi-screen real-time synchronization via BroadcastChannel & LocalStorage.
- * 5. Pre-Launch NASA GO / NO-GO Roll-Call Verification Poll.
- * 6. Multi-Officer Debrief & NASA Flight Certification Manifest.
+ * 4. Full Real-Time State Synchronization:
+ *    - Destination Selection Sync
+ *    - Assembly Bay & 3D Module Equipping Sync
+ *    - Mission Architecture & Launch Vehicle Sync
+ *    - Pre-Launch NASA GO / NO-GO Roll-Call Poll Sync
+ *    - Simultaneous Multi-Player Rocket Launch Commit
+ *    - In-Flight Stage Handoff & Telemetry Sync
+ *    - Deep Space Emergency Anomaly Directive Sync
+ * 5. Multi-Officer Debrief & NASA Flight Certification Manifest.
  */
 
 export const CREW_ROLES = [
@@ -71,19 +77,13 @@ export function getSubsystemRole(slot) {
 }
 
 export function getStageRole(stage) {
-  // Stage 0: Ascent / Trans-Injection Burn -> FLIGHT
-  // Stage 1: Interplanetary Cruise & Trajectory Burn -> COMMS / FIDO
-  // Stage 2: Target Approach & Orbital Insertion Sweep -> SCIENCE
-  // Stage 3: Atmospheric Descent & Precision Touchdown -> SYSTEMS / EECOM
-  // Stage 4: Surface Exploration, Rover Driving & Core Drilling -> SCIENCE
-  // Stage 5: Departure Burn & Earth Atmospheric Re-entry -> FLIGHT
   switch (Number(stage)) {
-    case 0: return 'flight';
-    case 1: return 'comms';
-    case 2: return 'science';
-    case 3: return 'systems';
-    case 4: return 'science';
-    case 5: return 'flight';
+    case 0: return 'flight';   // Ascent / Trans-Injection Burn -> FLIGHT
+    case 1: return 'comms';    // Interplanetary Cruise & Trajectory Burn -> COMMS / FIDO
+    case 2: return 'science';  // Target Approach & Orbital Insertion Sweep -> SCIENCE
+    case 3: return 'systems';  // Atmospheric Descent & Precision Touchdown -> SYSTEMS / EECOM
+    case 4: return 'science';  // Surface Exploration, Rover Driving & Core Drilling -> SCIENCE
+    case 5: return 'flight';   // Departure Burn & Earth Atmospheric Re-entry -> FLIGHT
     default: return 'flight';
   }
 }
@@ -107,16 +107,17 @@ class CrewManager {
     this.storageRoomKey = 'aurora-room-code';
     this.storageMyRoleKey = 'aurora-my-role';
     this.storageMyNameKey = 'aurora-my-name';
+    this.storageIsHostKey = 'aurora-is-host';
 
     this.mode = this.loadMode();
     this.roomCode = this.loadRoomCode();
     this.myRole = this.loadMyRole();
     this.myName = this.loadMyName();
-    this.isHost = false;
+    this.isHost = this.loadIsHost();
     this.roster = this.loadRoster();
 
     this.activeRole = this.myRole;
-    this.activeSegmentRole = 'flight'; // Who has active flight control
+    this.activeSegmentRole = 'flight';
     this.activeSegmentTitle = 'MISSION INITIALIZATION';
     this.overrideAuthority = false;
 
@@ -139,7 +140,7 @@ class CrewManager {
 
   loadMode() {
     try {
-      return localStorage.getItem(this.storageModeKey) || 'solo';
+      return sessionStorage.getItem(this.storageModeKey) || localStorage.getItem(this.storageModeKey) || 'solo';
     } catch {
       return 'solo';
     }
@@ -148,13 +149,14 @@ class CrewManager {
   saveMode(mode = this.mode) {
     this.mode = mode;
     try {
+      sessionStorage.setItem(this.storageModeKey, mode);
       localStorage.setItem(this.storageModeKey, mode);
     } catch {}
   }
 
   loadRoomCode() {
     try {
-      return localStorage.getItem(this.storageRoomKey) || '';
+      return sessionStorage.getItem(this.storageRoomKey) || localStorage.getItem(this.storageRoomKey) || '';
     } catch {
       return '';
     }
@@ -163,13 +165,15 @@ class CrewManager {
   saveRoomCode(code = this.roomCode) {
     this.roomCode = code;
     try {
+      sessionStorage.setItem(this.storageRoomKey, code);
       localStorage.setItem(this.storageRoomKey, code);
     } catch {}
   }
 
+  // Use sessionStorage for per-tab player identity so multiple tabs on localhost do not collide!
   loadMyRole() {
     try {
-      return localStorage.getItem(this.storageMyRoleKey) || 'flight';
+      return sessionStorage.getItem(this.storageMyRoleKey) || 'flight';
     } catch {
       return 'flight';
     }
@@ -179,13 +183,13 @@ class CrewManager {
     this.myRole = role;
     this.activeRole = role;
     try {
-      localStorage.setItem(this.storageMyRoleKey, role);
+      sessionStorage.setItem(this.storageMyRoleKey, role);
     } catch {}
   }
 
   loadMyName() {
     try {
-      return localStorage.getItem(this.storageMyNameKey) || 'Commander Alex';
+      return sessionStorage.getItem(this.storageMyNameKey) || 'Commander Alex';
     } catch {
       return 'Commander Alex';
     }
@@ -194,7 +198,22 @@ class CrewManager {
   saveMyName(name = this.myName) {
     this.myName = name;
     try {
-      localStorage.setItem(this.storageMyNameKey, name);
+      sessionStorage.setItem(this.storageMyNameKey, name);
+    } catch {}
+  }
+
+  loadIsHost() {
+    try {
+      return sessionStorage.getItem(this.storageIsHostKey) === 'true';
+    } catch {
+      return false;
+    }
+  }
+
+  saveIsHost(isHost) {
+    this.isHost = isHost;
+    try {
+      sessionStorage.setItem(this.storageIsHostKey, String(isHost));
     } catch {}
   }
 
@@ -256,6 +275,17 @@ class CrewManager {
     if (typeof window === 'undefined') return;
     window.addEventListener('storage', (e) => {
       if (!this.roomCode) return;
+
+      // Event packet storage broadcast fallback
+      if (e.key === `aurora_event_${this.roomCode}` && e.newValue) {
+        try {
+          const packet = JSON.parse(e.newValue);
+          if (packet.senderRole === this.myRole && packet.senderName === this.myName) return;
+          this.handleBroadcastMessage(packet);
+        } catch {}
+      }
+
+      // Room state storage sync
       if (e.key === `aurora_room_${this.roomCode}` && e.newValue) {
         try {
           const data = JSON.parse(e.newValue);
@@ -278,17 +308,34 @@ class CrewManager {
   }
 
   broadcast(type, payload = {}) {
+    const packet = {
+      type,
+      payload,
+      senderRole: this.myRole,
+      senderName: this.myName,
+      roomCode: this.roomCode,
+      timestamp: Date.now(),
+      packetId: Math.random().toString(36).slice(2)
+    };
+
     if (this.channel) {
       try {
-        this.channel.postMessage({ type, payload, senderRole: this.myRole, timestamp: Date.now() });
+        this.channel.postMessage(packet);
       } catch (err) {
         console.warn('Broadcast send error:', err);
       }
+    }
+
+    if (this.roomCode) {
+      try {
+        localStorage.setItem(`aurora_event_${this.roomCode}`, JSON.stringify(packet));
+      } catch {}
     }
   }
 
   handleBroadcastMessage(msg) {
     const { type, payload } = msg;
+
     if (type === 'ROOM_SYNC') {
       this.roster = payload.roster || this.roster;
       this.activeSegmentRole = payload.activeSegmentRole || this.activeSegmentRole;
@@ -339,8 +386,22 @@ class CrewManager {
       this.emit('pollReset');
     } else if (type === 'LAUNCH_EXPEDITION') {
       this.emit('expeditionLaunched', payload);
+    } else if (type === 'DESTINATION_SELECT') {
+      this.emit('destinationSelected', payload);
+    } else if (type === 'OPEN_DESIGN_BAY') {
+      this.emit('openDesignBay', payload);
+    } else if (type === 'OPEN_GONOGO_POLL') {
+      this.emit('openGoNoGoPoll', payload);
+    } else if (type === 'POLL_COMMIT_LAUNCH') {
+      this.emit('pollCommitLaunch', payload);
+    } else if (type === 'START_ROCKET_LAUNCH') {
+      this.emit('startRocketLaunch', payload);
+    } else if (type === 'STAGE_ADVANCE') {
+      this.emit('stageAdvance', payload);
     } else if (type === 'MODULE_EQUIP') {
       this.emit('moduleEquipped', payload);
+    } else if (type === 'ARCHITECTURE_CHANGE') {
+      this.emit('architectureChanged', payload);
     } else if (type === 'FLIGHT_TELEMETRY') {
       this.emit('flightTelemetry', payload);
     } else if (type === 'ANOMALY_CHOICE') {
@@ -354,9 +415,8 @@ class CrewManager {
     this.saveRoomCode(code);
     this.saveMyRole(hostRole);
     this.saveMyName(hostName);
-    this.isHost = true;
+    this.saveIsHost(true);
 
-    // Initialize fresh roster with host occupying chosen role
     this.roster = CREW_ROLES.map(r => ({
       id: r.id,
       name: r.id === hostRole ? hostName : r.defaultName,
@@ -389,9 +449,8 @@ class CrewManager {
     this.saveRoomCode(cleanCode);
     this.saveMyRole(playerRole);
     this.saveMyName(playerName);
-    this.isHost = false;
+    this.saveIsHost(false);
 
-    // Load any existing room data from local storage
     this.roster = this.loadRoster();
     const idx = this.roster.findIndex(m => m.id === playerRole);
     if (idx !== -1) {
@@ -410,7 +469,7 @@ class CrewManager {
     this.broadcast('PEER_LEFT', { roleId: this.myRole, name: this.myName });
     this.saveMode('solo');
     this.saveRoomCode('');
-    this.isHost = false;
+    this.saveIsHost(false);
     this.initBroadcast();
     this.emit('modeChanged', 'solo');
   }
@@ -428,20 +487,12 @@ class CrewManager {
     return this.mode === 'crew';
   }
 
-  /**
-   * Authority Check: Returns true if it is this player's turn to control the segment.
-   * If in solo mode, always true.
-   * If in crew mode, true only if myRole matches the activeSegmentRole (or override active).
-   */
   isMyTurn() {
     if (!this.isCrewMode()) return true;
     if (this.overrideAuthority) return true;
     return this.myRole === this.activeSegmentRole;
   }
 
-  /**
-   * Check if player has authority over a specific role domain (e.g. subsystem in assembly)
-   */
   canControlRole(roleId) {
     if (!this.isCrewMode()) return true;
     if (this.overrideAuthority) return true;
@@ -541,9 +592,26 @@ export function showModeSelectScreen(container, { onSolo, onTeamLaunch } = {}) {
   root.className = 'mode-select-screen active';
   root.style.display = 'flex';
 
-  let currentView = 'select-mode'; // 'select-mode' | 'create-team' | 'join-team' | 'team-lobby'
+  let currentView = crew.isCrewMode() && crew.roomCode ? 'team-lobby' : 'select-mode';
   let genCode = crew.roomCode || crew.generateRoomCode();
   let selectedRole = crew.myRole || 'flight';
+
+  // Listen for team launch and roster updates
+  const unsubLobby = crew.subscribe((event) => {
+    if (event === 'rosterChanged' || event === 'roomSynced') {
+      if (currentView === 'team-lobby') render();
+    } else if (event === 'expeditionLaunched') {
+      root.classList.remove('active');
+      setTimeout(() => { root.style.display = 'none'; }, 400);
+      if (onTeamLaunch) onTeamLaunch();
+    }
+  });
+
+  const closeScreen = () => {
+    unsubLobby();
+    root.classList.remove('active');
+    setTimeout(() => { root.style.display = 'none'; }, 400);
+  };
 
   const render = () => {
     if (currentView === 'select-mode') {
@@ -617,8 +685,7 @@ export function showModeSelectScreen(container, { onSolo, onTeamLaunch } = {}) {
 
       root.querySelector('#btnChooseSolo').onclick = () => {
         crew.setMode('solo');
-        root.classList.remove('active');
-        setTimeout(() => { root.style.display = 'none'; }, 400);
+        closeScreen();
         if (onSolo) onSolo();
       };
 
@@ -690,7 +757,7 @@ export function showModeSelectScreen(container, { onSolo, onTeamLaunch } = {}) {
 
               <div class="team-input-group">
                 <label>YOUR OFFICER NAME / CALLSIGN</label>
-                <input type="text" id="joinOfficerName" class="crew-input" value="Officer Sam" maxlength="24" placeholder="Enter your name..." />
+                <input type="text" id="joinOfficerName" class="crew-input" value="Engineer Maya" maxlength="24" placeholder="Enter your name..." />
               </div>
 
               <div class="team-input-group">
@@ -719,7 +786,6 @@ export function showModeSelectScreen(container, { onSolo, onTeamLaunch } = {}) {
         render();
       };
 
-      // Role selection for Create Team
       root.querySelectorAll('[data-select-role]').forEach(btn => {
         btn.onclick = () => {
           selectedRole = btn.dataset.selectRole;
@@ -727,7 +793,6 @@ export function showModeSelectScreen(container, { onSolo, onTeamLaunch } = {}) {
         };
       });
 
-      // Role selection for Join Team
       root.querySelectorAll('[data-join-role]').forEach(btn => {
         btn.onclick = () => {
           selectedRole = btn.dataset.joinRole;
@@ -735,7 +800,6 @@ export function showModeSelectScreen(container, { onSolo, onTeamLaunch } = {}) {
         };
       });
 
-      // Copy code button
       root.querySelector('#btnCopyCode').onclick = () => {
         try {
           navigator.clipboard.writeText(genCode);
@@ -745,7 +809,6 @@ export function showModeSelectScreen(container, { onSolo, onTeamLaunch } = {}) {
         } catch {}
       };
 
-      // Create Team action
       root.querySelector('#btnConfirmCreateTeam').onclick = () => {
         const name = (root.querySelector('#hostOfficerName')?.value.trim()) || 'Commander Alex';
         crew.createRoom(name, selectedRole);
@@ -753,7 +816,6 @@ export function showModeSelectScreen(container, { onSolo, onTeamLaunch } = {}) {
         render();
       };
 
-      // Join Team action
       root.querySelector('#btnConfirmJoinTeam').onclick = () => {
         const codeInput = root.querySelector('#joinRoomCode')?.value.trim();
         const nameInput = (root.querySelector('#joinOfficerName')?.value.trim()) || 'Officer';
@@ -767,7 +829,6 @@ export function showModeSelectScreen(container, { onSolo, onTeamLaunch } = {}) {
       };
     } else if (currentView === 'team-lobby') {
       const activeCode = crew.roomCode;
-      const myMeta = crew.getMyRoleMeta();
 
       root.innerHTML = `
         <div class="mode-select-container team-lobby-container">
@@ -842,21 +903,9 @@ export function showModeSelectScreen(container, { onSolo, onTeamLaunch } = {}) {
 
       root.querySelector('#btnStartExpedition').onclick = () => {
         crew.broadcast('LAUNCH_EXPEDITION', { roomCode: crew.roomCode });
-        root.classList.remove('active');
-        setTimeout(() => { root.style.display = 'none'; }, 400);
+        closeScreen();
         if (onTeamLaunch) onTeamLaunch();
       };
-
-      // Listen for peer joins and launches
-      const unsub = crew.subscribe((event) => {
-        if (event === 'rosterChanged' || event === 'roomSynced') {
-          render();
-        } else if (event === 'expeditionLaunched') {
-          root.classList.remove('active');
-          setTimeout(() => { root.style.display = 'none'; }, 400);
-          if (onTeamLaunch) onTeamLaunch();
-        }
-      });
     }
   };
 
@@ -1016,7 +1065,7 @@ export function showCrewSetupModal(onConfirm) {
 /**
  * Pre-Launch NASA GO / NO-GO Roll-Call Polling Verification Modal
  */
-export function showGoNoGoPollModal(onAllGo) {
+export function showGoNoGoPollModal(onAllGo, arch = {}) {
   crew.resetPoll();
   let modal = document.querySelector('#gonogo-poll-dialog');
   if (modal) modal.remove();
@@ -1024,12 +1073,14 @@ export function showGoNoGoPollModal(onAllGo) {
   modal = document.createElement('div');
   modal.id = 'gonogo-poll-dialog';
   modal.className = 'dialog-backdrop crew-modal-backdrop active';
+  modal.dataset.arch = JSON.stringify(arch);
 
   const memberMap = {};
   crew.roster.forEach(m => { memberMap[m.id] = m.name; });
 
   const renderPollContent = () => {
     const isReady = crew.isAllStationsGo();
+    const isFlightDirector = crew.myRole === 'flight' || !crew.isCrewMode() || crew.overrideAuthority;
 
     modal.innerHTML = `
       <div class="dialog-box gonogo-poll-box">
@@ -1112,18 +1163,23 @@ export function showGoNoGoPollModal(onAllGo) {
 
         <div class="dialog-footer gonogo-footer">
           <button id="pollAbortBtn" class="outline-button">STAND DOWN / ABORT</button>
-          <button id="pollLaunchBtn" class="primary-button hero-start-btn" ${!isReady ? 'disabled' : ''}>
-            <span>${isReady ? 'COMMIT ALL STATIONS &amp; LAUNCH' : 'STATIONS POLLING...'}</span>
+          <button id="pollLaunchBtn" class="primary-button hero-start-btn" ${!isReady || !isFlightDirector ? 'disabled' : ''}>
+            <span>${!isFlightDirector ? 'AWAITING FLIGHT COMMIT...' : isReady ? 'COMMIT ALL STATIONS &amp; LAUNCH' : 'STATIONS POLLING...'}</span>
             <b>🚀</b>
           </button>
         </div>
       </div>
     `;
 
-    // Event listeners
     modal.querySelectorAll('[data-vote-role]').forEach(btn => {
       btn.onclick = () => {
         const rId = btn.dataset.voteRole;
+        if (crew.isCrewMode() && !crew.canControlRole(rId)) {
+          const m = crew.getMember(rId);
+          const r = CREW_ROLES.find(x => x.id === rId) || CREW_ROLES[0];
+          alert(`Station Lock: Only ${m.name} (${r.callsign}) can cast the ${r.callsign} vote.`);
+          return;
+        }
         crew.castVote(rId, !crew.pollVotes[rId]);
         renderPollContent();
       };
@@ -1138,7 +1194,10 @@ export function showGoNoGoPollModal(onAllGo) {
       launchBtn.onclick = () => {
         if (!crew.isAllStationsGo()) return;
         modal.remove();
-        if (onAllGo) onAllGo();
+        if (crew.isCrewMode()) {
+          crew.broadcast('POLL_COMMIT_LAUNCH', { arch });
+        }
+        if (onAllGo) onAllGo(arch);
       };
     }
   };
@@ -1146,9 +1205,12 @@ export function showGoNoGoPollModal(onAllGo) {
   renderPollContent();
   document.body.appendChild(modal);
 
-  const unsub = crew.subscribe((event) => {
+  const unsub = crew.subscribe((event, data) => {
     if (event === 'pollUpdated') {
       renderPollContent();
+    } else if (event === 'pollCommitLaunch') {
+      modal.remove();
+      if (onAllGo) onAllGo(data?.arch || arch);
     }
   });
 

@@ -242,7 +242,7 @@ function closeDialog(){
 }
 function pauseForDialog(){extraPaused=sim?.pause()||false;}
 function header(kicker,title,close=false){return `<span class="eyebrow">${kicker}</span><h2 id="dialog-title">${title}</h2>${close?'<button class="close-dialog" data-close aria-label="Close dialog">×</button>':''}`;}
-function selectDestination(index){
+function selectDestination(index, broadcast = true){
   selected=(index+DESTINATIONS.length)%DESTINATIONS.length;const d=DESTINATIONS[selected];world?.setDestination(d);
   if($('#planet-name')) $('#planet-name').textContent=d.name;if($('#mission-subtitle')) $('#mission-subtitle').textContent=d.subtitle;if($('#mission-type')) $('#mission-type').textContent=d.type.toUpperCase();if($('#mission-code')) $('#mission-code').textContent=`0${selected+1} • 05`;
   if($('#risk-label')) { const riskTag = d.surface ? 'HABITABLE VOID' : d.id === 'earth' ? 'ORBITAL ZONE' : 'DEEP SPACE'; $('#risk-label').textContent='CLASS '+['I','II','III','IV','V'][d.difficulty-1]+' • '+riskTag; } if($('#mission-description')) $('#mission-description').textContent=d.intro;
@@ -252,18 +252,26 @@ function selectDestination(index){
   if($('#primary-goal')) $('#primary-goal').textContent='LOCATE '+d.target;if($('#trajectory-target')) $('#trajectory-target').textContent=d.name;
   $$('.destination-card').forEach((b,i)=>{b.classList.toggle('selected',i===selected);b.setAttribute('aria-pressed',String(i===selected));});
   if($('#record-label')) $('#record-label').textContent=records[d.id]?`BEST EXPEDITION: ${records[d.id].score} SCIENCE · RANK ${records[d.id].rank}`:'THE NEXT FRONTIER IS YOURS TO EXPLORE.';
+  if (broadcast && crew.isCrewMode()) {
+    crew.broadcast('DESTINATION_SELECT', { index: selected });
+  }
 }
 function buildCards(){
   $('#destination-cards').innerHTML=DESTINATIONS.map((d,i)=>`<button class="destination-card ${i===selected?'selected':''}" data-destination="${i}" aria-pressed="${i===selected}" aria-label="Select ${d.name} mission"><span class="card-index">0${i+1} / ${d.id==='earth'?'LOW ORBIT':d.id==='jupiter'?'DEEP SPACE':'EXPEDITION'}</span><span class="card-planet" style="background-image:url('./textures/${d.id==='earth'?'earth.jpg':d.texture}')"></span><span class="card-text">${d.name}<small>${d.subtitle}</small></span><span class="card-corner">${records[d.id]?'✓':'↗'}</span></button>`).join('');
 }
-function designDialog(){
+function designDialog(broadcast = true){
   assembly?.dispose();assembly=null;
   const d=DESTINATIONS[selected];
   showDialog('design',`${header('MISSION FORGE / '+d.name,'BUILD THE ODYSSEY 07.',true)}<div id="assembly-root"></div>`,true);
   $('#dialog').classList.add('assembly-dialog');
-  assembly=new AssemblyHangar($('#assembly-root'),loadout,d,value=>{loadout=value;},()=>audio.cue('success'));
+  assembly=new AssemblyHangar($('#assembly-root'),loadout,d,value=>{
+    loadout=value;
+  },()=>audio.cue('success'));
   $('#difficulty-select').value=difficulty;
   $('#difficulty-select').onchange=e=>{difficulty=e.target.value;};
+  if (broadcast && crew.isCrewMode()) {
+    crew.broadcast('OPEN_DESIGN_BAY', { destination: selected });
+  }
 }
 function flightPlanDialog(arch={}){
   closeDialog();
@@ -277,6 +285,15 @@ function flightPlanDialog(arch={}){
   bindPlanner($('#dialog'),plan=>{
     committedPlan=makeCampaign(plan, d.id, mClass, lVehicle);
     closeDialog();
+    if (crew.isCrewMode()) {
+      crew.broadcast('START_ROCKET_LAUNCH', {
+        destinationIndex: selected,
+        loadout: [...loadout],
+        plan,
+        missionClass: mClass,
+        launchVehicle: lVehicle
+      });
+    }
     activeLaunchSim=startRocketLaunch({
       destination: d,
       loadout,
@@ -886,6 +903,7 @@ function handleEvent(event){
         if (sim?.mode === 'transition') {
           sim.advance();
           if (crew.isCrewMode()) {
+            crew.broadcast('STAGE_ADVANCE', { stage: sim.stage });
             const stageRole = getStageRole(sim.stage);
             crew.setSegment(stageRole, getStageTitle(sim.stage));
             const flightHud = $('#crew-flight-hud');
@@ -1732,7 +1750,15 @@ document.addEventListener('click',e=>{
   if(b.id==='replay-practice'){coach=new FlightCoach(false);save('odyssey-coach-complete',false);closeDialog();updateHud();$('#mission-guidance').open=true;}
 
   if(b.matches('[data-close]')){closeDialog();if(sim?.mode==='paused')sim.resume();}
-  if(b.matches('[data-effect]')){const effect=b.dataset.effect;closeDialog();audio.stopVoice();sim.choose(effect);}
+  if(b.matches('[data-effect]')){
+    const effect=b.dataset.effect;
+    closeDialog();
+    audio.stopVoice();
+    if (crew.isCrewMode()) {
+      crew.broadcast('ANOMALY_CHOICE', { effect });
+    }
+    sim?.choose(effect);
+  }
   if(b.matches('[data-route]')&&sim?.mode==='flight')sim.setRoute(b.dataset.route);
   if(b.matches('[data-menu]'))returnMenu();
   if(b.id==='launch-button'){
@@ -1740,7 +1766,16 @@ document.addEventListener('click',e=>{
     const arch = assembly?.getArchitecture ? assembly.getArchitecture() : { missionClass: selectedMissionClass, launchVehicle: selectedLaunchVehicle };
     selectedMissionClass = arch.missionClass;
     selectedLaunchVehicle = arch.launchVehicle;
-    flightPlanDialog(arch);
+    if (crew.isCrewMode()) {
+      if (crew.myRole !== 'flight' && !crew.overrideAuthority) {
+        alert('Station Authority Lock: Only Flight Director can commit the mission architecture and initiate the launch roll-call poll.');
+        return;
+      }
+      crew.broadcast('OPEN_GONOGO_POLL', { arch });
+      showGoNoGoPollModal((a) => flightPlanDialog(a || arch), arch);
+    } else {
+      flightPlanDialog(arch);
+    }
   }
   if(b.id==='begin-stage'){closeDialog();audio.fadeInBgm(1.8);sim.begin();}
   if(b.id==='resume-flight'){closeDialog();audio.fadeInBgm(1.8);sim.resume();}
@@ -1823,6 +1858,52 @@ if ($('#crew-mode-btn')) {
 crew.subscribe((event, data) => {
   if (event === 'modeChanged' || event === 'rosterChanged' || event === 'roomSynced' || event === 'roomCreated' || event === 'roomJoined') {
     updateCrewModeUI();
+  } else if (event === 'destinationSelected' && data) {
+    if (data.index !== undefined && data.index !== selected) {
+      selectDestination(data.index, false);
+    }
+  } else if (event === 'openDesignBay') {
+    if (dialogKind !== 'design') {
+      designDialog(false);
+    }
+  } else if (event === 'openGoNoGoPoll' && data) {
+    showGoNoGoPollModal((a) => {
+      flightPlanDialog(a || data?.arch || {});
+    }, data?.arch || {});
+  } else if (event === 'startRocketLaunch' && data) {
+    closeDialog();
+    selected = data.destinationIndex;
+    if (Array.isArray(data.loadout)) loadout = [...data.loadout];
+    if (data.missionClass) selectedMissionClass = data.missionClass;
+    if (data.launchVehicle) selectedLaunchVehicle = data.launchVehicle;
+    const dest = DESTINATIONS[selected];
+    committedPlan = makeCampaign(data.plan, dest.id, data.missionClass, data.launchVehicle);
+    activeLaunchSim = startRocketLaunch({
+      destination: dest,
+      loadout,
+      campaign: committedPlan,
+      missionClass: data.missionClass,
+      launchVehicle: data.launchVehicle,
+      audio,
+      onComplete: () => {
+        activeLaunchSim = null;
+        initializeFlight();
+      },
+      onCancel: () => {
+        activeLaunchSim = null;
+        returnMenu();
+      }
+    });
+  } else if (event === 'stageAdvance' && sim) {
+    const el = $('#cinematic');
+    if (el) el.hidden = true;
+    if (sim?.mode === 'transition') {
+      sim.advance();
+    }
+  } else if (event === 'anomalyChoice' && data) {
+    closeDialog();
+    audio.stopVoice();
+    sim?.choose(data.effect);
   } else if (event === 'segmentChanged' || event === 'authorityChanged') {
     updateCrewModeUI();
     const flightHud = $('#crew-flight-hud');
