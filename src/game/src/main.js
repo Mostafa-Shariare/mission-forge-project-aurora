@@ -1756,6 +1756,10 @@ export async function autoRequestFullscreen(){
       const rfs=docEl.requestFullscreen||docEl.webkitRequestFullscreen||docEl.mozRequestFullScreen||docEl.msRequestFullscreen;
       if(rfs)await rfs.call(docEl);
     }
+    // Automatically lock orientation to landscape on mobile & tablet devices
+    if(screen.orientation && typeof screen.orientation.lock === 'function'){
+      screen.orientation.lock('landscape').catch(() => {});
+    }
   }catch(_){}
 }
 window.autoRequestFullscreen=autoRequestFullscreen;
@@ -1806,6 +1810,16 @@ document.addEventListener('click',e=>{
   if(b.id==='pause-controls'){closeDialog();controlsDialog();}
 });
 if($('#design-button')) $('#design-button').onclick=()=>{ autoRequestFullscreen(); designDialog(); };
+if($('#btnForceLandscape')) $('#btnForceLandscape').onclick=()=>{ autoRequestFullscreen(); };
+window.addEventListener('orientationchange', ()=>{ if(window.innerWidth<=1024) autoRequestFullscreen(); });
+if(window.screen?.orientation){
+  window.screen.orientation.addEventListener('change', ()=>{
+    if(!window.screen.orientation.type.includes('portrait')) {
+      const p = $('#orientation-prompt');
+      if(p) p.style.display = 'none';
+    }
+  });
+}
 if($('#resume-button')) $('#resume-button').onclick=()=>{try{initializeFlight(savedCheckpoint);}catch{notify('The saved checkpoint could not be loaded. Start a new expedition.','warning');savedCheckpoint=null;if($('#resume-button')) $('#resume-button').hidden=true;}};
 if($('#home-button')) $('#home-button').onclick=()=>{if(view==='flight'){if(!dialogKind)pauseMenu();}else if(dialogKind)closeDialog();};
 if($('#mission-nav')) $('#mission-nav').onclick=()=>{if(view==='flight'){if(!dialogKind)pauseMenu();}else if(dialogKind)closeDialog();};

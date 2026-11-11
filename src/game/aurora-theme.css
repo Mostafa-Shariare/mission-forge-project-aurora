@@ -6805,4 +6805,103 @@ aside::-webkit-scrollbar-thumb:hover {
   }
 }
 
+/* ==========================================================================
+   MOBILE & TABLET AUTOMATIC LANDSCAPE ENFORCEMENT ENGINE
+   ========================================================================== */
+
+.orientation-prompt {
+  display: none !important;
+}
+
+@media screen and (max-width: 1024px) and (orientation: portrait) {
+  .orientation-prompt {
+    display: flex !important;
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 999999 !important;
+    background: radial-gradient(ellipse at 50% 40%, rgba(6, 18, 40, 0.98) 0%, rgba(2, 6, 16, 0.99) 100%) !important;
+    backdrop-filter: blur(28px) !important;
+    -webkit-backdrop-filter: blur(28px) !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 24px !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+    animation: fadeInOrient 0.3s ease-out forwards;
+  }
+}
+
+@keyframes fadeInOrient {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.orientation-card {
+  max-width: 360px;
+  width: 100%;
+  padding: 32px 24px;
+  background: linear-gradient(180deg, rgba(10, 22, 42, 0.95) 0%, rgba(4, 10, 22, 0.98) 100%);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  border-radius: 6px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.8), 0 0 24px rgba(56, 189, 248, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.device-rotate-animation {
+  display: inline-block;
+  margin-bottom: 20px;
+  animation: phoneRotateAnim 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+}
+
+@keyframes phoneRotateAnim {
+  0% { transform: rotate(0deg); }
+  30% { transform: rotate(0deg); }
+  70% { transform: rotate(-90deg); }
+  100% { transform: rotate(-90deg); }
+}
+
+.orientation-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 14px;
+}
+
+.orientation-title {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+  margin: 0 0 10px 0;
+  text-shadow: 0 0 16px rgba(56, 189, 248, 0.4);
+}
+
+.orientation-copy {
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 11px;
+  line-height: 1.6;
+  color: #94a3b8;
+  margin: 0 0 22px 0;
+}
+
+.orient-force-btn {
+  width: 100% !important;
+  justify-content: center !important;
+  min-height: 44px !important;
+  font-size: 12px !important;
+  letter-spacing: 0.12em !important;
+}
+
 
