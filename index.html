@@ -822,7 +822,8 @@
       position: relative;
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: space-between;
+      gap: 16px;
       border-bottom: 1px solid rgba(0, 229, 255, 0.25);
       padding-bottom: 12px;
       pointer-events: auto;
@@ -831,49 +832,58 @@
     .screen2-title-block {
       display: flex;
       flex-direction: column;
-      align-items: center;
-      text-align: center;
+      align-items: flex-start;
+      text-align: left;
+      flex: 1;
+      min-width: 0;
     }
 
     .screen2-headline {
-      font-size: 1.55rem;
+      font-size: 1.45rem;
       font-weight: 800;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
       color: #00E5FF;
       text-shadow: 0 0 12px rgba(0, 229, 255, 0.8), 0 0 25px rgba(0, 229, 255, 0.45);
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       gap: 10px;
     }
 
     .screen2-headline .screen2-title-glow {
       color: #00E5FF;
       text-shadow: 0 0 14px rgba(0, 229, 255, 0.85), 0 0 28px rgba(0, 229, 255, 0.45);
-      letter-spacing: 0.2em;
+      letter-spacing: 0.16em;
     }
 
     .screen2-subtitle {
       font-family: var(--font-mono);
-      font-size: 0.74rem;
-      letter-spacing: 0.14em;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
       color: #8EB7CD;
-      margin-top: 5px;
-      text-align: center;
+      margin-top: 4px;
+      text-align: left;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
     }
 
     .back-btn-ghost {
-      position: absolute;
-      right: 0;
+      position: relative;
+      right: auto;
+      margin-left: auto;
+      flex-shrink: 0;
+      white-space: nowrap;
       background: rgba(0, 229, 255, 0.12);
       border: 1px solid rgba(0, 229, 255, 0.45);
       border-radius: 4px;
       color: var(--hud-cyan);
       font-family: var(--font-mono);
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       letter-spacing: 0.12em;
-      padding: 8px 16px;
+      padding: 7px 14px;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -3821,6 +3831,127 @@
       .aerospace-hud-crest .cyber-emblem-bay {
         width: 32px;
         height: 32px;
+      }
+    }
+
+    /* Short Viewports / Mobile & Tablet Landscape (max-height: 520px) */
+    @media (max-height: 520px) {
+      .top-telemetry-bar {
+        top: 4px !important;
+        left: 8px !important;
+        right: 8px !important;
+        padding: 2px 10px !important;
+        min-height: 34px !important;
+      }
+      .brand-title {
+        font-size: 0.92rem !important;
+      }
+      .brand-sub {
+        display: none !important;
+      }
+      .telemetry-pill {
+        padding: 2px 6px !important;
+        font-size: 0.65rem !important;
+      }
+      .top-actions-cluster button {
+        padding: 2px 8px !important;
+        font-size: 0.68rem !important;
+      }
+      .screen2-stage {
+        padding: 42px 12px 6px 12px !important;
+      }
+      .screen2-header {
+        padding-bottom: 4px !important;
+        margin-bottom: 2px !important;
+        gap: 10px !important;
+      }
+      .screen2-headline {
+        font-size: 1.15rem !important;
+      }
+      .screen2-subtitle {
+        font-size: 0.62rem !important;
+        margin-top: 1px !important;
+      }
+      .back-btn-ghost {
+        padding: 4px 10px !important;
+        font-size: 0.7rem !important;
+      }
+      .carousel-3d-wrapper {
+        height: calc(100vh - 88px) !important;
+        max-height: 270px !important;
+        margin: 0 auto !important;
+        perspective: 900px !important;
+      }
+      .carousel-3d-track {
+        width: 210px !important;
+        height: calc(100vh - 96px) !important;
+        max-height: 255px !important;
+      }
+      .carousel-3d-card {
+        width: 210px !important;
+        height: calc(100vh - 96px) !important;
+        max-height: 255px !important;
+        padding: 6px 10px !important;
+      }
+      .card-top-row {
+        margin-bottom: 2px !important;
+      }
+      .card-class-badge {
+        font-size: 0.58rem !important;
+        padding: 1px 5px !important;
+      }
+      .card-index {
+        font-size: 0.62rem !important;
+      }
+      .card-planet-preview-wrap {
+        width: 62px !important;
+        height: 62px !important;
+        margin: 2px auto !important;
+      }
+      .card-planet-canvas {
+        width: 56px !important;
+        height: 56px !important;
+      }
+      .card-info-block {
+        gap: 2px !important;
+      }
+      .card-dest-title {
+        font-size: 0.92rem !important;
+      }
+      .card-dest-sub {
+        font-size: 0.6rem !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+      }
+      .card-specs-chips {
+        margin: 2px 0 !important;
+        gap: 4px !important;
+      }
+      .chip-item {
+        font-size: 0.55rem !important;
+        padding: 1px 4px !important;
+      }
+      .card-view-dossier-btn {
+        padding: 5px 8px !important;
+        font-size: 0.72rem !important;
+      }
+      .carousel-nav-btn {
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 1.1rem !important;
+      }
+      .screen2-carousel-nav-dots {
+        margin-top: 2px !important;
+        gap: 6px !important;
+      }
+      .carousel-indicator-dot {
+        width: 7px !important;
+        height: 7px !important;
+      }
+      .dossier-modal {
+        max-height: 96vh !important;
+        padding: 8px 12px !important;
       }
     }
 
@@ -7337,6 +7468,9 @@
       if (composer) {
         composer.setSize(window.innerWidth, window.innerHeight);
       }
+      if (typeof update3DCarousel === 'function') {
+        update3DCarousel(true);
+      }
     }
 
     /* ==========================================================================
@@ -7865,14 +7999,15 @@
         while (diff > 2) diff -= numCards;
         while (diff < -2) diff += numCards;
 
+        const isCompact = window.innerHeight <= 520 || window.innerWidth < 768;
         // Cylindrical 3D layout math
-        const xOffset = diff * 290; // horizontal spacing in px
-        const zOffset = -Math.abs(diff) * 135; // curved depth back in z-space
+        const xOffset = diff * (isCompact ? 210 : 290); // horizontal spacing in px
+        const zOffset = -Math.abs(diff) * (isCompact ? 75 : 135); // curved depth back in z-space
         const rotY = diff * 24; // subtle cylindrical angle in degrees
-        const scale = diff === 0 ? 1.08 : (Math.abs(diff) === 1 ? 0.90 : 0.76);
+        const scale = diff === 0 ? (isCompact ? 1.0 : 1.08) : (Math.abs(diff) === 1 ? (isCompact ? 0.82 : 0.90) : (isCompact ? 0.68 : 0.76));
         const opacity = diff === 0 ? 1.0 : (Math.abs(diff) === 1 ? 0.82 : 0.45);
         const zIndex = 50 - Math.abs(diff) * 10;
-        const blur = diff === 0 ? 0 : (Math.abs(diff) === 1 ? 1 : 2.5);
+        const blur = diff === 0 ? 0 : (Math.abs(diff) === 1 ? (isCompact ? 0.5 : 1) : 2.5);
 
         if (instant) {
           card.style.transition = 'none';
