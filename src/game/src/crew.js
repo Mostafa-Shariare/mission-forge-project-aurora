@@ -696,12 +696,14 @@ export function showModeSelectScreen(container, { onSolo, onTeamLaunch } = {}) {
       `;
 
       root.querySelector('#btnChooseSolo').onclick = () => {
+        if (typeof window.autoRequestFullscreen === 'function') window.autoRequestFullscreen();
         crew.setMode('solo');
         closeScreen();
         if (onSolo) onSolo();
       };
 
       root.querySelector('#btnChooseTeam').onclick = () => {
+        if (typeof window.autoRequestFullscreen === 'function') window.autoRequestFullscreen();
         currentView = 'team-hub';
         render();
       };

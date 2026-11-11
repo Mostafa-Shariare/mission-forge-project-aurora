@@ -206,14 +206,15 @@ function persistSettings(){
 function updateAudioButton(){
     const b=$('#sound-button');
     if(!b)return;
-    b.setAttribute('aria-pressed',String(!audio.muted));
-    b.title=audio.muted?'Enable audio (M)':'Mute audio (M)';
-    b.classList.toggle('active',!audio.muted);
-    b.classList.toggle('muted',audio.muted);
-    if(!audio.muted){
-      b.innerHTML = '<span class="sound-eq-wave" aria-hidden="true"><span class="eq-bar bar-1"></span><span class="eq-bar bar-2"></span><span class="eq-bar bar-3"></span><span class="eq-bar bar-4"></span></span><span class="sound-icon-note">AUDIO</span>';
+    const isMuted = !!audio.muted;
+    b.setAttribute('aria-pressed',String(!isMuted));
+    b.title=isMuted?'Enable audio (M)':'Mute audio (M)';
+    b.classList.toggle('active',!isMuted);
+    b.classList.toggle('muted',isMuted);
+    if(!isMuted){
+      b.innerHTML = '<svg class="sound-svg" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 6h3l4-3v10l-4-3H2V6z"/><path d="M12 5a4.5 4.5 0 010 6"/><path d="M14 3a7.5 7.5 0 010 10"/></svg><span class="sound-label">AUDIO ON</span>';
     } else {
-      b.innerHTML = '<span class="sound-mute-wrap" aria-hidden="true"><span class="sound-icon-note muted">MUTED</span><span class="sound-mute-slash"></span><span class="sound-mute-badge"></span></span>';
+      b.innerHTML = '<svg class="sound-svg muted-svg" viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 6h3l4-3v10l-4-3H2V6z"/><line x1="2" y1="2" x2="14" y2="14" stroke="#ef4444" stroke-width="1.8"/></svg><span class="sound-label muted-label">MUTED</span>';
     }
   }
 function updateBgmButton(){
@@ -222,7 +223,15 @@ function updateBgmButton(){
     b.textContent = audio.getBgmButtonLabel ? audio.getBgmButtonLabel() : 'BGM';
     b.title = `Current Soundtrack: ${audio.getBgmTrackTitle ? audio.getBgmTrackTitle() : 'BGM'} (Press B to cycle)`;
   }
-function soundToggle(){audio.start();audio.toggle();updateAudioButton();updateBgmButton();persistSettings();}
+async function soundToggle(){
+  try {
+    await audio.start();
+  } catch(e){}
+  audio.toggle();
+  updateAudioButton();
+  updateBgmButton();
+  persistSettings();
+}
 function bgmToggle(){
     audio.start();
     if(audio.cycleBgmMode){
@@ -1738,10 +1747,22 @@ function action(action){
   if(action==='cam'&&sim.destination.id==='earth')sim.executeCamBurn();
   if(action==='camera'){world.cameraMode=(world.cameraMode+1)%3;$('#camera-button').innerHTML=['CHASE CAM','COCKPIT','ORBIT CAM'][world.cameraMode]+' <kbd>C</kbd>';audio.cue('click');}
 }
-async function fullscreen(){try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}catch{notify('Fullscreen is unavailable in this preview. Open the game in a browser.');}}
+export async function autoRequestFullscreen(){
+  try{
+    const doc=document;
+    const docEl=doc.documentElement;
+    const isFs=doc.fullscreenElement||doc.webkitFullscreenElement||doc.mozFullScreenElement||doc.msFullscreenElement;
+    if(!isFs){
+      const rfs=docEl.requestFullscreen||docEl.webkitRequestFullscreen||docEl.mozRequestFullScreen||docEl.msRequestFullscreen;
+      if(rfs)await rfs.call(docEl);
+    }
+  }catch(_){}
+}
+window.autoRequestFullscreen=autoRequestFullscreen;
+async function fullscreen(){try{if(document.fullscreenElement)await document.exitFullscreen();else await autoRequestFullscreen();}catch{}}
 
 document.addEventListener('click',e=>{
-  const b=e.target.closest('button');if(!b)return;audio.start();
+  const b=e.target.closest('button');if(!b)return;audio.start();autoRequestFullscreen();
   if(b.matches('[data-destination]')){selectDestination(Number(b.dataset.destination));audio.cue('click');}
   if(b.matches('[data-rover-target]'))sim?.selectSurfaceTarget(Number(b.dataset.roverTarget));
   if(b.id==='rover-depart')sim?.departSurface();
@@ -1784,13 +1805,13 @@ document.addEventListener('click',e=>{
   if(b.id==='retry-button'){const checkpoint=sim.checkpoint;initializeFlight(checkpoint);}
   if(b.id==='pause-controls'){closeDialog();controlsDialog();}
 });
-if($('#design-button')) $('#design-button').onclick=designDialog;
+if($('#design-button')) $('#design-button').onclick=()=>{ autoRequestFullscreen(); designDialog(); };
 if($('#resume-button')) $('#resume-button').onclick=()=>{try{initializeFlight(savedCheckpoint);}catch{notify('The saved checkpoint could not be loaded. Start a new expedition.','warning');savedCheckpoint=null;if($('#resume-button')) $('#resume-button').hidden=true;}};
 if($('#home-button')) $('#home-button').onclick=()=>{if(view==='flight'){if(!dialogKind)pauseMenu();}else if(dialogKind)closeDialog();};
 if($('#mission-nav')) $('#mission-nav').onclick=()=>{if(view==='flight'){if(!dialogKind)pauseMenu();}else if(dialogKind)closeDialog();};
 if($('#sound-button')) $('#sound-button').onclick=soundToggle;
 if($('#bgm-track-button')) $('#bgm-track-button').onclick=bgmToggle;
-if($('#fullscreen-button')) $('#fullscreen-button').onclick=fullscreen;if($('#pause-button')) $('#pause-button').onclick=pauseMenu;
+if($('#pause-button')) $('#pause-button').onclick=pauseMenu;
 if($('#controls-button')) $('#controls-button').onclick=controlsDialog;
 if($('#journal-button')) $('#journal-button').onclick=journalDialog;
 if($('#credits-button')) $('#credits-button').onclick=creditsDialog;

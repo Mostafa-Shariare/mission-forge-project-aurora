@@ -886,13 +886,16 @@ export class FlightAudio {
      -------------------------------------------------------------------------- */
   toggle(){
     this.muted = !this.muted;
+    if(this.ctx && this.ctx.state === 'suspended'){
+      this.ctx.resume().catch(()=>{});
+    }
     if(this.master && this.ctx){
-      this.master.gain.setTargetAtTime(this.muted ? 0 : 0.5, this.ctx.currentTime, 0.1);
+      this.master.gain.setTargetAtTime(this.muted ? 0 : 0.5, this.ctx.currentTime, 0.05);
     }
     if(this.muted){
       this.stopKlaxon();
       if(this.windGain && this.ctx){
-        this.windGain.gain.setTargetAtTime(0, this.ctx.currentTime, 0.1);
+        this.windGain.gain.setTargetAtTime(0, this.ctx.currentTime, 0.05);
       }
       if(typeof window !== 'undefined') window.speechSynthesis?.cancel();
       Object.values(this.audioElements).forEach(el => el?.pause());
@@ -901,7 +904,10 @@ export class FlightAudio {
         this.fadeInBgm(1.5);
       } else {
         const el = this.audioElements[this.activeTrackId];
-        if(el) el.play().catch(()=>{});
+        if(el && el.paused) el.play().catch(()=>{});
+        if(this.bgmGain && this.ctx){
+          this.bgmGain.gain.setTargetAtTime(this.bgmVolume, this.ctx.currentTime, 0.1);
+        }
       }
     }
     return !this.muted;

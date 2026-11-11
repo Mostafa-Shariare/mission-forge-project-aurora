@@ -7927,6 +7927,13 @@
       }
 
       document.body.classList.add('game-active');
+      try {
+        const docEl = document.documentElement;
+        if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+          const rfs = docEl.requestFullscreen || docEl.webkitRequestFullscreen || docEl.mozRequestFullScreen || docEl.msRequestFullscreen;
+          if (rfs) rfs.call(docEl).catch(() => {});
+        }
+      } catch (_) {}
       const topBar = document.querySelector('.top-telemetry-bar');
       if (topBar) topBar.style.display = 'none';
 
